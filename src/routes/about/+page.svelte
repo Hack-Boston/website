@@ -51,12 +51,12 @@
 </div>
 
 <div class="flex flex-wrap justify-center items-center mt-12 peak gap-3 sm:gap-4 px-4">
-    <img src="src/lib/assets/stock-photo/hack-club-assemble/Hack_Club_Assemble_LTNJ_00104.JPG" alt="Hack Club Assemble" class="w-full max-w-[400px] h-auto aspect-16/10 object-cover rounded-xl shadow-lg" />
-    <img src="src/lib/assets/stock-photo/hack-club-assemble/Hack_Club_Assemble_LTNJ_00517.JPG" alt="Hack Club Assemble" class="w-full max-w-[400px] h-auto aspect-16/10 object-cover rounded-xl shadow-lg" />
+    <img src="src/lib/assets/stock-photo/hack-club-assemble/Hack_Club_Assemble_LTNJ_00104.webp" alt="Hack Club Assemble" class="w-full max-w-[400px] h-auto aspect-16/10 object-cover rounded-xl shadow-lg" />
+    <img src="src/lib/assets/stock-photo/hack-club-assemble/Hack_Club_Assemble_LTNJ_00517.webp" alt="Hack Club Assemble" class="w-full max-w-[400px] h-auto aspect-16/10 object-cover rounded-xl shadow-lg" />
 </div>
 
 <div class="flex justify-center items-center mt-12 px-4 sm:px-6">
-    <img src="src/lib/assets/stock-photo/hack-club-summit/_BMT5361.jpg" alt="Hack Club Summit" class="w-full max-w-[400px] h-auto aspect-16/10 object-cover rounded-xl shadow-lg" />
+    <img src="src/lib/assets/stock-photo/hack-club-summit/_BMT5361.webp" alt="Hack Club Summit" class="w-full max-w-[400px] h-auto aspect-16/10 object-cover rounded-xl shadow-lg" />
 </div>
 
 <div class="flex justify-center items-center mt-12 px-4 sm:px-6">
