@@ -69,7 +69,7 @@
 
 <div class="flex flex-col items-center gap-6 mt-6 px-4 sm:px-6">
     <p class="text-left text-lg font-medium text-secondary max-w-4xl sm:w-2/3">
-        HackWIT will unite students from Wentworth Institute of Technology, the <a href="https://www.colleges-fenway.org/about/" target="_blank"><u>Colleges of the Fenway consortium</u></a>,
+        HackWIT will unite students from Wentworth Institute of Technology, the <a href="https://www.colleges-fenway.org/about/" target="_blank" class="text-primary underline">Colleges of the Fenway consortium</a>,
         and other institutions for three days of collaborative coding, networking, and skill development. To support newcomers, we aim to offer introductory coding workshops led by Wentworth
         professors. The event will feature hands-on coding challenges, interactive team projects, and opportunities to network with peers and industry mentors.
         Whether participants are new to coding or already experienced, HackWIT will foster an inclusive environment where students can expand their skills, connect with professionals,
