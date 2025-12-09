@@ -10,9 +10,9 @@
     <h1 class="roboto-flex-wit-main text-4xl sm:text-6xl md:text-7xl leading-tight">About</h1>
 </div>
 
-<div class="flex flex-wrap justify-center items-center mt-4 peak gap-3 sm:gap-4 px-4">
+<!-- <div class="flex flex-wrap justify-center items-center mt-4 peak gap-3 sm:gap-4 px-4">
     <h1 class="russo-one-regular text-3xl sm:text-3xl md:text-4xl leading-tight"><b><u>Theme:</u> Innovation</b></h1>
-</div>
+</div> -->
 
 <div class="flex justify-center items-center mt-6 px-4 sm:px-6">
     <hr class="w-full max-w-5xl border-t-[1px] border-gray-300 dark:border-gray-1000 my-6" />
@@ -23,11 +23,9 @@
     <p class="text-left text-lg font-medium text-secondary">
         <u>Event Details:</u>
         <br>
-        3 Day Event
+        Dates: March 13th ~ 15th, 2026
         <br>
-        March 13th ~ 15th, 2026
-        <br>
-        Friday Evening ~ Sunday Afternoon
+        Friday Evening ~ Sunday Afternoon (36 hours)
         <br>
         Location: Ira Allen Building + CEIS as breakout spaces
     </p>
@@ -44,7 +42,7 @@
 <div class="flex flex-col items-center gap-6 mt-6 px-4 sm:px-6">
     <p class="text-left text-lg font-medium text-secondary max-w-4xl sm:w-2/3">
         A hackathon is a fast-paced event — typically 24 to 72 hours — where people with different skills form teams to design and build functional prototypes
-        such as apps, games, or websites. Unlike a regular coding session, it combines problem‑solving, creativity, and rapid execution around a specific challenge or theme.
+        such as apps, games, or websites. Unlike a regular coding session, it combines problem solving, creativity, and rapid execution around a specific challenge or theme.
         Participants, often including programmers, designers, and subject matter experts, form teams to brainstorm ideas, develop prototypes, and present their solutions
         for a chance to win prizes, and attend workshops and panels to pick up new skills. Hackathons foster creativity, innovation, and teamwork, providing a platform for learning new skills, networking, and showcasing talent.
     </p>
@@ -83,13 +81,57 @@
 </div>
 
 <div class="flex flex-col justify-center items-center mt-4 peak gap-3 sm:gap-4 px-4">
+    <h1 class="russo-one-regular text-3xl sm:text-3xl md:text-4xl leading-tight"><u><b>Who is hosting HackWIT?</b></u></h1>
+</div>
+
+<div class="flex flex-col items-center gap-6 mt-6 px-4 sm:px-6">
+    <p class="text-left text-lg font-medium text-secondary max-w-4xl sm:w-2/3">
+        The Wentworth Coding Club (also known as WITCC) is a student organization at Wentworth Institute of Technology focused on promoting the development of students' technical skills through a shared passion and knowledge of
+        coding, while sharing our passion and skills with those who want to learn more about these fields. We want to help enforce the idea of creativity in engineering with relevant projects built in
+        teams along with leadership skills to those who wish to run projects of their own.
+    </p>
+</div>
+
+<div class="flex justify-center items-center mt-12 px-4 sm:px-6">
+    <hr class="w-full max-w-5xl border-t-[1px] border-gray-300 dark:border-gray-1000 my-6" />
+</div>
+
+<div class="flex flex-col justify-center items-center mt-4 peak gap-3 sm:gap-4 px-4">
+    <h1 class="russo-one-regular text-3xl sm:text-3xl md:text-4xl leading-tight"><u><b>What is the event's theme?</b></u></h1>
+</div>
+
+<div class="flex flex-col items-center gap-6 mt-6 px-4 sm:px-6">
+    <p class="text-left text-lg font-medium text-secondary max-w-4xl sm:w-2/3">
+        The theme for HackWIT is innovation, championing bold ideas and empowering students of all backgrounds to design and build solutions for the challenges shaping our world today.
+        Boston is a thriving hub of technology and talent—right in WIT's backyard. With a campus committed to hands-on learning and global-minded collaboration, WIT is the perfect place for
+        academia and industry to connect and experience the ingenuity of the brightest minds in our community.
+    </p>
+</div>
+
+<div class="flex flex-wrap justify-center items-center mt-12 peak gap-3 sm:gap-4 px-4">
+    <img src="src/lib/assets/stock-photo/hack-club-assemble/Hack_Club_Assemble_LTNJ_01375.webp" alt="Hack Club Assemble" class="w-full max-w-[400px] h-auto aspect-16/10 object-cover rounded-xl shadow-lg" />
+    <img src="src/lib/assets/stock-photo/hack-club-summit/_BMT5018.webp" alt="Hack Club Summit" class="w-full max-w-[400px] h-auto aspect-16/10 object-cover rounded-xl shadow-lg" />
+</div>
+
+<div class="flex flex-wrap justify-center items-center mt-12 peak gap-3 sm:gap-4 px-4">
+    <img src="src/lib/assets/stock-photo/hack-club-summit/_BMT5239.webp" alt="Hack Club Summit" class="w-full max-w-[400px] h-auto aspect-16/10 object-cover rounded-xl shadow-lg" />
+    <img src="src/lib/assets/stock-photo/hack-club-summit/_BMT5242.webp" alt="Hack Club Summit" class="w-full max-w-[400px] h-auto aspect-16/10 object-cover rounded-xl shadow-lg" />
+</div>
+
+<div class="flex justify-center items-center mt-12 px-4 sm:px-6">
+    <hr class="w-full max-w-5xl border-t-[1px] border-gray-300 dark:border-gray-1000 my-6" />
+</div>
+
+<div class="flex flex-col justify-center items-center mt-4 peak gap-3 sm:gap-4 px-4">
     <h1 class="russo-one-regular text-3xl sm:text-3xl md:text-4xl leading-tight"><u><b>Who can participate in HackWIT?</b></u></h1>
 </div>
 
 <div class="flex flex-col items-center gap-6 mt-6 px-4 sm:px-6">
     <p class="text-left text-lg font-medium text-secondary max-w-4xl sm:w-2/3">
         Any college student is eligible to participate. You don't need to be a tech expert or an experienced programmer.
+        We welcome students from all skill levels, backgrounds, and fields of study to join us in this collaborative learning experience.
         Our event will have experienced mentors to guide you, answer questions, and help you find the right direction when you're stuck.
+        Feel free to contact us at <a href="mailto:hackathon@hackwit.org" target="_blank" class="text-primary underline">hackathon@hackwit.org</a> with any questions or concerns!
     </p>
 </div>
 
