@@ -27,12 +27,12 @@
     <!-- ===== NAVIGATION BAR ===== -->
     <div class="flex justify-between py-6 px-20 items-center h-[100px] ">
         <!-- Left Side -->
-        <div class="flex gap-4 items-center">
+        <div class="flex flex-col items-center">
             <div class="gap-4 items-center flex justify-center">
                 <img src="/svg/mascot_4.svg" alt="Signature logo" class="w-[52px] h-[52px]"/>
                 <img src="/svg/wordmark_1.svg" alt="HackBoston word logo" class="w-[170px] h-[18.48px]"/>
             </div>
-            <!-- <img src="/svg/mascot_4.svg" alt="Signature logo" class="w-10 h-10"/> -->
+            <img src="/svg/mascot_4.svg" alt="Signature logo" class="w-10 h-10"/>
         </div>
    
         <!-- Middle side (link) -->
