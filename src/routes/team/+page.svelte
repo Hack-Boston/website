@@ -21,7 +21,7 @@
 </svelte:head>
 
 
-<div class="bg-white" style="font-family: 'JetBrains Mono', monospace;">
+<div class="bg-white " style="font-family: 'JetBrains Mono', monospace; ">
 
 
     <!-- ===== NAVIGATION BAR ===== -->
@@ -82,8 +82,121 @@
     </div>
 
     <!-- =====  ORGANIZER ===== -->
-    <div class="h-[1243px]">
+    <div class="h-[1243px] pt-6 pb-16 px-20 mb-20 items-center justify-center text-center gap-6">
+        <h2 class="text-[#3E6A53] text-[14px] mt-4 " style="">TEAM LEADS</h2>
 
+        <!-- Main organizers -->
+        <div class="grid grid-cols-3 justify-items-center justify-self-center gap-6 mt-8 px-30 w-full">
+
+            <!-- 1st Organizer -->
+            <div class="grid grid-cols-1 justify-items-center border-[#1F2E26] rounded-3xl border p-6 gap-4 h-[516px] w-[400px]">
+                <img src="/images/logan.jpg" alt="Logan Lambert" class="h-[352px] w-[352px] rounded-2xl" />
+
+                <div class="gap-4 flex flex-col">
+                    <span class="text-xl leading-[128%] tracking-[-1%] text-[#1F2E26]" style="font-family: 'Balgin Display', sans-serif;">
+                        Logan Lambert
+                    </span>
+                    <span class="text-[#3E6A53] text-[12px] leading-[100%] tracking-[0%]">
+                        Co-director · Tech Lead
+                    </span>
+                    <span class="text-[#5B6B62] text-[16px]" style="font-family: 'Newsreader', serif;">
+                        logan@hackboston.dev
+                    </span>
+                </div>
+            </div>
+
+            <!-- 2nd Organizer -->
+            <div class="flex flex-col justify-center items-center border-[#1F2E26] rounded-3xl border p-6 gap-4 h-[516px] w-[400px]">
+                <img src="/images/jasper.jpg" alt="Jasper Mayone" class="h-[352px] w-[352px] rounded-2xl" />
+
+                <div class="gap-4 flex flex-col">
+                    <span class="text-xl leading-[128%] tracking-[-1%] text-[#1F2E26]" style="font-family: 'Balgin Display', sans-serif;">
+                        Jasper Mayone
+                    </span>
+                    <span class="text-[#3E6A53] text-[12px] leading-[100%] tracking-[0%]">
+                        Co-director · Ops Lead
+                    </span>
+                    <span class="text-[#5B6B62] text-[16px]" style="font-family: 'Newsreader', serif;">
+                        jasper@hackboston.dev
+                    </span>
+                </div>
+            </div>
+
+            <!-- 3rd Organizer -->
+            <div class="flex flex-col justify-center items-center border-[#1F2E26] rounded-3xl border p-6 gap-4 h-[476px] w-[400px]">
+                <img src="/images/volo.png" alt="Volo" class="h-[476px] w-[400px] rounded-2xl" />
+
+                <div class="gap-4 flex flex-col">
+                    <span class="text-xl leading-[128%] tracking-[-1%] text-[#1F2E26]" style="font-family: 'Balgin Display', sans-serif;">
+                        Volo
+                    </span>
+                    <span class="text-[#3E6A53] text-[12px] leading-[100%] tracking-[0%]">
+                        Sponsorship + Finances Lead
+                    </span>
+                </div>
+            </div>
+
+            <!-- 4th Organizer -->
+            <div class="flex flex-col justify-center items-center border-[#1F2E26] rounded-3xl border p-6 gap-4 h-[516px] w-[400px]">
+                <img src="/images/cj.png" alt="Logan Lambert" class="h-[352px] w-[352px] rounded-2xl" />
+
+                <div class="gap-4 flex flex-col">
+                    <span class="text-xl leading-[128%] tracking-[-1%] text-[#1F2E26]" style="font-family: 'Balgin Display', sans-serif;">
+                        CJ
+                    </span>
+                    <span class="text-[#3E6A53] text-[12px] leading-[100%] tracking-[0%]" >
+                        CoVenue + Logistics Lead
+                    </span>
+                </div>
+            </div>
+
+            <!-- 5th Organizer -->
+            <div class="flex flex-col justify-center items-center border-[#1F2E26] rounded-3xl border p-6 gap-4 h-[516px] w-[400px]">
+                <img src="/images/jojo.jpg" alt="Logan Lambert" class="h-[352px] w-[352px] rounded-2xl" />
+
+                <div class="gap-4 flex flex-col">
+                    <span class="text-xl leading-[128%] tracking-[-1%] text-[#1F2E26]" style="font-family: 'Balgin Display', sans-serif;">
+                        Jojo
+                    </span>
+                    <span class="text-[#3E6A53] text-[12px] leading-[100%] tracking-[0%]">
+                        Design + Socials Lead
+                    </span>
+                </div>
+            </div>
+
+            <!-- 6th Organizer -->
+            <div class="flex flex-col justify-center items-center border-[#1F2E26] rounded-3xl border p-6 gap-4 h-[516px] w-[400px]">
+                <img src="/images/daniel.jpg" alt="Logan Lambert" class="h-[352px] w-[352px] rounded-2xl" />
+
+                <div class="gap-4 flex flex-col">
+                    <span class="text-xl leading-[128%] tracking-[-1%] text-[#1F2E26]" style="font-family: 'Balgin Display', sans-serif;">
+                        Daniel Miretsky
+                    </span>
+                    <span class="text-[#3E6A53] text-[12px] leading-[100%] tracking-[0%]">
+                        Judging Lead
+                    </span>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- Other Organizer -->
+        <div>
+            <h2 class="text-[#3E6A53] text-[14px] mt-12" >ALSO ON THE TEAM</h2>
+            <div class="flex flex-wrap items-center text-[#5B6B62] text-[18px] mt-2 leading-6 justify-center font-normal" style="font-family: 'Newsreader', serif;">
+                <span>Thang Pham</span>
+                <span class="mx-5">·</span>
+                <span>Organizer Name</span>
+                <span class="mx-5">·</span>
+                <span>Organizer Name</span>
+                <span class="mx-5">·</span>
+                <span>Organizer Name</span>
+                <span class="mx-5">·</span>
+                <span>Organizer Name</span>
+                <span class="mx-5">·</span>
+                <span>Organizer Name</span>
+            </div>
+        </div>
     </div>
     
     <!-- =====  FOOTER ===== -->
