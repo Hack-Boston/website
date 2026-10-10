@@ -8,8 +8,10 @@
 
     /* Balgin Display */
     @font-face {
-        font-family: 'BalginDisplay';
-        src: url('/static/Font_family/DISPLAY/BalginDisplay-SemiBold.otf') format('otf');
+        font-family: 'Balgin Display';
+        src: url('/fonts/BalginDisplay-SemiBold.otf') format('opentype');
+        font-weight: 600;
+        font-style: normal;
     }
 </style>
 
