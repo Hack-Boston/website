@@ -37,7 +37,13 @@
 						<div class="flex flex-col gap-4">
 							<span class="display-m text-text-ink"> Logan Lambert </span>
 							<span class="label-mono text-accent-green"> Co-director · Tech Lead </span>
-							<span class="font-body text-base text-text-muted"> logan@hackboston.dev </span>
+							<span class="font-body text-base text-text-muted"> 
+								<a
+									href="mailto:logan@hackboston.dev" target="_blank"
+								>
+									logan@hackboston.dev 
+								</a> 
+							</span>
 						</div>
 					</div>
 
@@ -54,7 +60,13 @@
 						<div class="flex flex-col gap-4">
 							<span class="display-m text-text-ink"> Jasper Mayone </span>
 							<span class="label-mono text-accent-green"> Co-director · Ops Lead </span>
-							<span class="font-body text-base text-text-muted"> jasper@hackboston.dev </span>
+							<span class="font-body text-base text-text-muted">  
+								<a
+									href="mailto:jasper@hackboston.dev" target="_blank"
+								>
+									jasper@hackboston.dev
+								</a> 
+							</span>
 						</div>
 					</div>
 
@@ -71,7 +83,13 @@
 						<div class="flex flex-col gap-4">
 							<span class="display-m text-text-ink"> Volo Kotelyak </span>
 							<span class="label-mono text-accent-green"> Sponsorship + Finances Lead </span>
-							<span class="font-body text-base text-text-muted"> volo@hackboston.dev </span>
+							<span class="font-body text-base text-text-muted"> 
+								<a
+									href="mailto:volo@hackboston.dev" target="_blank"
+								>
+									volo@hackboston.dev
+								</a> 
+							</span>
 						</div>
 					</div>
 
@@ -88,7 +106,13 @@
 						<div class="flex flex-col gap-4">
 							<span class="display-m text-text-ink"> CJ Kanne </span>
 							<span class="label-mono text-accent-green"> Venue + Logistics Lead </span>
-							<span class="font-body text-base text-text-muted"> cj@hackboston.dev </span>
+							<span class="font-body text-base text-text-muted"> 
+								<a
+									href="mailto:cj@hackboston.dev" target="_blank"
+								>
+									cj@hackboston.dev 
+								</a> 
+							</span>
 						</div>
 					</div>
 
@@ -105,7 +129,13 @@
 						<div class="flex flex-col gap-4">
 							<span class="display-m text-text-ink"> Jojo Dejesus </span>
 							<span class="label-mono text-accent-green"> Design + Socials Lead </span>
-							<span class="font-body text-base text-text-muted"> jojo@hackboston.dev </span>
+							<span class="font-body text-base text-text-muted"> 
+								<a
+									href="mailto:jojo@hackboston.dev" target="_blank"
+								>
+									jojo@hackboston.dev 
+								</a> 
+							</span>
 						</div>
 					</div>
 
@@ -122,7 +152,13 @@
 						<div class="flex flex-col gap-4">
 							<span class="display-m text-text-ink"> Daniel Miretsky </span>
 							<span class="label-mono text-accent-green"> Judging Lead </span>
-							<span class="font-body text-base text-text-muted"> danielr@hackboston.dev </span>
+							<span class="font-body text-base text-text-muted">
+								<a
+									href="mailto:danielr@hackboston.dev" target="_blank"
+								>
+									danielr@hackboston.dev
+								</a> 
+							</span>
 						</div>
 					</div>
 				</div>
@@ -160,7 +196,7 @@
 					</div>
 
 					<a
-						href="mailto:team@hackboston.dev"
+						href="mailto:team@hackboston.dev" target="_blank"
 						class="rounded-pill bg-bg-forest px-6 py-4 label-mono text-bg-paper"
 					>
 						team@hackboston.dev
