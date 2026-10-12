@@ -32,13 +32,13 @@ The site will be available at [http://localhost:5173](http://localhost:5173). To
 
 ### Project Structure
 
-| Path                 | Purpose                                            |
-| -------------------- | -------------------------------------------------- |
-| `src/routes/`        | Pages and layouts (file-based routing)             |
-| `src/lib/`           | Shared components, utilities, and assets           |
-| `src/app.html`       | HTML template wrapping every page                  |
-| `static/`            | Static files served as-is (e.g. `robots.txt`)      |
-| `svelte.config.js`   | SvelteKit configuration                            |
-| `wrangler.jsonc`     | Cloudflare Workers deployment configuration        |
+| Path               | Purpose                                       |
+| ------------------ | --------------------------------------------- |
+| `src/routes/`      | Pages and layouts (file-based routing)        |
+| `src/lib/`         | Shared components, utilities, and assets      |
+| `src/app.html`     | HTML template wrapping every page             |
+| `static/`          | Static files served as-is (e.g. `robots.txt`) |
+| `svelte.config.js` | SvelteKit configuration                       |
+| `wrangler.jsonc`   | Cloudflare Workers deployment configuration   |
 
 To add a new page, create a `+page.svelte` file in a folder under `src/routes/`. For example, `src/routes/events/+page.svelte` is served at `/events`.
