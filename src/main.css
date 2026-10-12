@@ -1,46 +1,150 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-html, body {
-    margin: 0;
-    padding: 0;
+/*
+ * HackBoston design tokens.
+ * Source: Figma file nMwbM9EiIHyMjhGlf8j6s0 (color variables and text styles).
+ * Naming rule: the Figma variable name with "/" changed to "-" (bg/paper -> --bg-paper).
+ * Pages must use these tokens. Do not hard-code hex values in pages.
+ */
+
+@font-face {
+	font-family: 'Balgin Display';
+	src: url('/fonts/BALGIN%20-%20Studio%20Sun/DISPLAY/BalginDisplay-SemiBold.otf') format('opentype');
+	font-weight: 600;
+	font-style: normal;
+	font-display: swap;
 }
 
-@theme {
-    --color-primary: rgb(var(--m3-scheme-primary));
-    --color-on-primary: rgb(var(--m3-scheme-on-primary));
-    --color-primary-container: rgb(var(--m3-scheme-primary-container));
-    --color-on-primary-container: rgb(var(--m3-scheme-on-primary-container));
-    --color-secondary: rgb(var(--m3-scheme-secondary));
-    --color-on-secondary: rgb(var(--m3-scheme-on-secondary));
-    --color-secondary-container: rgb(var(--m3-scheme-secondary-container));
-    --color-on-secondary-container: rgb(var(--m3-scheme-on-secondary-container));
-    --color-tertiary: rgb(var(--m3-scheme-tertiary));
-    --color-on-tertiary: rgb(var(--m3-scheme-on-tertiary));
-    --color-tertiary-container: rgb(var(--m3-scheme-tertiary-container));
-    --color-on-tertiary-container: rgb(var(--m3-scheme-on-tertiary-container));
-    --color-error: rgb(var(--m3-scheme-error));
-    --color-on-error: rgb(var(--m3-scheme-on-error));
-    --color-error-container: rgb(var(--m3-scheme-error-container));
-    --color-on-error-container: rgb(var(--m3-scheme-on-error-container));
-    --color-background: rgb(var(--m3-scheme-background));
-    --color-on-background: rgb(var(--m3-scheme-on-background));
-    --color-surface: rgb(var(--m3-scheme-surface));
-    --color-on-surface: rgb(var(--m3-scheme-on-surface));
-    --color-surface-variant: rgb(var(--m3-scheme-surface-variant));
-    --color-on-surface-variant: rgb(var(--m3-scheme-on-surface-variant));
-    --color-outline: rgb(var(--m3-scheme-outline));
-    --color-outline-variant: rgb(var(--m3-scheme-outline-variant));
-    --color-shadow: rgb(var(--m3-scheme-shadow));
-    --color-scrim: rgb(var(--m3-scheme-scrim));
-    --color-inverse-surface: rgb(var(--m3-scheme-inverse-surface));
-    --color-inverse-on-surface: rgb(var(--m3-scheme-inverse-on-surface));
-    --color-inverse-primary: rgb(var(--m3-scheme-inverse-primary));
-    --color-surface-bright: rgb(var(--m3-scheme-surface-bright));
-    --color-surface-container: rgb(var(--m3-scheme-surface-container));
-    --color-surface-container-high: rgb(var(--m3-scheme-surface-container-high));
-    --color-surface-container-highest: rgb(var(--m3-scheme-surface-container-highest));
-    --color-surface-container-low: rgb(var(--m3-scheme-surface-container-low));
-    --color-surface-container-lowest: rgb(var(--m3-scheme-surface-container-lowest));
-    --color-surface-dim: rgb(var(--m3-scheme-surface-dim));
-    --color-surface-tint: rgb(var(--m3-scheme-surface-tint));
+:root {
+	color-scheme: light;
+
+	/* Color: Figma variables */
+	--bg-paper: #f5f2e9;
+	--bg-paper-deep: #ece6d6;
+	--bg-forest: #2e4a3b;
+	--bg-green-wash: #e3e6d9;
+	--text-ink: #1f2e26;
+	--text-muted: #5b6b62;
+	--text-on-dark: #f5f2e9;
+	--accent-green: #3e6a53;
+	--accent-green-tint: #e2ebe6;
+
+	/* Color: proposed, not a Figma variable yet (Register field states, 79:621) */
+	--state-error: #b5452e;
+
+	/* Layout */
+	--content-max: 1280px;
+	--space-gutter: 1rem;
+	--space-section: 3rem;
+	--nav-height: 80px;
+}
+
+@media (min-width: 640px) {
+	:root {
+		--nav-height: 100px;
+		--space-gutter: 1.5rem;
+		--space-section: 4rem;
+	}
+}
+
+@media (min-width: 1024px) {
+	:root {
+		--space-gutter: 5rem;
+	}
+}
+
+/*
+ * Fonts and radii. Tailwind emits these on :root too, so var(--font-display)
+ * works in plain CSS. Utilities: font-display, font-body, font-label,
+ * rounded-pill, rounded-card, rounded-image.
+ */
+@theme static {
+	--font-display: 'Balgin Display', 'Helvetica Neue', Arial, sans-serif;
+	--font-body: 'Newsreader', Georgia, 'Times New Roman', serif;
+	--font-label: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+	--radius-pill: 999px;
+	--radius-card: 24px;
+	--radius-image: 16px;
+}
+
+/*
+ * Tailwind theme bridge. Utilities read the tokens above, for example
+ * bg-bg-paper, text-text-ink, border-accent-green, px-gutter, py-section, max-w-content.
+ */
+@theme inline {
+	--color-bg-paper: var(--bg-paper);
+	--color-bg-paper-deep: var(--bg-paper-deep);
+	--color-bg-forest: var(--bg-forest);
+	--color-bg-green-wash: var(--bg-green-wash);
+	--color-text-ink: var(--text-ink);
+	--color-text-muted: var(--text-muted);
+	--color-text-on-dark: var(--text-on-dark);
+	--color-accent-green: var(--accent-green);
+	--color-accent-green-tint: var(--accent-green-tint);
+	--color-state-error: var(--state-error);
+
+	--spacing-gutter: var(--space-gutter);
+	--spacing-section: var(--space-section);
+	--container-content: var(--content-max);
+}
+
+/*
+ * Figma text styles. Sizes scale down on small screens and reach the
+ * Figma size at desktop width. Letter spacing: Figma -3 = -3%.
+ */
+@utility display-xl {
+	font-family: var(--font-display);
+	font-weight: 600;
+	font-size: clamp(2.5rem, 1.5rem + 3.5vw, 4rem);
+	line-height: 1.04;
+	letter-spacing: -0.03em;
+}
+
+@utility display-l {
+	font-family: var(--font-display);
+	font-weight: 600;
+	font-size: clamp(1.875rem, 1.4rem + 1.6vw, 2.5rem);
+	line-height: 1.12;
+	letter-spacing: -0.02em;
+}
+
+@utility display-m {
+	font-family: var(--font-display);
+	font-weight: 600;
+	font-size: 1.5rem;
+	line-height: 1.2;
+	letter-spacing: -0.01em;
+}
+
+@utility display-stat {
+	font-family: var(--font-display);
+	font-weight: 600;
+	font-size: clamp(2.5rem, 1.75rem + 2.5vw, 3.5rem);
+	line-height: 1;
+	letter-spacing: -0.03em;
+}
+
+/* Body copy: Newsreader 20 / 1.5 (page ledes) and 16 / 1.5 (default) */
+@utility text-lede {
+	font-family: var(--font-body);
+	font-size: 1.25rem;
+	line-height: 1.5;
+}
+
+/* Mono labels: JetBrains Mono Medium (nav links, buttons, eyebrows) */
+@utility label-mono {
+	font-family: var(--font-label);
+	font-weight: 500;
+	font-size: 0.875rem;
+	line-height: normal;
+}
+
+@utility eyebrow {
+	font-family: var(--font-label);
+	font-weight: 500;
+	font-size: 0.75rem;
+	line-height: normal;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
 }
