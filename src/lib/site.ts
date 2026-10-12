@@ -46,7 +46,6 @@ export const footerPageColumns: NavLink[][] = [
 	[
 		{ label: 'Sponsors', href: '/sponsors' },
 		{ label: 'FAQ', href: '/faq' },
-		{ label: 'Contact', href: '/contact' },
 		{ label: 'Register', href: registerHref }
 	]
 ];
