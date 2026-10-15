@@ -6,7 +6,7 @@
     const faqs = [
         {
             question: 'What is a hackathon?',
-            answer: 'A hackathon is a fast-paced event — typically 24 to 72 hours — where people with different skills form teams to design and build functional prototypes such as apps, games, or websites. Unlike a regular coding session, it combines problem solving, creativity, and rapid execution around a specific challenge or theme. Participants, often including programmers, designers, and subject matter experts, form teams to brainstorm ideas, develop prototypes, and present their solutions for a chance to win prizes, and attend workshops and panels to pick up new skills. Hackathons foster creativity, innovation, and teamwork, providing a platform for learning new skills, networking, and showcasing talent.'
+            answer: "A hackathon is a fast-paced event — typically 24 to 72 hours — where people with different skills form teams to design and build functional prototypes such as apps, games, or websites. Unlike a regular coding session, it combines problem solving, creativity, and rapid execution around a specific challenge or theme. Participants, often including programmers, designers, and subject matter experts, form teams to brainstorm ideas, develop prototypes, and present their solutions for a chance to win prizes, and attend workshops and panels to pick up new skills. Hackathons foster creativity, innovation, and teamwork, providing a platform for learning new skills, networking, and showcasing talent."
         },
         {
             question: 'When and where is it?',
@@ -15,7 +15,7 @@
         },
         {
             question: 'Who can come?',
-            answer: 'Students from across the Boston area, of all backgrounds and skill levels.'
+            answer: "Students from across the Boston area, of all backgrounds and skill levels."
         },
         {
             question: 'Who runs HackBoston?',
@@ -23,21 +23,23 @@
         },
         {
             question: "What is the theme?",
-            answer: "This year's theme is Innovation (bold the word 'Innovation'). We want bold ideas from students of all backgrounds, built to tackle the challenges people face today. Bring a problem you care about and build something new around it."
+            answer: "This year's theme is",
+            bold: "Innovation.",
+            rest: "We want bold ideas from students of all backgrounds, built to tackle the challenges people face today. Bring a problem you care about and build something new around it."
         },
         {
             question: 'What will there be to eat?',
-            answer: 'Six main meals and two midnight snacks across the weekend.'
+            answer: "Six main meals and two midnight snacks throughout the weekend."
         },
         {
             question: 'How can my company get involved?',
-            answer: 'Sponsor a tier, a meal, or an activity, or send mentors, APIs, and hardware. Email',
+            answer: "Support HackBoston by sponsoring a tier, meal, or activity, or by contributing mentors, APIs, or hardware. Reach out to",
             email: "sponsorship@hackboston.dev"
 
         },
         {
             question: 'Where does sponsor money go?',
-            answer: 'Straight into the venue, food, swag, and anything else that makes the weekend better for hackers.'
+            answer: "Straight into the venue, food, swag, and anything else that makes the weekend better for hackers."
         }
     ];
 </script>
@@ -74,6 +76,11 @@
                         <summary>{faq.question}</summary>
                         <p>
                             {faq.answer}
+                            {#if faq.bold}
+                                <strong>{faq.bold}</strong>
+                                {faq.rest}
+                            {/if}
+                        
                             {#if faq.email}
                                 <a href={"mailto:" + faq.email}>
                                     {faq.email}
@@ -126,6 +133,7 @@
 
     .contact a {
         text-decoration: none;
+        text-decoration-skip-ink: none;
         color: inherit;
     }
 
@@ -134,12 +142,13 @@
     }
 
     .questions a {
-        color: "inherit";
+        color: inherit;
         text-decoration: none;
     }
 
     .questions a:hover {
         text-decoration: underline;
+        text-decoration-skip-ink: none;
     }
 
     .questions details {
