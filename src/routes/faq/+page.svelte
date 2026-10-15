@@ -5,8 +5,13 @@
 
     const faqs = [
         {
+            question: 'What is a hackathon?',
+            answer: 'A hackathon is a fast-paced event — typically 24 to 72 hours — where people with different skills form teams to design and build functional prototypes such as apps, games, or websites. Unlike a regular coding session, it combines problem solving, creativity, and rapid execution around a specific challenge or theme. Participants, often including programmers, designers, and subject matter experts, form teams to brainstorm ideas, develop prototypes, and present their solutions for a chance to win prizes, and attend workshops and panels to pick up new skills. Hackathons foster creativity, innovation, and teamwork, providing a platform for learning new skills, networking, and showcasing talent.'
+        },
+        {
             question: 'When and where is it?',
-            answer: "Spring 2027 in the Boston area. We're finalizing the exact date and venue now. Got a space? Reach out to logistics@hackboston.dev."
+            answer: "Spring 2027 in the Boston area. We're finalizing the exact date and venue now. Got a space? Reach out to",
+            email: 'logistics@hackboston.dev'
         },
         {
             question: 'Who can come?',
@@ -17,12 +22,18 @@
             answer: "An independent student team from Boston. We're fiscally sponsored by Patchwork Labs Inc., a 501(c)(3) nonprofit."
         },
         {
+            question: "What is the theme?",
+            answer: "This year's theme is Innovation (bold the word 'Innovation'). We want bold ideas from students of all backgrounds, built to tackle the challenges people face today. Bring a problem you care about and build something new around it."
+        },
+        {
             question: 'What will there be to eat?',
             answer: 'Six main meals and two midnight snacks across the weekend.'
         },
         {
             question: 'How can my company get involved?',
-            answer: 'Sponsor a tier, a meal, or an activity, or send mentors, APIs, and hardware. Email sponsorship@hackboston.dev.'
+            answer: 'Sponsor a tier, a meal, or an activity, or send mentors, APIs, and hardware. Email',
+            email: "sponsorship@hackboston.dev"
+
         },
         {
             question: 'Where does sponsor money go?',
@@ -51,8 +62,9 @@
         <div class="faq-layout">
             <aside class="contact">
                 <p>Didn't find it?</p>
+                <span>Email </span>
                 <a href="mailto:team@hackboston.dev">
-                    Email team@hackboston.dev
+                    team@hackboston.dev
                 </a>
             </aside>
 
@@ -60,7 +72,14 @@
                 {#each faqs as faq}
                     <details>
                         <summary>{faq.question}</summary>
-                        <p>{faq.answer}</p>
+                        <p>
+                            {faq.answer}
+                            {#if faq.email}
+                                <a href={"mailto:" + faq.email}>
+                                    {faq.email}
+                                </a>
+                            {/if}
+                        </p>
                     </details>
                 {/each}
             </div>
@@ -108,6 +127,19 @@
     .contact a {
         text-decoration: none;
         color: inherit;
+    }
+
+    .contact a:hover {
+        text-decoration: underline;
+    }
+
+    .questions a {
+        color: "inherit";
+        text-decoration: none;
+    }
+
+    .questions a:hover {
+        text-decoration: underline;
     }
 
     .questions details {
