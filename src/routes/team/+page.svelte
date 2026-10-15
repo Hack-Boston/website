@@ -29,7 +29,7 @@
 						class="grid w-full grid-cols-1 justify-items-center gap-4 rounded-card border border-text-ink p-6"
 					>
 						<img
-							src="/images/logan.jpg"
+							src="/images/logan.png"
 							alt="Logan Lambert"
 							class="aspect-square w-full rounded-image object-cover"
 						/>
