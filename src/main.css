@@ -38,15 +38,15 @@
 	--space-section: 3rem;
 	--nav-height: 80px;
 	/* Collapsed nav: a content row plus a lane for the crawling bug under it */
-	--nav-height-compact: 78px;
-	--nav-row-compact: 52px;
+	--nav-height-compact: 72px;
+	--nav-row-compact: 56px;
 }
 
 @media (min-width: 640px) {
 	:root {
 		--nav-height: 100px;
-		--nav-height-compact: 96px;
-		--nav-row-compact: 56px;
+		--nav-height-compact: 88px;
+		--nav-row-compact: 60px;
 		--space-gutter: 1.5rem;
 		--space-section: 4rem;
 	}
