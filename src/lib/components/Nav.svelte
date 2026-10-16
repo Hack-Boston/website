@@ -3,17 +3,15 @@
 	import { page } from '$app/state';
 	import type { Pathname } from '$app/types';
 	import bugInk from '$lib/assets/bug-ink.svg';
-	import { isActivePath, navLinks, notifyHref, type NavLink } from '$lib/site';
+	import { isActivePath, navLinks, type NavLink } from '$lib/site';
 	import Button from './Button.svelte';
 	import Logo from './Logo.svelte';
 
 	interface Props {
 		links?: NavLink[];
-		ctaHref?: string;
-		ctaLabel?: string;
 	}
 
-	let { links = navLinks, ctaHref = notifyHref, ctaLabel = 'Get notified' }: Props = $props();
+	let { links = navLinks }: Props = $props();
 
 	let menuOpen = $state(false);
 	let menuButton: HTMLButtonElement | undefined = $state();
@@ -96,7 +94,7 @@
 		</nav>
 
 		<div class="hidden lg:block">
-			<Button href={resolve(ctaHref as Pathname)}>{ctaLabel}</Button>
+			<Button href='/register'>Pre-register</Button>
 		</div>
 
 		<button
@@ -134,8 +132,7 @@
 					</li>
 				{/each}
 				<li class="pt-3">
-					<Button href={resolve(ctaHref as Pathname)} onclick={() => closeMenu()}>{ctaLabel}</Button
-					>
+					<Button href='/register' onclick={() => closeMenu()}>Pre-register</Button>
 				</li>
 			</ul>
 		</nav>
