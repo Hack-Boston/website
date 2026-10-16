@@ -120,10 +120,6 @@
 				</ul>
 			</nav>
 
-			<div class="hidden lg:block">
-				<Button href="/register">Pre-register</Button>
-			</div>
-
 			<button
 				bind:this={menuButton}
 				type="button"
@@ -158,9 +154,6 @@
 							</a>
 						</li>
 					{/each}
-					<li class="pt-3">
-						<Button href="/register" onclick={() => closeMenu()}>Pre-register</Button>
-					</li>
 				</ul>
 			</nav>
 		</div>
