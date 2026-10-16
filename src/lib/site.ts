@@ -31,6 +31,7 @@ export const notifyHref = '/notify';
 
 /** Nav links, in Figma order. Register and Contact are footer-only. */
 export const navLinks: NavLink[] = [
+	{ label: 'Home', href: '/' },
 	{ label: 'Team', href: '/team' },
 	{ label: 'Schedule', href: '/schedule' },
 	{ label: 'Sponsors', href: '/sponsors' },
