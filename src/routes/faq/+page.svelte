@@ -11,7 +11,7 @@
         {
             question: 'When and where is it?',
             answer: "Spring 2027 in the Boston area. We're finalizing the exact date and venue now. Got a space? Reach out to",
-            email: 'logistics@hackboston.dev'
+            email: "logistics@hackboston.dev"
         },
         {
             question: 'Who can come?',
@@ -22,7 +22,7 @@
             answer: "An independent student team from Boston. We're fiscally sponsored by Patchwork Labs Inc., a 501(c)(3) nonprofit."
         },
         {
-            question: "What is the theme?",
+            question: 'What is the theme?',
             answer: "This year's theme is",
             bold: "Innovation.",
             rest: "We want bold ideas from students of all backgrounds, built to tackle the challenges people face today. Bring a problem you care about and build something new around it."
