@@ -2,6 +2,8 @@
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import type { Pathname } from '$app/types';
+	import { cubicInOut } from 'svelte/easing';
+	import { crossfade } from 'svelte/transition';
 	import bugInk from '$lib/assets/bug-ink.svg';
 	import { isActivePath, navLinks, type NavLink } from '$lib/site';
 	import Button from './Button.svelte';
@@ -19,6 +21,17 @@
 	/** Scroll progress from 0 to 1. Drives the crawling bug and its trail. */
 	let progress = $state(0);
 	let scrolling = $state(false);
+	/** Past the top of the page: the bar shrinks and the logo bug runs on the track. */
+	let collapsed = $state(false);
+
+	/** Scrolled distance (px) that collapses the bar. */
+	const COLLAPSE_AT = 24;
+
+	// The logo bug and the track bug are one bug: it hops between the two spots.
+	const [send, receive] = crossfade({
+		duration: () => (matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 550),
+		easing: cubicInOut
+	});
 
 	const pathname = $derived(page.url.pathname);
 
@@ -36,6 +49,7 @@
 			frame = 0;
 			const max = document.documentElement.scrollHeight - window.innerHeight;
 			progress = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+			collapsed = window.scrollY > COLLAPSE_AT;
 		};
 
 		const onScroll = () => {
@@ -69,102 +83,173 @@
 
 <svelte:window onkeydown={onKeydown} />
 
-<header class="nav" style:--progress={progress}>
-	<div
-		class="mx-auto flex h-[var(--nav-height)] w-full max-w-[calc(var(--content-max)+2*var(--space-gutter))] items-center justify-between gap-6 px-gutter"
-	>
-		<a href={resolve('/')} class="nav__home" aria-label="HackBoston home">
-			<Logo tone="ink" size="nav" />
-		</a>
+<header class="nav" class:nav--collapsed={collapsed} style:--progress={progress}>
+	<div class="nav__bar">
+		<div
+			class="nav__row mx-auto flex w-full max-w-[calc(var(--content-max)+2*var(--space-gutter))] items-center justify-between gap-6 px-gutter"
+		>
+			<a href={resolve('/')} class="nav__home" aria-label="HackBoston home">
+				<span class="nav__logo-bug">
+					{#if !collapsed}
+						<img
+							src={bugInk}
+							alt=""
+							width="52"
+							height="52"
+							in:receive={{ key: 'bug' }}
+							out:send={{ key: 'bug' }}
+						/>
+					{/if}
+				</span>
+				<Logo tone="ink" size="nav" bug={false} />
+			</a>
 
-		<nav aria-label="Main" class="hidden lg:block">
-			<ul class="flex gap-10">
-				{#each links as link (link.href)}
-					<li>
-						<a
-							href={resolve(link.href as Pathname)}
-							class="nav__link"
-							aria-current={isActivePath(pathname, link.href) ? 'page' : undefined}
-						>
-							{link.label}
-						</a>
-					</li>
-				{/each}
-			</ul>
-		</nav>
+			<nav aria-label="Main" class="hidden lg:block">
+				<ul class="flex gap-10">
+					{#each links as link (link.href)}
+						<li>
+							<a
+								href={resolve(link.href as Pathname)}
+								class="nav__link"
+								aria-current={isActivePath(pathname, link.href) ? 'page' : undefined}
+							>
+								{link.label}
+							</a>
+						</li>
+					{/each}
+				</ul>
+			</nav>
 
-		<div class="hidden lg:block">
-			<Button href='/register'>Pre-register</Button>
+			<div class="hidden lg:block">
+				<Button href="/register">Pre-register</Button>
+			</div>
+
+			<button
+				bind:this={menuButton}
+				type="button"
+				class="nav__toggle lg:hidden"
+				aria-expanded={menuOpen}
+				aria-controls="nav-menu"
+				onclick={() => (menuOpen = !menuOpen)}
+			>
+				<span class="sr-only">{menuOpen ? 'Close menu' : 'Open menu'}</span>
+				<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="none">
+					{#if menuOpen}
+						<path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" />
+					{:else}
+						<path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" />
+					{/if}
+				</svg>
+			</button>
 		</div>
 
-		<button
-			bind:this={menuButton}
-			type="button"
-			class="nav__toggle lg:hidden"
-			aria-expanded={menuOpen}
-			aria-controls="nav-menu"
-			onclick={() => (menuOpen = !menuOpen)}
-		>
-			<span class="sr-only">{menuOpen ? 'Close menu' : 'Open menu'}</span>
-			<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="none">
-				{#if menuOpen}
-					<path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" />
-				{:else}
-					<path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" />
-				{/if}
-			</svg>
-		</button>
-	</div>
-
-	<div id="nav-menu" class="nav__menu lg:hidden" hidden={!menuOpen}>
-		<nav aria-label="Main mobile">
-			<ul class="flex flex-col gap-1 px-gutter py-4">
-				{#each links as link (link.href)}
-					<li>
-						<a
-							href={resolve(link.href as Pathname)}
-							class="nav__link nav__link--mobile"
-							aria-current={isActivePath(pathname, link.href) ? 'page' : undefined}
-							onclick={() => closeMenu()}
-						>
-							{link.label}
-						</a>
+		<div id="nav-menu" class="nav__menu lg:hidden" hidden={!menuOpen}>
+			<nav aria-label="Main mobile">
+				<ul class="flex flex-col gap-1 px-gutter py-4">
+					{#each links as link (link.href)}
+						<li>
+							<a
+								href={resolve(link.href as Pathname)}
+								class="nav__link nav__link--mobile"
+								aria-current={isActivePath(pathname, link.href) ? 'page' : undefined}
+								onclick={() => closeMenu()}
+							>
+								{link.label}
+							</a>
+						</li>
+					{/each}
+					<li class="pt-3">
+						<Button href="/register" onclick={() => closeMenu()}>Pre-register</Button>
 					</li>
-				{/each}
-				<li class="pt-3">
-					<Button href='/register' onclick={() => closeMenu()}>Pre-register</Button>
-				</li>
-			</ul>
-		</nav>
-	</div>
+				</ul>
+			</nav>
+		</div>
 
-	<!-- Scroll progress: the bug crawls along the bottom edge. Decorative only. -->
-	<div class="nav__progress" aria-hidden="true">
-		<div class="nav__track"></div>
-		<div class="nav__trail"></div>
-		<img
-			class="nav__bug"
-			class:nav__bug--moving={scrolling}
-			src={bugInk}
-			alt=""
-			width="40"
-			height="40"
-		/>
+		<!-- Scroll progress: the bug crawls along the bottom edge. Decorative only. -->
+		<div class="nav__progress" aria-hidden="true">
+			<div class="nav__track"></div>
+			<div class="nav__trail"></div>
+			{#if collapsed}
+				<span class="nav__bug" in:receive={{ key: 'bug' }} out:send={{ key: 'bug' }}>
+					<img class:nav__bug--moving={scrolling} src={bugInk} alt="" width="40" height="40" />
+				</span>
+			{/if}
+		</div>
 	</div>
 </header>
 
 <style>
+	/*
+	 * The header always reserves the full nav height so the page never shifts.
+	 * Only the bar inside it shrinks; the space below the collapsed bar lets
+	 * clicks through to the page.
+	 */
 	.nav {
 		--progress: 0;
 		position: sticky;
 		top: 0;
 		z-index: 50;
+		height: var(--nav-height);
+		pointer-events: none;
+	}
+
+	.nav__bar {
+		position: relative;
+		height: var(--nav-height);
 		background: var(--bg-paper);
+		pointer-events: auto;
+		transition: height 300ms ease;
+	}
+
+	.nav--collapsed .nav__bar {
+		height: var(--nav-height-compact);
+	}
+
+	/* Collapsed, the content sits in a shorter row so the bug has a lane below it. */
+	.nav__row {
+		height: var(--nav-height);
+		transition: height 300ms ease;
+	}
+
+	.nav--collapsed .nav__row {
+		height: var(--nav-row-compact);
 	}
 
 	.nav__home {
 		display: inline-flex;
+		align-items: center;
 		border-radius: 4px;
+	}
+
+	/* Holds the bug (sizes match Logo size="nav"); it narrows once the bug leaves. */
+	.nav__logo-bug {
+		--logo-bug-size: 40px;
+		display: block;
+		flex-shrink: 0;
+		width: var(--logo-bug-size);
+		height: var(--logo-bug-size);
+		margin-right: 16px;
+		transition:
+			width 300ms ease 150ms,
+			margin-right 300ms ease 150ms;
+	}
+
+	.nav__logo-bug img {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	.nav--collapsed .nav__logo-bug {
+		width: 0;
+		margin-right: 0;
+		transition-delay: 0ms;
+	}
+
+	@media (min-width: 640px) {
+		.nav__logo-bug {
+			--logo-bug-size: 52px;
+		}
 	}
 
 	.nav__link {
@@ -268,6 +353,12 @@
 		);
 		width: var(--bug-size);
 		height: var(--bug-size);
+	}
+
+	.nav__bug img {
+		display: block;
+		width: 100%;
+		height: 100%;
 		transform-origin: 50% 90%;
 	}
 

@@ -3,8 +3,6 @@
  * Change these values here, not in the components.
  */
 
-import { register } from "module";
-
 export interface NavLink {
 	label: string;
 	href: string;
