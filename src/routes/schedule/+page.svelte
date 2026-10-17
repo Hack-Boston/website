@@ -36,7 +36,7 @@
 </script>
 
 <svelte:head>
-	<title>About - HackBoston</title>
+	<title>HackBoston - Schedule</title>
 	<meta
 		name="description"
 		content="HackBoston is a hackathon run by an independent student team from the Boston area."
@@ -67,17 +67,4 @@
 	<p class="mt-8 eyebrow text-text-muted">
 		Rough times&ensp;/&ensp;final schedule once the venue is locked in
 	</p>
-</Section>
-
-<Section aria-labelledby="theme-heading">
-	<div class="flex flex-col gap-6 md:flex-row md:items-end md:gap-16">
-		<div class="flex shrink-0 flex-col gap-3">
-			<p class="eyebrow text-accent-green">This year's theme</p>
-			<h2 id="theme-heading" class="display-stat">Innovation.</h2>
-		</div>
-		<p class="max-w-[640px] text-lede">
-			We want bold ideas from students of all backgrounds, built to tackle the challenges people
-			face today. Bring a problem you care about and build something new around it.
-		</p>
-	</div>
 </Section>
