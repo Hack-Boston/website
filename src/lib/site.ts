@@ -26,28 +26,14 @@ export interface ContactEmail {
 export const registrationOpen = false;
 
 export const notifyHref = '/notify';
-export const registerHref = registrationOpen ? '/register' : notifyHref;
 
 /** Nav links, in Figma order. Register and Contact are footer-only. */
 export const navLinks: NavLink[] = [
-	{ label: 'About', href: '/about' },
+	{ label: 'Home', href: '/' },
 	{ label: 'Team', href: '/team' },
+	{ label: 'Schedule', href: '/schedule' },
 	{ label: 'Sponsors', href: '/sponsors' },
 	{ label: 'FAQ', href: '/faq' }
-];
-
-/** Footer "Pages" column, split into the two Figma columns. */
-export const footerPageColumns: NavLink[][] = [
-	[
-		{ label: 'Home', href: '/' },
-		{ label: 'About', href: '/about' },
-		{ label: 'Team', href: '/team' }
-	],
-	[
-		{ label: 'Sponsors', href: '/sponsors' },
-		{ label: 'FAQ', href: '/faq' },
-		{ label: 'Register', href: registerHref }
-	]
 ];
 
 export const contactEmails: ContactEmail[] = [
