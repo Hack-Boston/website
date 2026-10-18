@@ -37,11 +37,16 @@
 	--space-gutter: 1rem;
 	--space-section: 3rem;
 	--nav-height: 80px;
+	/* Collapsed nav: a content row plus a lane for the crawling bug under it */
+	--nav-height-compact: 72px;
+	--nav-row-compact: 56px;
 }
 
 @media (min-width: 640px) {
 	:root {
 		--nav-height: 100px;
+		--nav-height-compact: 88px;
+		--nav-row-compact: 60px;
 		--space-gutter: 1.5rem;
 		--space-section: 4rem;
 	}
@@ -147,4 +152,17 @@
 	line-height: normal;
 	letter-spacing: 0.04em;
 	text-transform: uppercase;
+}
+
+/* Email links: inherit the text color, underlined. In the base layer so utilities still win. */
+@layer base {
+	a[href^='mailto:'] {
+		color: inherit;
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+
+	a[href^='mailto:']:hover {
+		color: var(--accent-green);
+	}
 }
