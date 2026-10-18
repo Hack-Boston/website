@@ -1,38 +1,38 @@
 <script lang="ts">
 	import { PageHeader, Section } from '$lib';
 
-	const schedule = [
-		{
-			when: 'Fri 6 PM',
-			title: 'Check in + kickoff',
-			detail: 'Grab your badge and swag, meet sponsors, and hear the challenges at the opening ceremony.'
-		},
-		{
-			when: 'Fri 8 PM',
-			title: 'Form a team',
-			detail: 'Come with friends or find people there. Pitch an idea or join one that excites you.'
-		},
-		{
-			when: 'Sat daytime',
-			title: 'Learn',
-			detail: 'Sit in on sponsor workshops and grab a mentor whenever you get stuck.'
-		},
-		{
-			when: 'Sat + Sun AM',
-			title: 'Build',
-			detail: 'Hack through the weekend. Six meals and two midnight snacks keep you going.'
-		},
-		{
-			when: 'Sun 11 AM',
-			title: 'Demo + judging',
-			detail: 'Show what you made to the judges and sponsors.'
-		},
-		{
-			when: 'Sun 2 PM',
-			title: 'Closing ceremony',
-			detail: 'Winners announced, prizes handed out, and a lot of tired, happy people.'
-		}
-	];
+	// const schedule = [
+	// 	{
+	// 		when: 'Fri 6 PM',
+	// 		title: 'Check in + kickoff',
+	// 		detail: 'Grab your badge and swag, meet sponsors, and hear the challenges at the opening ceremony.'
+	// 	},
+	// 	{
+	// 		when: 'Fri 8 PM',
+	// 		title: 'Form a team',
+	// 		detail: 'Come with friends or find people there. Pitch an idea or join one that excites you.'
+	// 	},
+	// 	{
+	// 		when: 'Sat daytime',
+	// 		title: 'Learn',
+	// 		detail: 'Sit in on sponsor workshops and grab a mentor whenever you get stuck.'
+	// 	},
+	// 	{
+	// 		when: 'Sat + Sun AM',
+	// 		title: 'Build',
+	// 		detail: 'Hack through the weekend. Six meals and two midnight snacks keep you going.'
+	// 	},
+	// 	{
+	// 		when: 'Sun 11 AM',
+	// 		title: 'Demo + judging',
+	// 		detail: 'Show what you made to the judges and sponsors.'
+	// 	},
+	// 	{
+	// 		when: 'Sun 2 PM',
+	// 		title: 'Closing ceremony',
+	// 		detail: 'Winners announced, prizes handed out, and a lot of tired, happy people.'
+	// 	}
+	// ];
 </script>
 
 <svelte:head>
@@ -50,7 +50,7 @@
 />
 
 <Section class="border-b border-text-ink/40" aria-labelledby="weekend-heading">
-	<h2 id="weekend-heading" class="display-l">How the weekend runs</h2>
+	<!-- <h2 id="weekend-heading" class="display-l">How the weekend runs</h2>
 
 	<ol class="mt-10 border-t-2 border-text-ink">
 		{#each schedule as item (item.title)}
@@ -66,5 +66,15 @@
 
 	<p class="mt-8 eyebrow text-text-muted">
 		Rough times&ensp;/&ensp;final schedule once the venue is locked in
-	</p>
+	</p> -->
+
+	<div
+		class="flex flex-col items-center gap-4 rounded-card border-2 border-dashed border-text-ink/40 bg-bg-green-wash px-6 py-16 text-center sm:py-20"
+	>
+		<span class="eyebrow text-accent-green">Spring 2027&ensp;/&ensp;Boston</span>
+		<h2 id="weekend-heading" class="display-l text-text-ink">Schedule coming soon.</h2>
+		<p class="max-w-[520px] text-lede text-text-muted">
+			We're locking in the venue and dates now. Check back soon for the full weekend lineup.
+		</p>
+	</div>
 </Section>
