@@ -1,27 +1,120 @@
 <script lang="ts">
 	import { tick } from 'svelte';
-	import { enhance } from '$app/forms';
 	import { resolve } from '$app/paths';
 	import type { Pathname } from '$app/types';
 	import { Button, PageHeader, Section } from '$lib';
-	import type { ActionData } from './$types';
+	import type { NotifyStatus } from './status/+server';
 
-	let { form }: { form: ActionData } = $props();
+	/** Loops form endpoint (Loops > Forms > Settings > Form Endpoint). Public, no API key. */
+	const LOOPS_FORM_URL = 'https://app.loops.so/api/newsletter-form/cmvdd4bqn09hl0jvp19ick32l';
+	const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+	const CONTACT_EMAIL = 'team@hackboston.dev';
 
+	let firstName = $state('');
+	let email = $state('');
 	let submitting = $state(false);
+	let done = $state(false);
+	let error = $state<string>();
+	let errorField = $state<'firstName' | 'email'>();
+	/** Show the contact email after the error, for failures the visitor can't fix. */
+	let showContact = $state(false);
+	/** Set when the email is already in Loops, so we don't sign them up again. */
+	let existing = $state<Exclude<NotifyStatus, 'new' | 'unknown'>>();
 
-	const values = $derived(form && 'values' in form ? form.values : undefined);
-	const error = $derived(form && 'error' in form ? form.error : undefined);
-	const errorField = $derived(form && 'field' in form ? form.field : undefined);
-	const contactEmail = $derived(form && 'contactEmail' in form ? form.contactEmail : undefined);
+	/** Asks our server whether the email is already signed up. Never blocks a signup if it fails. */
+	async function checkStatus(address: string): Promise<NotifyStatus> {
+		try {
+			const res = await fetch(resolve('/notify/status'), {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ email: address })
+			});
+			if (!res.ok) return 'unknown';
+			return ((await res.json()) as { status: NotifyStatus }).status;
+		} catch {
+			return 'unknown';
+		}
+	}
+
+	function setError(message: string, field?: 'firstName' | 'email', contact = false) {
+		error = message;
+		errorField = field;
+		showContact = contact;
+	}
+
+	async function onsubmit(event: SubmitEvent) {
+		event.preventDefault();
+		if (submitting) return;
+
+		const name = firstName.trim();
+		const address = email.trim().toLowerCase();
+		if (!name) return setError('Add your first name.', 'firstName');
+		if (!EMAIL_PATTERN.test(address)) return setError('Enter a valid email address.', 'email');
+
+		error = undefined;
+		errorField = undefined;
+		existing = undefined;
+		submitting = true;
+
+		try {
+			const status = await checkStatus(address);
+			if (status !== 'new' && status !== 'unknown') {
+				existing = status;
+				return;
+			}
+
+			const res = await fetch(LOOPS_FORM_URL, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+				body: new URLSearchParams({
+					firstName: name,
+					email: address,
+					source: 'Website: notify page'
+				})
+			});
+
+			if (res.ok) {
+				done = true;
+				await tick();
+				window.scrollTo({ top: 0 });
+				document.getElementById('main')?.focus();
+			} else if (res.status === 429) {
+				setError('Too many signups from your network. Try again in a minute.');
+			} else {
+				const data = await res.json().catch(() => null);
+				console.error('[notify] Loops rejected signup:', res.status, data);
+				setError(
+					data?.message ?? 'We could not save your email. Try again later, or write to',
+					undefined,
+					!data?.message
+				);
+			}
+		} catch (err) {
+			// Loops' rate limiter answers without CORS headers, so it surfaces as a network error.
+			console.error('[notify] Loops request failed:', err);
+			setError(
+				'We could not reach our mailing list. Try again in a minute, or write to',
+				undefined,
+				true
+			);
+		} finally {
+			submitting = false;
+		}
+	}
 
 	const steps = [
-		{ title: 'We lock in the date and venue', body: 'Once both are set, they go on the site.' },
+		{
+			title: 'You confirm your email',
+			body: 'Click the link in the email we just sent. We only email you after you confirm.'
+		},
+		{
+			title: 'We lock in the date and venue',
+			body: 'Once both are set, they go on the site.'
+		},
 		{
 			title: 'You get the first email',
 			body: 'Registration opens for the list before we announce it anywhere else.'
-		},
-		{ title: 'You apply', body: 'The full application takes about five minutes.' }
+		}
 	];
 </script>
 
@@ -30,16 +123,16 @@
 	<meta name="description" content="Get notified when registration opens for HackBoston." />
 </svelte:head>
 
-{#if form?.success}
+{#if done}
 	<PageHeader
-		title="You're on the list."
-		lede="We'll email you when registration opens. Nothing else in between."
+		title="Check your inbox."
+		lede="We sent you a link to confirm your email. Click it and you're on the list."
 	/>
 
 	<Section>
 		<div class="notify-grid">
 			<aside class="flex flex-col gap-1">
-				<h2 class="eyebrow text-accent-green">No email?</h2>
+				<h2 class="eyebrow text-accent-green">No confirmation email?</h2>
 				<p class="text-text-muted">
 					Check spam, then write to
 					<a href="mailto:team@hackboston.dev">team@hackboston.dev</a>.
@@ -83,23 +176,8 @@
 				</div>
 			</aside>
 
-			<form
-				method="POST"
-				class="flex flex-col gap-8"
-				novalidate
-				use:enhance={() => {
-					submitting = true;
-					return async ({ update, result }) => {
-						await update();
-						submitting = false;
-						if (result.type === 'success') {
-							await tick();
-							window.scrollTo({ top: 0 });
-							document.getElementById('main')?.focus();
-						}
-					};
-				}}
-			>
+			<!-- Without JavaScript the browser posts straight to Loops, which replies with JSON. -->
+			<form method="POST" action={LOOPS_FORM_URL} class="flex flex-col gap-8" novalidate {onsubmit}>
 				<div class="grid gap-6 sm:grid-cols-2">
 					<div class="field">
 						<label for="firstName" class="eyebrow">First name</label>
@@ -111,7 +189,7 @@
 							placeholder="Ada"
 							required
 							maxlength="100"
-							value={values?.firstName ?? ''}
+							bind:value={firstName}
 							aria-invalid={errorField === 'firstName' || undefined}
 							aria-describedby={errorField === 'firstName' ? 'notify-error' : undefined}
 						/>
@@ -126,18 +204,35 @@
 							inputmode="email"
 							placeholder="you@school.edu"
 							required
-							value={values?.email ?? ''}
+							maxlength="254"
+							bind:value={email}
 							aria-invalid={errorField === 'email' || undefined}
 							aria-describedby={errorField === 'email' ? 'notify-error' : undefined}
 						/>
 					</div>
 				</div>
 
+				{#if existing === 'subscribed'}
+					<p class="text-accent-green" role="status">
+						You're already on the list. We'll email you when registration opens.
+					</p>
+				{:else if existing === 'pending'}
+					<p class="text-accent-green" role="status">
+						You've already signed up. Click the confirmation link we emailed you (check spam too).
+						Can't find it? Write to <a href="mailto:{CONTACT_EMAIL}">{CONTACT_EMAIL}</a>.
+					</p>
+				{:else if existing === 'unsubscribed'}
+					<p class="text-accent-green" role="status">
+						This email unsubscribed from our updates. To get back on the list, write to
+						<a href="mailto:{CONTACT_EMAIL}">{CONTACT_EMAIL}</a>.
+					</p>
+				{/if}
+
 				{#if error}
 					<p id="notify-error" class="text-state-error" role="alert">
 						{error}
-						{#if contactEmail}
-							<a href="mailto:{contactEmail}">{contactEmail}</a>.
+						{#if showContact}
+							<a href="mailto:{CONTACT_EMAIL}">{CONTACT_EMAIL}</a>.
 						{/if}
 					</p>
 				{/if}
@@ -194,45 +289,6 @@
 	}
 
 	.field input[aria-invalid='true'] {
-		border-color: var(--state-error);
-	}
-
-	.consent {
-		display: flex;
-		align-items: center;
-		gap: 12px;
-		cursor: pointer;
-	}
-
-	.consent input {
-		appearance: none;
-		display: grid;
-		place-content: center;
-		flex-shrink: 0;
-		width: 20px;
-		height: 20px;
-		margin: 0;
-		border: 1.5px solid var(--bg-forest);
-		border-radius: 4px;
-		background: transparent;
-		cursor: pointer;
-	}
-
-	.consent input:checked {
-		background: var(--bg-forest);
-	}
-
-	.consent input:checked::after {
-		content: '';
-		width: 10px;
-		height: 6px;
-		margin-top: -2px;
-		border-left: 2px solid var(--text-on-dark);
-		border-bottom: 2px solid var(--text-on-dark);
-		transform: rotate(-45deg);
-	}
-
-	.consent input[aria-invalid='true'] {
 		border-color: var(--state-error);
 	}
 
