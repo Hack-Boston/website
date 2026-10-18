@@ -7,4 +7,5 @@ export { default as Container } from './components/Container.svelte';
 export { default as Section } from './components/Section.svelte';
 export { default as PageHeader } from './components/PageHeader.svelte';
 export { default as Field } from './components/Field.svelte';
+export { default as RegistrationBanner } from './components/RegistrationBanner.svelte';
 export * from './site';

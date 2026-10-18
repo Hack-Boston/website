@@ -2,9 +2,20 @@
 	import '../main.css';
 	import '../app.css';
 	import favicon from '$lib/assets/favicon.svg';
-	import { Footer, Nav } from '$lib';
+	import { page } from '$app/state';
+	import {
+		Footer,
+		Nav,
+		RegistrationBanner,
+		isActivePath,
+		registerHref,
+		registrationOpen
+	} from '$lib';
 
 	let { children } = $props();
+
+	// No banner on the Register pages themselves.
+	const showBanner = $derived(registrationOpen && !isActivePath(page.url.pathname, registerHref));
 </script>
 
 <svelte:head>
@@ -15,6 +26,9 @@
 <a href="#main" class="skip-link">Skip to content</a>
 
 <div class="flex min-h-dvh flex-col">
+	{#if showBanner}
+		<RegistrationBanner />
+	{/if}
 	<Nav />
 	<main id="main" tabindex="-1" class="flex-1 focus:outline-none">
 		{@render children()}
