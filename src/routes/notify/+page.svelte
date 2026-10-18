@@ -13,6 +13,7 @@
 	const values = $derived(form && 'values' in form ? form.values : undefined);
 	const error = $derived(form && 'error' in form ? form.error : undefined);
 	const errorField = $derived(form && 'field' in form ? form.field : undefined);
+	const contactEmail = $derived(form && 'contactEmail' in form ? form.contactEmail : undefined);
 
 	const steps = [
 		{ title: 'We lock in the date and venue', body: 'Once both are set, they go on the site.' },
@@ -41,7 +42,7 @@
 				<h2 class="eyebrow text-accent-green">No email?</h2>
 				<p class="text-text-muted">
 					Check spam, then write to
-					<a class="notify-link" href="mailto:team@hackboston.dev">team@hackboston.dev</a>.
+					<a href="mailto:team@hackboston.dev">team@hackboston.dev</a>.
 				</p>
 			</aside>
 
@@ -77,12 +78,8 @@
 				<div class="flex flex-col gap-1">
 					<h2 class="eyebrow text-accent-green">What you'll get</h2>
 					<p class="text-text-muted">
-						Big announcements only: dates, venue, and when applications open.
+						Big announcements only: dates, venue, and when applications open. Unsubscribe anytime.
 					</p>
-				</div>
-				<div class="flex flex-col gap-1">
-					<h2 class="eyebrow text-accent-green">Ready to apply?</h2>
-					<p class="text-text-muted">Registration isn't open yet. This list hears first.</p>
 				</div>
 			</aside>
 
@@ -136,19 +133,13 @@
 					</div>
 				</div>
 
-				<label class="consent">
-					<input
-						type="checkbox"
-						name="consent"
-						checked={values?.consent ?? true}
-						aria-invalid={errorField === 'consent' || undefined}
-						aria-describedby={errorField === 'consent' ? 'notify-error' : undefined}
-					/>
-					<span>Email me HackBoston updates. Unsubscribe anytime.</span>
-				</label>
-
 				{#if error}
-					<p id="notify-error" class="text-state-error" role="alert">{error}</p>
+					<p id="notify-error" class="text-state-error" role="alert">
+						{error}
+						{#if contactEmail}
+							<a href="mailto:{contactEmail}">{contactEmail}</a>.
+						{/if}
+					</p>
 				{/if}
 
 				<div>
@@ -173,15 +164,6 @@
 			grid-template-columns: 220px minmax(0, 1fr);
 			column-gap: 56px;
 		}
-	}
-
-	.notify-link {
-		color: inherit;
-		text-underline-offset: 3px;
-	}
-
-	.notify-link:hover {
-		color: var(--accent-green);
 	}
 
 	.field {
@@ -266,10 +248,6 @@
 		gap: 16px;
 		padding-block: 20px 22px;
 		border-top: 1px solid var(--text-ink);
-	}
-
-	.step:last-child {
-		border-bottom: 1px solid var(--text-ink);
 	}
 
 	.step > span {
