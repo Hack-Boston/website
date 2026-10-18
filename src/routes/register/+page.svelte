@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount, tick, type Snippet } from 'svelte';
-	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import type { Pathname } from '$app/types';
 	import { Button, Field, PageHeader, Section } from '$lib';
@@ -43,10 +42,25 @@
 	/** Network or server failure that is not tied to a field. */
 	let formError = $state('');
 	let submitting = $state(false);
+	/** True after a successful submit: the page shows the confirmation instead of the form. */
+	let submitted = $state(false);
 	let summaryEl: HTMLElement | undefined = $state();
 
 	let schools: string[] = $state([]);
 	let schoolsFailed = $state(false);
+
+	/** Confirmation steps (Figma "Register / Submitted", 79:472). */
+	const nextSteps = [
+		{ title: 'We read it', text: 'The team reviews every application by hand.' },
+		{
+			title: 'You hear back',
+			text: 'Decisions go out by email once the date and venue are set.'
+		},
+		{
+			title: 'Confirm your spot',
+			text: 'Accepted? Confirm by the deadline in the email so we can plan food and swag.'
+		}
+	];
 
 	const summaryItems = $derived(
 		fieldOrder.flatMap((field) => {
@@ -176,7 +190,11 @@
 			const data = await res.json().catch(() => null);
 
 			if (res.ok && data?.ok) {
-				await goto(resolve('/register/submitted'));
+				// Show the confirmation in place. A reload brings back an empty form.
+				submitted = true;
+				await tick();
+				window.scrollTo({ top: 0 });
+				document.getElementById('main')?.focus();
 				return;
 			}
 			if (data?.errors && Object.keys(data.errors).length > 0) {
@@ -197,541 +215,589 @@
 </script>
 
 <svelte:head>
-	<title>HackBoston - Register</title>
+	<title>{submitted ? 'HackBoston - Application submitted' : 'HackBoston - Register'}</title>
 </svelte:head>
 
-<PageHeader
-	title="Save your spot."
-	lede="Takes about five minutes. We read every application, and you'll hear back by email."
-/>
+{#if submitted}
+	<PageHeader
+		title="You’re in the queue."
+		lede="Your application is in. We sent a copy to your email."
+	/>
 
-<Section containerClass="register">
-	<aside class="register__aside" aria-label="About applying">
-		<div>
-			<h2 class="eyebrow text-accent-green">Who can apply</h2>
-			<p>Any student 18 or older, at any school, in any major. No experience needed.</p>
-		</div>
-		<div>
-			<h2 class="eyebrow text-accent-green">Cost</h2>
-			<p>Free. Food, swag, and a place to build are on us.</p>
-		</div>
-		<div>
-			<h2 class="eyebrow text-accent-green">Questions?</h2>
-			<p>Email <a href="mailto:team@hackboston.dev">team@hackboston.dev</a></p>
-		</div>
-	</aside>
-
-	<form class="register__form" novalidate onsubmit={handleSubmit}>
-		{#if showSummary && (summaryItems.length > 0 || formError)}
-			<div
-				class="summary"
-				role="alert"
-				tabindex="-1"
-				aria-labelledby="summary-title"
-				bind:this={summaryEl}
-			>
-				{#if summaryItems.length > 0}
-					<p id="summary-title" class="summary__title">
-						Fix {summaryItems.length}
-						{summaryItems.length === 1 ? 'thing' : 'things'} before you submit
-					</p>
-					<ul class="summary__list">
-						{#each summaryItems as item (item.field)}
-							<li>
-								<a
-									href="#{fieldId(item.field)}"
-									onclick={(event) => {
-										event.preventDefault();
-										focusField(item.field);
-									}}>{item.text}</a
-								>
-							</li>
-						{/each}
-					</ul>
-				{:else}
-					<p id="summary-title" class="summary__title">We couldn’t send your application</p>
-					<p class="summary__text">{formError}</p>
-				{/if}
+	<Section containerClass="register">
+		<aside class="register__aside">
+			<div>
+				<h2 class="eyebrow text-accent-green">What happens next</h2>
+				<p>
+					Didn’t get the email? Check spam, then write to
+					<a href="mailto:team@hackboston.dev">team@hackboston.dev</a>.
+				</p>
 			</div>
-		{/if}
+		</aside>
 
-		<!-- 01 About you -->
-		<section class="part" aria-labelledby="part-about">
-			<h2 id="part-about" class="part__title">
-				<span class="part__num">01</span><span class="display-m">About you</span>
-			</h2>
-			<div class="grid">
-				<Field id={fieldId('firstName')} label="First name" error={errors.firstName?.message}>
-					{#snippet children({ id, describedby, invalid })}
-						<input
-							{id}
-							class="control"
-							type="text"
-							autocomplete="given-name"
-							placeholder="Ada"
-							maxlength="200"
-							required
-							aria-describedby={describedby}
-							aria-invalid={invalid}
-							bind:value={form.firstName}
-							{...validateOn('firstName')}
-						/>
-					{/snippet}
-				</Field>
-
-				<Field id={fieldId('lastName')} label="Last name" error={errors.lastName?.message}>
-					{#snippet children({ id, describedby, invalid })}
-						<input
-							{id}
-							class="control"
-							type="text"
-							autocomplete="family-name"
-							placeholder="Lovelace"
-							maxlength="200"
-							required
-							aria-describedby={describedby}
-							aria-invalid={invalid}
-							bind:value={form.lastName}
-							{...validateOn('lastName')}
-						/>
-					{/snippet}
-				</Field>
-
-				<Field
-					id={fieldId('email')}
-					label="Email"
-					help="We'll send your decision and event details here."
-					error={errors.email?.message}
-				>
-					{#snippet children({ id, describedby, invalid })}
-						<input
-							{id}
-							class="control"
-							type="email"
-							inputmode="email"
-							autocomplete="email"
-							placeholder="you@school.edu"
-							maxlength="200"
-							required
-							aria-describedby={describedby}
-							aria-invalid={invalid}
-							bind:value={form.email}
-							{...validateOn('email')}
-						/>
-					{/snippet}
-				</Field>
-
-				<Field
-					id={fieldId('age')}
-					label="Age"
-					help="You need to be 18 by the event."
-					error={errors.age?.message}
-				>
-					{#snippet children({ id, describedby, invalid })}
-						<div class="select">
-							<select
-								{id}
-								class="control"
-								class:control--empty={!form.age}
-								required
-								aria-describedby={describedby}
-								aria-invalid={invalid}
-								bind:value={form.age}
-								{...validateOn('age')}
-							>
-								<option value="" disabled>Select your age</option>
-								{#each ages as age (age)}
-									<option value={age}>{age}</option>
-								{/each}
-							</select>
-							{@render chevron()}
+		<div class="flex flex-col gap-12">
+			<ol class="steps">
+				{#each nextSteps as step, i (step.title)}
+					<li class="step">
+						<span class="step__num">{String(i + 1).padStart(2, '0')}</span>
+						<div class="flex flex-col gap-1">
+							<h3 class="display-m">{step.title}</h3>
+							<p class="text-text-muted">{step.text}</p>
 						</div>
-					{/snippet}
-				</Field>
-
-				<Field
-					id={fieldId('phone')}
-					label="Phone"
-					help="Only for urgent messages during the event."
-					error={errors.phone?.message}
-				>
-					{#snippet children({ id, describedby, invalid })}
-						<input
-							{id}
-							class="control"
-							type="tel"
-							inputmode="tel"
-							autocomplete="tel"
-							placeholder="(617) 555-0123"
-							maxlength="30"
-							required
-							aria-describedby={describedby}
-							aria-invalid={invalid}
-							bind:value={form.phone}
-							{...validateOn('phone')}
-						/>
-					{/snippet}
-				</Field>
-
-				<Field id={fieldId('country')} label="Country of residence" error={errors.country?.message}>
-					{#snippet children({ id, describedby, invalid })}
-						<div class="select">
-							<select
-								{id}
-								class="control"
-								autocomplete="country"
-								required
-								aria-describedby={describedby}
-								aria-invalid={invalid}
-								bind:value={form.country}
-								{...validateOn('country')}
-							>
-								{#each countries as country (country.code)}
-									<option value={country.code}>{country.name}</option>
-								{/each}
-							</select>
-							{@render chevron()}
-						</div>
-					{/snippet}
-				</Field>
-			</div>
-		</section>
-
-		<!-- 02 School -->
-		<section class="part" aria-labelledby="part-school">
-			<h2 id="part-school" class="part__title">
-				<span class="part__num">02</span><span class="display-m">School</span>
-			</h2>
-			<div class="grid">
-				<Field
-					id={fieldId('school')}
-					class="col-span-full"
-					label="School"
-					help={schoolsFailed
-						? "We couldn't load MLH's school list. Pick “Other” and type it in."
-						: "Pulled from MLH's school list. Not there? Pick “Other” and type it in."}
-					error={errors.school?.message}
-				>
-					{#snippet children({ id, describedby, invalid })}
-						<div class="select">
-							<input
-								{id}
-								class="control"
-								type="text"
-								list="school-options"
-								autocomplete="organization"
-								placeholder="Start typing your school…"
-								maxlength="200"
-								required
-								aria-describedby={describedby}
-								aria-invalid={invalid}
-								bind:value={form.school}
-								onblur={() => check('school')}
-								oninput={onSchoolInput}
-							/>
-							{@render chevron()}
-						</div>
-						<datalist id="school-options">
-							<option value={OTHER_SCHOOL}></option>
-							{#each schools as school (school)}
-								<option value={school}></option>
-							{/each}
-						</datalist>
-					{/snippet}
-				</Field>
-
-				{#if form.school === OTHER_SCHOOL}
-					<Field
-						id={fieldId('schoolOther')}
-						class="col-span-full"
-						label="Your school"
-						error={errors.schoolOther?.message}
-					>
-						{#snippet children({ id, describedby, invalid })}
-							<input
-								{id}
-								class="control"
-								type="text"
-								autocomplete="organization"
-								placeholder="Full name of your school"
-								maxlength="200"
-								required
-								aria-describedby={describedby}
-								aria-invalid={invalid}
-								bind:value={form.schoolOther}
-								{...validateOn('schoolOther')}
-							/>
-						{/snippet}
-					</Field>
-				{/if}
-
-				<Field
-					id={fieldId('levelOfStudy')}
-					class="col-span-full"
-					label="Level of study"
-					error={errors.levelOfStudy?.message}
-				>
-					{#snippet children({ id, describedby, invalid })}
-						<div class="select">
-							<select
-								{id}
-								class="control"
-								class:control--empty={!form.levelOfStudy}
-								required
-								aria-describedby={describedby}
-								aria-invalid={invalid}
-								bind:value={form.levelOfStudy}
-								{...validateOn('levelOfStudy')}
-							>
-								<option value="" disabled>Select your level of study</option>
-								{#each levelsOfStudy as level (level)}
-									<option value={level}>{level}</option>
-								{/each}
-							</select>
-							{@render chevron()}
-						</div>
-					{/snippet}
-				</Field>
-
-				<Field id={fieldId('major')} label="Major" error={errors.major?.message}>
-					{#snippet children({ id, describedby, invalid })}
-						<input
-							{id}
-							class="control"
-							type="text"
-							placeholder="Computer Science"
-							maxlength="200"
-							required
-							aria-describedby={describedby}
-							aria-invalid={invalid}
-							bind:value={form.major}
-							{...validateOn('major')}
-						/>
-					{/snippet}
-				</Field>
-
-				<Field
-					id={fieldId('gradYear')}
-					label="Expected graduation"
-					error={errors.gradYear?.message}
-				>
-					{#snippet children({ id, describedby, invalid })}
-						<div class="select">
-							<select
-								{id}
-								class="control"
-								class:control--empty={!form.gradYear}
-								required
-								aria-describedby={describedby}
-								aria-invalid={invalid}
-								bind:value={form.gradYear}
-								{...validateOn('gradYear')}
-							>
-								<option value="" disabled>Select year</option>
-								{#each gradYears as year (year)}
-									<option value={year}>{year}</option>
-								{/each}
-							</select>
-							{@render chevron()}
-						</div>
-					{/snippet}
-				</Field>
-			</div>
-		</section>
-
-		<!-- 03 The weekend -->
-		<section class="part" aria-labelledby="part-weekend">
-			<h2 id="part-weekend" class="part__title">
-				<span class="part__num">03</span><span class="display-m">The weekend</span>
-			</h2>
-			<div class="stack">
-				<fieldset
-					class="group"
-					aria-describedby={errors.tshirtSize ? 'tshirt-error' : undefined}
-					onfocusout={(event) => onGroupFocusout('tshirtSize', event)}
-				>
-					<legend class="group__label">T-shirt size (adult unisex)</legend>
-					<div class="chips" class:chips--invalid={errors.tshirtSize}>
-						{#each tshirtSizes as size, i (size)}
-							<label class="chip">
-								<input
-									id={i === 0 ? fieldId('tshirtSize') : undefined}
-									class="chip__input"
-									type="radio"
-									name="tshirtSize"
-									value={size}
-									required
-									bind:group={form.tshirtSize}
-									onchange={() => check('tshirtSize')}
-								/>
-								<span class="chip__face">{size}</span>
-							</label>
-						{/each}
-					</div>
-					{#if errors.tshirtSize}
-						<p id="tshirt-error" class="error-text">{errors.tshirtSize.message}</p>
-					{/if}
-				</fieldset>
-
-				<fieldset
-					class="group"
-					aria-describedby={errors.allergies ? 'allergies-error' : 'allergies-help'}
-					onfocusout={(event) => onGroupFocusout('allergies', event)}
-				>
-					<legend class="group__label">Food allergies or restrictions</legend>
-					<div class="chips" class:chips--invalid={errors.allergies}>
-						{#each allergyOptions as option, i (option)}
-							<label class="chip">
-								<input
-									id={i === 0 ? fieldId('allergies') : undefined}
-									class="chip__input"
-									type="checkbox"
-									value={option}
-									aria-invalid={Boolean(errors.allergies)}
-									checked={form.allergies.includes(option)}
-									onchange={(event) => toggleAllergy(option, event.currentTarget.checked)}
-								/>
-								<span class="chip__face">{option}</span>
-							</label>
-						{/each}
-					</div>
-					{#if errors.allergies}
-						<p id="allergies-error" class="error-text">{errors.allergies.message}</p>
-					{:else}
-						<p id="allergies-help" class="help-text">Pick all that apply.</p>
-					{/if}
-				</fieldset>
-
-				<Field
-					id={fieldId('dietaryNotes')}
-					label="Anything else we should know?"
-					error={errors.dietaryNotes?.message}
-				>
-					{#snippet children({ id, describedby, invalid })}
-						<input
-							{id}
-							class="control"
-							type="text"
-							placeholder="Other allergies or needs"
-							maxlength="1000"
-							required={form.allergies.includes(OTHER_ALLERGY)}
-							aria-describedby={describedby}
-							aria-invalid={invalid}
-							bind:value={form.dietaryNotes}
-							{...validateOn('dietaryNotes')}
-						/>
-					{/snippet}
-				</Field>
-			</div>
-		</section>
-
-		<!-- 04 Short answers -->
-		<section class="part" aria-labelledby="part-answers">
-			<h2 id="part-answers" class="part__title">
-				<span class="part__num">04</span><span class="display-m">Short answers</span>
-			</h2>
-			<div class="stack">
-				{#each shortAnswerQuestions as question (question.name)}
-					{@const words = countWords(form[question.name])}
-					<Field
-						id={fieldId(question.name)}
-						label={question.label}
-						help="{MAX_WORDS} words max · {words} / {MAX_WORDS}"
-						error={errors[question.name]?.message}
-					>
-						{#snippet children({ id, describedby, invalid })}
-							<textarea
-								{id}
-								class="control control--area"
-								rows="5"
-								placeholder={question.placeholder}
-								required
-								aria-describedby={describedby}
-								aria-invalid={invalid}
-								bind:value={form[question.name]}
-								onblur={() => check(question.name)}
-								oninput={(event) => onAnswerInput(question.name, event.currentTarget.value)}
-							></textarea>
-						{/snippet}
-					</Field>
+					</li>
 				{/each}
+			</ol>
+
+			<div class="flex flex-wrap gap-4">
+				<Button href={resolve('/')}>Back to home</Button>
+				<Button href={resolve('/faq' as Pathname)} variant="secondary">Read the FAQ</Button>
 			</div>
-		</section>
-
-		<!-- 05 Agreements -->
-		<section class="part" aria-labelledby="part-agreements">
-			<h2 id="part-agreements" class="part__title">
-				<span class="part__num">05</span><span class="display-m">Agreements</span>
-			</h2>
-			<div class="stack stack--tight">
-				<div class="note">
-					<p class="eyebrow text-accent-green">MLH partnership</p>
-					<p>
-						We are currently in the process of partnering with MLH. The following 3 checkboxes are
-						for this partnership. If we do not end up partnering with MLH, your information will not
-						be shared.
-					</p>
-				</div>
-
-				{#snippet external(href: string, text: string)}
-					<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- external URL -->
-					<a {href} target="_blank" rel="noopener noreferrer">{text}</a>
-				{/snippet}
-
-				{#snippet internal(href: string, text: string)}
-					<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- resolved above -->
-					<a {href} target="_blank" rel="noopener">{text}</a>
-				{/snippet}
-
-				{@render checkbox('agreeMlhCodeOfConduct', true, mlhCodeOfConductText)}
-				{#snippet mlhCodeOfConductText()}
-					I have read and agree to the {@render external(MLH.codeOfConduct, 'MLH Code of Conduct')}.
-				{/snippet}
-
-				{@render checkbox('agreeMlhDataSharing', true, mlhDataSharingText)}
-				{#snippet mlhDataSharingText()}
-					I authorize you to share my application/registration information with Major League Hacking
-					for event administration, ranking, and administration (including the creation of linked
-					accounts on MLH and DEV (dev.to)) in line with the {@render external(
-						MLH.privacyPolicy,
-						'MLH Privacy Policy'
-					)}. I further agree to the terms of both the {@render external(
-						MLH.contestTerms,
-						'MLH Contest Terms and Conditions'
-					)} and the {@render external(MLH.privacyPolicy, 'MLH Privacy Policy')}.
-				{/snippet}
-
-				{@render checkbox('mlhEmails', false, mlhEmailsText)}
-				{#snippet mlhEmailsText()}
-					I authorize MLH + DEV to send me occasional emails about relevant events, career
-					opportunities, and community announcements.
-				{/snippet}
-
-				<hr class="rule" />
-
-				{@render checkbox('agreeHackBostonPolicies', true, policiesText)}
-				{#snippet policiesText()}
-					I have read and agree to the {@render internal(conductHref, 'HackBoston Code of Conduct')}
-					and {@render internal(privacyHref, 'Privacy Policy')}.
-				{/snippet}
-
-				{@render checkbox('agreeWaiver', true, waiverText)}
-				{#snippet waiverText()}
-					I agree to the HackBoston {@render internal(
-						waiverHref,
-						'photo release and participant waiver'
-					)}.
-				{/snippet}
-			</div>
-		</section>
-
-		<div class="submit">
-			<Button type="submit" disabled={submitting} aria-busy={submitting}>
-				{submitting ? 'Submitting…' : 'Submit application'}
-			</Button>
 		</div>
-	</form>
-</Section>
+	</Section>
+{:else}
+	<PageHeader
+		title="Save your spot."
+		lede="Takes about five minutes. We read every application, and you'll hear back by email."
+	/>
+
+	<Section containerClass="register">
+		<aside class="register__aside" aria-label="About applying">
+			<div>
+				<h2 class="eyebrow text-accent-green">Who can apply</h2>
+				<p>Any student 18 or older, at any school, in any major. No experience needed.</p>
+			</div>
+			<div>
+				<h2 class="eyebrow text-accent-green">Cost</h2>
+				<p>Free. Food, swag, and a place to build are on us.</p>
+			</div>
+			<div>
+				<h2 class="eyebrow text-accent-green">Questions?</h2>
+				<p>Email <a href="mailto:team@hackboston.dev">team@hackboston.dev</a></p>
+			</div>
+		</aside>
+
+		<form class="register__form" novalidate onsubmit={handleSubmit}>
+			{#if showSummary && (summaryItems.length > 0 || formError)}
+				<div
+					class="summary"
+					role="alert"
+					tabindex="-1"
+					aria-labelledby="summary-title"
+					bind:this={summaryEl}
+				>
+					{#if summaryItems.length > 0}
+						<p id="summary-title" class="summary__title">
+							Fix {summaryItems.length}
+							{summaryItems.length === 1 ? 'thing' : 'things'} before you submit
+						</p>
+						<ul class="summary__list">
+							{#each summaryItems as item (item.field)}
+								<li>
+									<a
+										href="#{fieldId(item.field)}"
+										onclick={(event) => {
+											event.preventDefault();
+											focusField(item.field);
+										}}>{item.text}</a
+									>
+								</li>
+							{/each}
+						</ul>
+					{:else}
+						<p id="summary-title" class="summary__title">We couldn’t send your application</p>
+						<p class="summary__text">{formError}</p>
+					{/if}
+				</div>
+			{/if}
+
+			<!-- 01 About you -->
+			<section class="part" aria-labelledby="part-about">
+				<h2 id="part-about" class="part__title">
+					<span class="part__num">01</span><span class="display-m">About you</span>
+				</h2>
+				<div class="grid">
+					<Field id={fieldId('firstName')} label="First name" error={errors.firstName?.message}>
+						{#snippet children({ id, describedby, invalid })}
+							<input
+								{id}
+								class="control"
+								type="text"
+								autocomplete="given-name"
+								placeholder="Ada"
+								maxlength="200"
+								required
+								aria-describedby={describedby}
+								aria-invalid={invalid}
+								bind:value={form.firstName}
+								{...validateOn('firstName')}
+							/>
+						{/snippet}
+					</Field>
+
+					<Field id={fieldId('lastName')} label="Last name" error={errors.lastName?.message}>
+						{#snippet children({ id, describedby, invalid })}
+							<input
+								{id}
+								class="control"
+								type="text"
+								autocomplete="family-name"
+								placeholder="Lovelace"
+								maxlength="200"
+								required
+								aria-describedby={describedby}
+								aria-invalid={invalid}
+								bind:value={form.lastName}
+								{...validateOn('lastName')}
+							/>
+						{/snippet}
+					</Field>
+
+					<Field
+						id={fieldId('email')}
+						label="Email"
+						help="We'll send your decision and event details here."
+						error={errors.email?.message}
+					>
+						{#snippet children({ id, describedby, invalid })}
+							<input
+								{id}
+								class="control"
+								type="email"
+								inputmode="email"
+								autocomplete="email"
+								placeholder="you@school.edu"
+								maxlength="200"
+								required
+								aria-describedby={describedby}
+								aria-invalid={invalid}
+								bind:value={form.email}
+								{...validateOn('email')}
+							/>
+						{/snippet}
+					</Field>
+
+					<Field
+						id={fieldId('age')}
+						label="Age"
+						help="You need to be 18 by the event."
+						error={errors.age?.message}
+					>
+						{#snippet children({ id, describedby, invalid })}
+							<div class="select">
+								<select
+									{id}
+									class="control"
+									class:control--empty={!form.age}
+									required
+									aria-describedby={describedby}
+									aria-invalid={invalid}
+									bind:value={form.age}
+									{...validateOn('age')}
+								>
+									<option value="" disabled>Select your age</option>
+									{#each ages as age (age)}
+										<option value={age}>{age}</option>
+									{/each}
+								</select>
+								{@render chevron()}
+							</div>
+						{/snippet}
+					</Field>
+
+					<Field
+						id={fieldId('phone')}
+						label="Phone"
+						help="Only for urgent messages during the event."
+						error={errors.phone?.message}
+					>
+						{#snippet children({ id, describedby, invalid })}
+							<input
+								{id}
+								class="control"
+								type="tel"
+								inputmode="tel"
+								autocomplete="tel"
+								placeholder="(617) 555-0123"
+								maxlength="30"
+								required
+								aria-describedby={describedby}
+								aria-invalid={invalid}
+								bind:value={form.phone}
+								{...validateOn('phone')}
+							/>
+						{/snippet}
+					</Field>
+
+					<Field
+						id={fieldId('country')}
+						label="Country of residence"
+						error={errors.country?.message}
+					>
+						{#snippet children({ id, describedby, invalid })}
+							<div class="select">
+								<select
+									{id}
+									class="control"
+									autocomplete="country"
+									required
+									aria-describedby={describedby}
+									aria-invalid={invalid}
+									bind:value={form.country}
+									{...validateOn('country')}
+								>
+									{#each countries as country (country.code)}
+										<option value={country.code}>{country.name}</option>
+									{/each}
+								</select>
+								{@render chevron()}
+							</div>
+						{/snippet}
+					</Field>
+				</div>
+			</section>
+
+			<!-- 02 School -->
+			<section class="part" aria-labelledby="part-school">
+				<h2 id="part-school" class="part__title">
+					<span class="part__num">02</span><span class="display-m">School</span>
+				</h2>
+				<div class="grid">
+					<Field
+						id={fieldId('school')}
+						class="col-span-full"
+						label="School"
+						help={schoolsFailed
+							? "We couldn't load MLH's school list. Pick “Other” and type it in."
+							: "Pulled from MLH's school list. Not there? Pick “Other” and type it in."}
+						error={errors.school?.message}
+					>
+						{#snippet children({ id, describedby, invalid })}
+							<div class="select">
+								<input
+									{id}
+									class="control"
+									type="text"
+									list="school-options"
+									autocomplete="organization"
+									placeholder="Start typing your school…"
+									maxlength="200"
+									required
+									aria-describedby={describedby}
+									aria-invalid={invalid}
+									bind:value={form.school}
+									onblur={() => check('school')}
+									oninput={onSchoolInput}
+								/>
+								{@render chevron()}
+							</div>
+							<datalist id="school-options">
+								<option value={OTHER_SCHOOL}></option>
+								{#each schools as school (school)}
+									<option value={school}></option>
+								{/each}
+							</datalist>
+						{/snippet}
+					</Field>
+
+					{#if form.school === OTHER_SCHOOL}
+						<Field
+							id={fieldId('schoolOther')}
+							class="col-span-full"
+							label="Your school"
+							error={errors.schoolOther?.message}
+						>
+							{#snippet children({ id, describedby, invalid })}
+								<input
+									{id}
+									class="control"
+									type="text"
+									autocomplete="organization"
+									placeholder="Full name of your school"
+									maxlength="200"
+									required
+									aria-describedby={describedby}
+									aria-invalid={invalid}
+									bind:value={form.schoolOther}
+									{...validateOn('schoolOther')}
+								/>
+							{/snippet}
+						</Field>
+					{/if}
+
+					<Field
+						id={fieldId('levelOfStudy')}
+						class="col-span-full"
+						label="Level of study"
+						error={errors.levelOfStudy?.message}
+					>
+						{#snippet children({ id, describedby, invalid })}
+							<div class="select">
+								<select
+									{id}
+									class="control"
+									class:control--empty={!form.levelOfStudy}
+									required
+									aria-describedby={describedby}
+									aria-invalid={invalid}
+									bind:value={form.levelOfStudy}
+									{...validateOn('levelOfStudy')}
+								>
+									<option value="" disabled>Select your level of study</option>
+									{#each levelsOfStudy as level (level)}
+										<option value={level}>{level}</option>
+									{/each}
+								</select>
+								{@render chevron()}
+							</div>
+						{/snippet}
+					</Field>
+
+					<Field id={fieldId('major')} label="Major" error={errors.major?.message}>
+						{#snippet children({ id, describedby, invalid })}
+							<input
+								{id}
+								class="control"
+								type="text"
+								placeholder="Computer Science"
+								maxlength="200"
+								required
+								aria-describedby={describedby}
+								aria-invalid={invalid}
+								bind:value={form.major}
+								{...validateOn('major')}
+							/>
+						{/snippet}
+					</Field>
+
+					<Field
+						id={fieldId('gradYear')}
+						label="Expected graduation"
+						error={errors.gradYear?.message}
+					>
+						{#snippet children({ id, describedby, invalid })}
+							<div class="select">
+								<select
+									{id}
+									class="control"
+									class:control--empty={!form.gradYear}
+									required
+									aria-describedby={describedby}
+									aria-invalid={invalid}
+									bind:value={form.gradYear}
+									{...validateOn('gradYear')}
+								>
+									<option value="" disabled>Select year</option>
+									{#each gradYears as year (year)}
+										<option value={year}>{year}</option>
+									{/each}
+								</select>
+								{@render chevron()}
+							</div>
+						{/snippet}
+					</Field>
+				</div>
+			</section>
+
+			<!-- 03 The weekend -->
+			<section class="part" aria-labelledby="part-weekend">
+				<h2 id="part-weekend" class="part__title">
+					<span class="part__num">03</span><span class="display-m">The weekend</span>
+				</h2>
+				<div class="stack">
+					<fieldset
+						class="group"
+						aria-describedby={errors.tshirtSize ? 'tshirt-error' : undefined}
+						onfocusout={(event) => onGroupFocusout('tshirtSize', event)}
+					>
+						<legend class="group__label">T-shirt size (adult unisex)</legend>
+						<div class="chips" class:chips--invalid={errors.tshirtSize}>
+							{#each tshirtSizes as size, i (size)}
+								<label class="chip">
+									<input
+										id={i === 0 ? fieldId('tshirtSize') : undefined}
+										class="chip__input"
+										type="radio"
+										name="tshirtSize"
+										value={size}
+										required
+										bind:group={form.tshirtSize}
+										onchange={() => check('tshirtSize')}
+									/>
+									<span class="chip__face">{size}</span>
+								</label>
+							{/each}
+						</div>
+						{#if errors.tshirtSize}
+							<p id="tshirt-error" class="error-text">{errors.tshirtSize.message}</p>
+						{/if}
+					</fieldset>
+
+					<fieldset
+						class="group"
+						aria-describedby={errors.allergies ? 'allergies-error' : 'allergies-help'}
+						onfocusout={(event) => onGroupFocusout('allergies', event)}
+					>
+						<legend class="group__label">Food allergies or restrictions</legend>
+						<div class="chips" class:chips--invalid={errors.allergies}>
+							{#each allergyOptions as option, i (option)}
+								<label class="chip">
+									<input
+										id={i === 0 ? fieldId('allergies') : undefined}
+										class="chip__input"
+										type="checkbox"
+										value={option}
+										aria-invalid={Boolean(errors.allergies)}
+										checked={form.allergies.includes(option)}
+										onchange={(event) => toggleAllergy(option, event.currentTarget.checked)}
+									/>
+									<span class="chip__face">{option}</span>
+								</label>
+							{/each}
+						</div>
+						{#if errors.allergies}
+							<p id="allergies-error" class="error-text">{errors.allergies.message}</p>
+						{:else}
+							<p id="allergies-help" class="help-text">Pick all that apply.</p>
+						{/if}
+					</fieldset>
+
+					<Field
+						id={fieldId('dietaryNotes')}
+						label="Anything else we should know?"
+						error={errors.dietaryNotes?.message}
+					>
+						{#snippet children({ id, describedby, invalid })}
+							<input
+								{id}
+								class="control"
+								type="text"
+								placeholder="Other allergies or needs"
+								maxlength="1000"
+								required={form.allergies.includes(OTHER_ALLERGY)}
+								aria-describedby={describedby}
+								aria-invalid={invalid}
+								bind:value={form.dietaryNotes}
+								{...validateOn('dietaryNotes')}
+							/>
+						{/snippet}
+					</Field>
+				</div>
+			</section>
+
+			<!-- 04 Short answers -->
+			<section class="part" aria-labelledby="part-answers">
+				<h2 id="part-answers" class="part__title">
+					<span class="part__num">04</span><span class="display-m">Short answers</span>
+				</h2>
+				<div class="stack">
+					{#each shortAnswerQuestions as question (question.name)}
+						{@const words = countWords(form[question.name])}
+						<Field
+							id={fieldId(question.name)}
+							label={question.label}
+							help="{MAX_WORDS} words max · {words} / {MAX_WORDS}"
+							error={errors[question.name]?.message}
+						>
+							{#snippet children({ id, describedby, invalid })}
+								<textarea
+									{id}
+									class="control control--area"
+									rows="5"
+									placeholder={question.placeholder}
+									required
+									aria-describedby={describedby}
+									aria-invalid={invalid}
+									bind:value={form[question.name]}
+									onblur={() => check(question.name)}
+									oninput={(event) => onAnswerInput(question.name, event.currentTarget.value)}
+								></textarea>
+							{/snippet}
+						</Field>
+					{/each}
+				</div>
+			</section>
+
+			<!-- 05 Agreements -->
+			<section class="part" aria-labelledby="part-agreements">
+				<h2 id="part-agreements" class="part__title">
+					<span class="part__num">05</span><span class="display-m">Agreements</span>
+				</h2>
+				<div class="stack stack--tight">
+					<div class="note">
+						<p class="eyebrow text-accent-green">MLH partnership</p>
+						<p>
+							We are currently in the process of partnering with MLH. The following 3 checkboxes are
+							for this partnership. If we do not end up partnering with MLH, your information will
+							not be shared.
+						</p>
+					</div>
+
+					{#snippet external(href: string, text: string)}
+						<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- external URL -->
+						<a {href} target="_blank" rel="noopener noreferrer">{text}</a>
+					{/snippet}
+
+					{#snippet internal(href: string, text: string)}
+						<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- resolved above -->
+						<a {href} target="_blank" rel="noopener">{text}</a>
+					{/snippet}
+
+					{@render checkbox('agreeMlhCodeOfConduct', true, mlhCodeOfConductText)}
+					{#snippet mlhCodeOfConductText()}
+						I have read and agree to the {@render external(
+							MLH.codeOfConduct,
+							'MLH Code of Conduct'
+						)}.
+					{/snippet}
+
+					{@render checkbox('agreeMlhDataSharing', true, mlhDataSharingText)}
+					{#snippet mlhDataSharingText()}
+						I authorize you to share my application/registration information with Major League
+						Hacking for event administration, ranking, and administration (including the creation of
+						linked accounts on MLH and DEV (dev.to)) in line with the {@render external(
+							MLH.privacyPolicy,
+							'MLH Privacy Policy'
+						)}. I further agree to the terms of both the {@render external(
+							MLH.contestTerms,
+							'MLH Contest Terms and Conditions'
+						)} and the {@render external(MLH.privacyPolicy, 'MLH Privacy Policy')}.
+					{/snippet}
+
+					{@render checkbox('mlhEmails', false, mlhEmailsText)}
+					{#snippet mlhEmailsText()}
+						I authorize MLH + DEV to send me occasional emails about relevant events, career
+						opportunities, and community announcements.
+					{/snippet}
+
+					<hr class="rule" />
+
+					{@render checkbox('agreeHackBostonPolicies', true, policiesText)}
+					{#snippet policiesText()}
+						I have read and agree to the {@render internal(
+							conductHref,
+							'HackBoston Code of Conduct'
+						)}
+						and {@render internal(privacyHref, 'Privacy Policy')}.
+					{/snippet}
+
+					{@render checkbox('agreeWaiver', true, waiverText)}
+					{#snippet waiverText()}
+						I agree to the HackBoston {@render internal(
+							waiverHref,
+							'photo release and participant waiver'
+						)}.
+					{/snippet}
+				</div>
+			</section>
+
+			<div class="submit">
+				<Button type="submit" disabled={submitting} aria-busy={submitting}>
+					{submitting ? 'Submitting…' : 'Submit application'}
+				</Button>
+			</div>
+		</form>
+	</Section>
+{/if}
 
 {#snippet chevron()}
 	<svg class="select__chevron" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
@@ -1192,5 +1258,36 @@
 		flex-wrap: wrap;
 		align-items: center;
 		gap: 16px 24px;
+	}
+
+	/* Confirmation steps after a successful submit. */
+	.steps {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.step {
+		display: flex;
+		gap: 24px;
+		padding: 24px 0;
+		border-top: 1px solid var(--text-ink);
+	}
+
+	.step:first-child {
+		padding-top: 20px;
+	}
+
+	.step__num {
+		padding-top: 6px;
+		font-family: var(--font-label);
+		font-weight: 500;
+		font-size: 0.75rem;
+		color: var(--text-muted);
+	}
+
+	.step h3,
+	.step p {
+		margin: 0;
 	}
 </style>
