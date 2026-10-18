@@ -3,10 +3,13 @@
 	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
 
 	type Variant = 'primary' | 'secondary';
+	type Size = 'md' | 'sm';
 
 	type Props = {
 		/** Figma "Button / Primary" (forest fill) or "Button / Secondary" (ink outline). */
 		variant?: Variant;
+		/** "md" is the Figma 50px button. "sm" is 34px, for tight spots like the collapsed Nav. */
+		size?: Size;
 		children: Snippet;
 		class?: string;
 	} & (
@@ -14,15 +17,25 @@
 		| ({ href?: undefined } & Omit<HTMLButtonAttributes, 'class' | 'children'>)
 	);
 
-	let { variant = 'primary', children, class: className = '', ...rest }: Props = $props();
+	let {
+		variant = 'primary',
+		size = 'md',
+		children,
+		class: className = '',
+		...rest
+	}: Props = $props();
 </script>
 
 {#if rest.href !== undefined}
-	<a class="btn btn--{variant} {className}" {...rest as HTMLAnchorAttributes}>
+	<a class="btn btn--{variant} btn--{size} {className}" {...rest as HTMLAnchorAttributes}>
 		{@render children()}
 	</a>
 {:else}
-	<button class="btn btn--{variant} {className}" type="button" {...rest as HTMLButtonAttributes}>
+	<button
+		class="btn btn--{variant} btn--{size} {className}"
+		type="button"
+		{...rest as HTMLButtonAttributes}
+	>
 		{@render children()}
 	</button>
 {/if}
@@ -45,6 +58,10 @@
 			background-color 150ms ease,
 			color 150ms ease,
 			border-color 150ms ease;
+	}
+
+	.btn--sm {
+		padding: 8px 18px;
 	}
 
 	.btn--primary {

@@ -123,7 +123,8 @@
 			</nav>
 
 			<div class="hidden lg:block">
-				<Button href={resolve(ctaHref as Pathname)}>{ctaLabel}</Button>
+				<!-- Small, so the bug can crawl under it on the collapsed bar. -->
+				<Button href={resolve(ctaHref as Pathname)} size="sm">{ctaLabel}</Button>
 			</div>
 
 			<button

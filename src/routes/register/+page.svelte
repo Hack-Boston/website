@@ -202,7 +202,7 @@
 
 <PageHeader
 	title="Save your spot."
-	lede="Takes about five minutes. We read every application, and you’ll hear back by email."
+	lede="Takes about five minutes. We read every application, and you'll hear back by email."
 />
 
 <Section containerClass="register">
@@ -300,7 +300,7 @@
 				<Field
 					id={fieldId('email')}
 					label="Email"
-					help="We’ll send your decision and event details here."
+					help="We'll send your decision and event details here."
 					error={errors.email?.message}
 				>
 					{#snippet children({ id, describedby, invalid })}
@@ -408,8 +408,8 @@
 					class="col-span-full"
 					label="School"
 					help={schoolsFailed
-						? 'We couldn’t load MLH’s school list. Pick “Other” and type it in.'
-						: 'Pulled from MLH’s school list. Not there? Pick “Other” and type it in.'}
+						? "We couldn't load MLH's school list. Pick “Other” and type it in."
+						: "Pulled from MLH's school list. Not there? Pick “Other” and type it in."}
 					error={errors.school?.message}
 				>
 					{#snippet children({ id, describedby, invalid })}
