@@ -21,7 +21,7 @@
             href="/sponsorship-prospectus.pdf"
             target="_blank"
             variant="secondary"
-             class="border-text-on-dark bg-transparent text-bg-paper"
+             class="border-text-on-dark bg-transparent text-bg-paper hover:underline!"
         >
             View the prospectus ↗
         </Button>
@@ -29,7 +29,7 @@
         <Button
             href="mailto:sponsorship@hackboston.dev"
             variant="secondary"
-            class="border-2! border-solid! border-bg-paper! bg-transparent! text-text-on-dark!"
+            class="border-2! border-solid! border-bg-paper! bg-transparent! text-text-on-dark! hover:underline!"
             target="_blank"
 
         >
@@ -92,5 +92,54 @@
                 </span>
             </div>
         </div>
+   </Section>
+   <Section>
+        <h2 class="display-l font-display">Sponsorship tiers</h2>
+        <div class="grid grid-cols-4 mt-10 border-t-2 border-b-2">
+            <div class="py-6 flex flex-col gap-2 border-r">
+                <span class="display-s">Dewdrop</span>
+                <span class="font-label text-accent-green">$500+</span>
+            </div>
+            <div class="py-6 flex flex-col gap-2 border-r pl-6">
+                <span class="display-s">Crystal</span>
+                <span class="font-label text-accent-green">$1,000+</span>
+            </div>
+            <div class="py-6 flex flex-col gap-2 border-r pl-6">
+                <span class="display-s">Aurora</span>
+                <span class="font-label text-accent-green">$5,000+</span>
+            </div>
+            <div class="py-6 flex flex-col gap-2 pl-6">
+                <span class="display-s">Cosmic</span>
+                <span class="font-label text-accent-green">$10,000+</span>
+            </div>
+        </div>
+        <div class="flex gap-4 my-10">
+            <span class="font-body">Every benefit, tier by tier, is in the prospectus.</span>
+           <Button
+            href="/sponsorship-prospectus.pdf"
+            target="_blank"
+            variant="secondary"
+             class="border-text-on-dark! text-bg-paper p-0! hover:underline! hover:bg-transparent!"
+        >
+            View the prospectus ↗
+        </Button>
+    </div>
+    <div
+        class="flex h-auto flex-col items-start justify-between gap-2 rounded-card bg-bg-green-wash p-10 text-text-ink sm:h-[141px] sm:flex-row sm:items-center"
+    >
+        <div class="flex flex-col text-left">
+            <span class="text-lede text-text-muted">
+                Want something custom? Sponsor a meal or an activity, or send mentors, APIs, or hardware, and we’ll put together a package around your goals.
+            </span>
+        </div>
+
+        <a
+            href="mailto:sponsorship@hackboston.dev" target="_blank"
+            class="rounded-pill bg-bg-forest px-6 py-4 label-mono text-bg-paper no-underline hover:underline"
+        >
+            sponsorship@hackboston.dev
+        </a>
+    </div>
+        
    </Section>
 </div>
