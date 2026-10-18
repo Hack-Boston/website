@@ -153,3 +153,16 @@
 	letter-spacing: 0.04em;
 	text-transform: uppercase;
 }
+
+/* Email links: inherit the text color, underlined. In the base layer so utilities still win. */
+@layer base {
+	a[href^='mailto:'] {
+		color: inherit;
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+
+	a[href^='mailto:']:hover {
+		color: var(--accent-green);
+	}
+}

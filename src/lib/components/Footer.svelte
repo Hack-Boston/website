@@ -19,11 +19,7 @@
 		socialsSlot?: Snippet;
 	}
 
-	let {
-		contacts = contactEmails,
-		socials = socialLinks,
-		socialsSlot
-	}: Props = $props();
+	let { contacts = contactEmails, socials = socialLinks, socialsSlot }: Props = $props();
 
 	const year = new Date().getFullYear();
 	const showSocials = $derived(Boolean(socialsSlot) || socials.length > 0);
@@ -118,6 +114,16 @@
 
 	.footer__link:hover {
 		text-decoration: underline;
+	}
+
+	/* Email links match the site-wide mailto style (main.css): always underlined. */
+	.footer__link[href^='mailto:'] {
+		text-decoration: underline;
+	}
+
+	/* accent-green is too dark on bg-forest, so hover uses the light tint. */
+	.footer__link[href^='mailto:']:hover {
+		color: var(--accent-green-tint);
 	}
 
 	.footer__link:focus-visible,
