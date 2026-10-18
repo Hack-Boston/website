@@ -131,26 +131,6 @@
         color: #68786e;
     }
 
-    .contact a {
-        text-decoration: none;
-        text-decoration-skip-ink: none;
-        color: inherit;
-    }
-
-    .contact a:hover {
-        text-decoration: underline;
-    }
-
-    .questions a {
-        color: inherit;
-        text-decoration: none;
-    }
-
-    .questions a:hover {
-        text-decoration: underline;
-        text-decoration-skip-ink: none;
-    }
-
     .questions details {
         border-top: 2px solid #30463a;
         padding: 20px 0;
