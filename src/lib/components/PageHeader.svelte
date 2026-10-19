@@ -50,12 +50,12 @@
 		{:else if sponsor}
 			<div class="hidden sm:flex w-full max-w-[180px] shrink-0 p-3 sm:max-w-[200px] sm:p-4 md:w-[200px] md:max-w-none md:p-5 lg:w-[230px] lg:p-6 gap-2 rounded-lg bg-bg-paper flex flex-col justify-center items-center self-center md:self-auto">
 				<img
-					src="/src/lib/assets/favicon.svg"
+					src="/assets/hackboston-bug-green-on-cream.png"
 					class="w-[90px] sm:w-[110px] md:w-[120px] lg:w-[140px]"
 					alt="HackBoston bug"
 				/>
 				<img
-					src="/src/lib/assets/wordmark-ink.svg"
+					src="/assets/hackboston-wordmark.png"
 					class="w-full max-w-[150px] sm:max-w-[170px] md:max-w-40 lg:max-w-[182px]"
 					alt="HackBoston wordmark"
 				/>
