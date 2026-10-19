@@ -150,7 +150,7 @@
 
             <a
                 href="mailto:sponsorship@hackboston.dev"
-                class="break-all rounded-pill bg-bg-forest px-6 py-4 label-mono text-bg-paper no-underline hover:underline"
+                class="rounded-pill bg-bg-forest px-6 py-4 label-mono text-bg-paper no-underline hover:underline"
             >
                 sponsorship@hackboston.dev
             </a>
