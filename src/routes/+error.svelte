@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
-	import bugLight from '$lib/assets/bug-light.svg';
-	import { Button, Container } from '$lib';
+	import { Button, Container, Logo } from '$lib';
 
 	const notFound = $derived(page.status === 404);
 </script>
@@ -11,11 +10,12 @@
 	<title>{notFound ? 'Page not found' : 'Something went wrong'} | HackBoston</title>
 </svelte:head>
 
-<!-- Nav and Footer come from +layout.svelte. The forest band runs into the forest footer,
-     so only the bug shows here: the footer already has the full wordmark. -->
-<section class="flex min-h-[60dvh] items-center bg-bg-forest py-section text-text-on-dark">
+<!-- +layout.svelte hides the Nav and Footer on this page, so it fills the screen. -->
+<section class="flex min-h-dvh items-center bg-bg-forest py-section text-text-on-dark">
 	<Container class="flex flex-col items-start gap-8">
-		<img class="error__bug" src={bugLight} alt="" width="500" height="500" />
+		<a href={resolve('/')} class="error__home" aria-label="HackBoston home">
+			<Logo tone="light" size="footer" />
+		</a>
 
 		<div class="flex flex-col gap-4">
 			<p class="error__status eyebrow">Error {page.status}</p>
@@ -40,9 +40,14 @@
 </section>
 
 <style>
-	.error__bug {
-		width: 120px;
-		height: 120px;
+	.error__home {
+		display: inline-flex;
+		border-radius: 4px;
+	}
+
+	.error__home:focus-visible {
+		outline: 2px solid var(--text-on-dark);
+		outline-offset: 4px;
 	}
 
 	.error__status {

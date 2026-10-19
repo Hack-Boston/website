@@ -1,10 +1,14 @@
 <script lang="ts">
 	import '../main.css';
 	import '../app.css';
+	import { page } from '$app/state';
 	import favicon from '$lib/assets/favicon.svg';
 	import { Footer, Nav } from '$lib';
 
 	let { children } = $props();
+
+	// The error page (+error.svelte) is a full-screen page with no Nav or Footer.
+	const chrome = $derived(!page.error);
 </script>
 
 <svelte:head>
@@ -15,11 +19,15 @@
 <a href="#main" class="skip-link">Skip to content</a>
 
 <div class="flex min-h-dvh flex-col">
-	<Nav />
+	{#if chrome}
+		<Nav />
+	{/if}
 	<main id="main" tabindex="-1" class="flex-1 focus:outline-none">
 		{@render children()}
 	</main>
-	<Footer />
+	{#if chrome}
+		<Footer />
+	{/if}
 </div>
 
 <style>
