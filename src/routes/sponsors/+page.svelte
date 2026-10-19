@@ -15,6 +15,7 @@
     title="Sponsor HackBoston."
     lede="Put your team in the room with ~200 students who are actively building. Recruit, get your brand in front of hackers, and see how people use your tools firsthand."
     mascot={false}
+    sponsor={true}
     >
     <div class="flex flex-wrap gap-3">
         <Button
@@ -36,7 +37,7 @@
             Get in touch about sponsorship
         </Button>
     </div>
-    </PageHeader>
+</PageHeader>
    <Section>
         <h2 class="display-l font-display">Why sponsor us?</h2>
         <div class="mt-10 border-t-2">
@@ -96,14 +97,17 @@
    <Section>
         <h2 class="display-l font-display">Sponsorship tiers</h2>
         <div class="grid grid-cols-4 mt-10 border-t-2 border-b-2">
+            <!-- Dewdrop -->
             <div class="py-6 flex flex-col gap-2 border-r">
                 <span class="display-s">Dewdrop</span>
                 <span class="font-label text-accent-green">$500+</span>
             </div>
+            <!-- Dewdrop -->
             <div class="py-6 flex flex-col gap-2 border-r pl-6">
                 <span class="display-s">Crystal</span>
                 <span class="font-label text-accent-green">$1,000+</span>
             </div>
+            <!-- Dewdrop -->
             <div class="py-6 flex flex-col gap-2 border-r pl-6">
                 <span class="display-s">Aurora</span>
                 <span class="font-label text-accent-green">$5,000+</span>
