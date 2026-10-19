@@ -42,6 +42,9 @@ export const contactEmails: ContactEmail[] = [
 	{ label: 'Venue + logistics', email: 'logistics@hackboston.dev' }
 ];
 
+/** Shown on the error page so visitors can report a broken page. */
+export const supportEmail = 'support@hackboston.dev';
+
 /**
  * Social accounts for the footer (#17). Empty until the accounts are confirmed.
  * When this list is empty, the footer hides the Socials column.
