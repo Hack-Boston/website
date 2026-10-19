@@ -38,15 +38,26 @@
 		}
 	};
 
-	const fallback: ErrorCopy = {
+	/** Other 4xx codes: the request was the problem, so do not ask for a bug report. */
+	const clientFallback: ErrorCopy = {
+		title: 'Request failed',
+		heading: 'That request did not work.',
+		lede: 'Go back and try again, or start from the home page.'
+	};
+
+	/** 5xx codes other than 503. */
+	const serverFallback: ErrorCopy = {
 		title: 'Something went wrong',
 		heading: 'Something broke on our end.',
 		lede: 'We hit a problem loading this page. Try again in a moment.'
 	};
 
-	const copy = $derived(copyByStatus[page.status] ?? fallback);
-	// A 404 is usually a bad link, so only other errors ask the visitor to report it.
-	const showSupport = $derived(page.status !== 404);
+	const serverError = $derived(page.status >= 500);
+	const copy = $derived(
+		copyByStatus[page.status] ?? (serverError ? serverFallback : clientFallback)
+	);
+	// Only server errors are our bug, so only they ask the visitor to report it.
+	const showSupport = $derived(serverError);
 </script>
 
 <svelte:head>
@@ -71,7 +82,9 @@
 			{/if}
 		</div>
 
-		<Button href={resolve('/')} variant="secondary">Back to home</Button>
+		<div class="error__actions">
+			<Button href={resolve('/')} variant="secondary">Back to home</Button>
+		</div>
 	</Container>
 </section>
 
@@ -98,5 +111,11 @@
 	/* The site-wide mailto hover (accent-green) is too dark on bg-forest. */
 	.error__lede a:hover {
 		color: var(--text-on-dark);
+	}
+
+	/* The site-wide focus ring (accent-green) is 1.6:1 on bg-forest. WCAG 2.4.7 needs 3:1. */
+	.error__lede a:focus-visible,
+	.error__actions :global(.btn:focus-visible) {
+		outline-color: var(--text-on-dark);
 	}
 </style>
