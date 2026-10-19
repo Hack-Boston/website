@@ -17,7 +17,6 @@ export const ages = [...Array.from({ length: 13 }, (_, i) => String(18 + i)), '3
 
 /** MLH "Level of Study" list from the organizer guide. Do not change the wording. */
 export const levelsOfStudy = [
-	'Less than Secondary / High School',
 	'Secondary / High School',
 	'Undergraduate University (2 year - community college or similar)',
 	'Undergraduate University (3+ year)',
@@ -26,7 +25,7 @@ export const levelsOfStudy = [
 	'Other Vocational / Trade Program or Apprenticeship',
 	'Post Doctorate',
 	'Other',
-	"I'm not currently a student",
+	'I’m not currently a student',
 	'Prefer not to answer'
 ];
 
@@ -52,16 +51,70 @@ export const allergyOptions = [
 const firstGradYear = new Date().getFullYear();
 export const gradYears = Array.from({ length: 9 }, (_, i) => String(firstGradYear + i));
 
-/** Long-form questions. Q1 is set. Q2 and Q3 are not decided yet (#2). */
-export const shortAnswerQuestions = [
+/** "Is this your first hackathon?" */
+export const firstHackathonOptions = ['Yes', 'No'];
+
+/** "How would you rate your coding experience?" */
+export const codingExperienceLevels = ['Beginner', 'Intermediate', 'Advanced'];
+
+/** "Are you applying as an individual or part of a team?" */
+export const APPLYING_AS_TEAM = 'Part of a team';
+export const applyingAsOptions = ['Individual', APPLYING_AS_TEAM];
+
+/** Teams are up to 4 people: the applicant plus 3 teammates. */
+export const MAX_TEAMMATES = 3;
+
+/** "What is your primary role on a team?" */
+export const teamRoles = [
+	'Frontend',
+	'Backend',
+	'Full-stack',
+	'Mobile',
+	'UI/UX Designer',
+	'Product Manager',
+	'Hardware/Embedded'
+];
+
+/** Long-form questions. Each has a MAX_WORDS limit. `hint` shows under the prompt. */
+export const shortAnswerQuestions: readonly {
+	name: 'projectIdea' | 'proudProject' | 'whyHackBoston' | 'learnedQuickly';
+	/** Used in the error summary, for example "Project idea is missing." */
+	summaryName: string;
+	label: string;
+	hint?: string;
+	placeholder: string;
+}[] = [
 	{
 		name: 'projectIdea',
-		label: 'Describe a project you might build at HackBoston',
+		summaryName: 'Project idea',
+		label: 'Describe a project you might build at HackBoston.',
 		placeholder: 'A few sentences is plenty…'
 	},
-	{ name: 'question2', label: 'Question 2', placeholder: 'Prompt TBD' },
-	{ name: 'question3', label: 'Question 3', placeholder: 'Prompt TBD' }
-] as const;
+	{
+		name: 'proudProject',
+		summaryName: 'Recent project',
+		label: 'Describe a recent technical project or hack you are proud of. What did you learn?',
+		hint: 'Haven’t built a project yet? Describe a piece of technology that fascinates you and why.',
+		placeholder: 'What you built, how, and what you took away from it…'
+	},
+	{
+		name: 'whyHackBoston',
+		summaryName: 'Why HackBoston',
+		label: 'Why do you want to attend HackBoston, and what do you hope to learn or build?',
+		placeholder: 'What draws you to HackBoston…'
+	},
+	{
+		name: 'learnedQuickly',
+		summaryName: 'Learning quickly',
+		label:
+			'Tell us about a time you had to learn a new tool or skill quickly. How did you handle it?',
+		placeholder: 'What you had to learn, and how you went about it…'
+	}
+];
+
+export type ShortAnswerName = (typeof shortAnswerQuestions)[number]['name'];
+
+export type Teammate = { name: string; email: string };
 
 export type RegistrationForm = {
 	firstName: string;
@@ -80,14 +133,32 @@ export type RegistrationForm = {
 	major: string;
 	gradYear: string;
 
+	/** "Yes" or "No". */
+	firstHackathon: string;
+	codingExperience: string;
+	/** Optional. Stored as a full https:// URL. */
+	githubUrl: string;
+	/** Optional. Stored as a full https:// URL. */
+	portfolioUrl: string;
+	/** Optional. Stored as a full https:// URL. */
+	linkedinUrl: string;
+
+	applyingAs: string;
+	/** Only kept when applyingAs is APPLYING_AS_TEAM. */
+	teammates: Teammate[];
+	primaryRole: string;
+
 	tshirtSize: string;
 	allergies: string[];
-	/** "Anything else we should know?" */
+	/** Details when allergies includes OTHER_ALLERGY. */
+	allergiesOther: string;
+	/** "Anything else we should know?" Optional. */
 	dietaryNotes: string;
 
 	projectIdea: string;
-	question2: string;
-	question3: string;
+	proudProject: string;
+	whyHackBoston: string;
+	learnedQuickly: string;
 
 	agreeMlhCodeOfConduct: boolean;
 	agreeMlhDataSharing: boolean;
@@ -128,12 +199,22 @@ export const fieldOrder: FieldName[] = [
 	'levelOfStudy',
 	'major',
 	'gradYear',
+	'firstHackathon',
+	'codingExperience',
+	'githubUrl',
+	'portfolioUrl',
+	'linkedinUrl',
+	'applyingAs',
+	'teammates',
+	'primaryRole',
 	'tshirtSize',
 	'allergies',
+	'allergiesOther',
 	'dietaryNotes',
 	'projectIdea',
-	'question2',
-	'question3',
+	'proudProject',
+	'whyHackBoston',
+	'learnedQuickly',
 	'agreeMlhCodeOfConduct',
 	'agreeMlhDataSharing',
 	'mlhEmails',
@@ -154,12 +235,22 @@ export function emptyRegistration(): RegistrationForm {
 		levelOfStudy: '',
 		major: '',
 		gradYear: '',
+		firstHackathon: '',
+		codingExperience: '',
+		githubUrl: '',
+		portfolioUrl: '',
+		linkedinUrl: '',
+		applyingAs: '',
+		teammates: [],
+		primaryRole: '',
 		tshirtSize: '',
 		allergies: [],
+		allergiesOther: '',
 		dietaryNotes: '',
 		projectIdea: '',
-		question2: '',
-		question3: '',
+		proudProject: '',
+		whyHackBoston: '',
+		learnedQuickly: '',
 		agreeMlhCodeOfConduct: false,
 		agreeMlhDataSharing: false,
 		mlhEmails: false,
@@ -176,8 +267,29 @@ const SHORT_TEXT_MAX = 200;
 const LONG_TEXT_MAX = 5000;
 const countryCodes = new Set(countries.map((c) => c.code));
 
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 const str = (value: unknown) => (typeof value === 'string' ? value.trim() : '');
 const bool = (value: unknown) => value === true;
+
+/**
+ * Turns "github.com/ada" or "https://github.com/ada" into a full https:// URL.
+ * Returns null when it is not a web address, or its host is not `host` (or a subdomain of it).
+ */
+export function normalizeUrl(value: string, host?: string): string | null {
+	const withScheme = /^[a-z][a-z\d+.-]*:\/\//i.test(value) ? value : `https://${value}`;
+	let url: URL;
+	try {
+		url = new URL(withScheme);
+	} catch {
+		return null;
+	}
+	if (url.protocol !== 'https:' && url.protocol !== 'http:') return null;
+	const hostname = url.hostname.toLowerCase();
+	if (!hostname.includes('.')) return null;
+	if (host && hostname !== host && !hostname.endsWith(`.${host}`)) return null;
+	return url.href;
+}
 
 /**
  * Validates a Register payload. `input` can be anything (it comes from JSON on the server).
@@ -213,7 +325,7 @@ export function validateRegistration(
 
 	const email = text('email');
 	required('email', email, 'Enter your email.', 'Email is missing.');
-	if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+	if (email && !EMAIL_PATTERN.test(email)) {
 		fail('email', 'Use your full email, like you@school.edu.', 'Email needs to be a full address.');
 	}
 
@@ -280,7 +392,106 @@ export function validateRegistration(
 		fail('gradYear', 'Pick a year from the list.', 'Graduation year is not valid.');
 	}
 
-	// 03 The weekend
+	const oneOf = (field: FieldName, options: string[], message: string, summary: string) => {
+		const value = text(field);
+		if (!value) fail(field, message, summary);
+		else if (!options.includes(value)) fail(field, 'Pick an option from the list.', summary);
+		return value;
+	};
+
+	// 03 Experience
+	const firstHackathon = oneOf(
+		'firstHackathon',
+		firstHackathonOptions,
+		'Pick Yes or No.',
+		'First hackathon is missing.'
+	);
+	const codingExperience = oneOf(
+		'codingExperience',
+		codingExperienceLevels,
+		'Pick the level that fits best.',
+		'Coding experience is missing.'
+	);
+
+	/** Optional link. Blank is fine; anything typed must be a web address on `host`. */
+	const link = (field: FieldName, host: string | undefined, example: string, summary: string) => {
+		const value = text(field, 500);
+		if (!value) return '';
+		const url = normalizeUrl(value, host);
+		if (!url) fail(field, `Use a full link, like ${example}.`, summary);
+		return url ?? value;
+	};
+	const githubUrl = link(
+		'githubUrl',
+		'github.com',
+		'github.com/your-username',
+		'GitHub link is not valid.'
+	);
+	const portfolioUrl = link(
+		'portfolioUrl',
+		undefined,
+		'yourname.dev',
+		'Portfolio link is not valid.'
+	);
+	const linkedinUrl = link(
+		'linkedinUrl',
+		'linkedin.com',
+		'linkedin.com/in/your-name',
+		'LinkedIn link is not valid.'
+	);
+
+	// 04 Team
+	const applyingAs = oneOf(
+		'applyingAs',
+		applyingAsOptions,
+		'Pick Individual or Part of a team.',
+		'Team question is missing.'
+	);
+
+	let teammates: Teammate[] = [];
+	if (applyingAs === APPLYING_AS_TEAM) {
+		const rows: unknown[] = Array.isArray(raw.teammates) ? raw.teammates : [];
+		teammates = rows
+			.map((row) => {
+				const r = (row && typeof row === 'object' ? row : {}) as Record<string, unknown>;
+				return { name: str(r.name), email: str(r.email) };
+			})
+			// Fully blank rows are ignored.
+			.filter((t) => t.name || t.email);
+
+		if (teammates.length === 0) {
+			fail('teammates', 'Add at least one teammate’s name and email.', 'Teammates are missing.');
+		} else if (teammates.length > MAX_TEAMMATES) {
+			fail(
+				'teammates',
+				`Teams can have up to ${MAX_TEAMMATES} teammates besides you.`,
+				'Too many teammates.'
+			);
+		} else if (
+			teammates.some(
+				(t) =>
+					!t.name ||
+					t.name.length > SHORT_TEXT_MAX ||
+					!EMAIL_PATTERN.test(t.email) ||
+					t.email.length > SHORT_TEXT_MAX
+			)
+		) {
+			fail(
+				'teammates',
+				'Each teammate needs a name and a full email, like you@school.edu.',
+				'A teammate’s details are incomplete.'
+			);
+		}
+	}
+
+	const primaryRole = oneOf(
+		'primaryRole',
+		teamRoles,
+		'Pick the role you usually take.',
+		'Primary role is missing.'
+	);
+
+	// 05 The weekend
 	const tshirtSize = text('tshirtSize');
 	required('tshirtSize', tshirtSize, 'Pick a T-shirt size.', 'T-shirt size is missing.');
 	if (tshirtSize && !tshirtSizes.includes(tshirtSize)) {
@@ -306,21 +517,26 @@ export function validateRegistration(
 		fail('allergies', 'Pick None or your allergies, not both.', 'Food allergies conflict.');
 	}
 
-	const dietaryNotes = text('dietaryNotes', 1000);
+	// Only kept when "Other" is picked; the field is hidden otherwise.
+	let allergiesOther = text('allergiesOther', 500);
 	if (allergies.includes(OTHER_ALLERGY)) {
 		required(
-			'dietaryNotes',
-			dietaryNotes,
-			'You picked Other. Tell us what it is.',
-			'Other allergy needs details.'
+			'allergiesOther',
+			allergiesOther,
+			'Tell us your other allergies or restrictions.',
+			'Other allergies need details.'
 		);
+	} else {
+		allergiesOther = '';
 	}
 
-	// 04 Short answers
-	const answers = {} as Record<(typeof shortAnswerQuestions)[number]['name'], string>;
-	shortAnswerQuestions.forEach((question, i) => {
+	const dietaryNotes = text('dietaryNotes', 1000);
+
+	// 06 Short answers
+	const answers = {} as Record<ShortAnswerName, string>;
+	shortAnswerQuestions.forEach((question) => {
 		const value = text(question.name, LONG_TEXT_MAX);
-		const what = i === 0 ? 'Project idea' : `Question ${i + 1}`;
+		const what = question.summaryName;
 		required(question.name, value, 'Write a short answer.', `${what} is missing.`);
 		const words = countWords(value);
 		if (words > MAX_WORDS) {
@@ -333,7 +549,7 @@ export function validateRegistration(
 		answers[question.name] = value;
 	});
 
-	// 05 Agreements
+	// 07 Agreements
 	const mustAgree = (field: FieldName, summary: string) => {
 		const value = bool(raw[field]);
 		if (!value) fail(field, 'You need to agree to this to register.', summary);
@@ -369,8 +585,17 @@ export function validateRegistration(
 			levelOfStudy,
 			major,
 			gradYear,
+			firstHackathon,
+			codingExperience,
+			githubUrl,
+			portfolioUrl,
+			linkedinUrl,
+			applyingAs,
+			teammates,
+			primaryRole,
 			tshirtSize,
 			allergies,
+			allergiesOther,
 			dietaryNotes,
 			...answers,
 			agreeMlhCodeOfConduct,

@@ -12,6 +12,8 @@
 		/** The control's id. The label points at it. */
 		id: string;
 		label: string;
+		/** Extra guidance between the label and the control, for example an alternate prompt. */
+		hint?: string;
 		/** Help text under the control. An error replaces it. */
 		help?: string;
 		error?: string;
@@ -20,14 +22,21 @@
 		children: Snippet<[ControlProps]>;
 	}
 
-	let { id, label, help, error, class: className = '', children }: Props = $props();
+	let { id, label, hint, help, error, class: className = '', children }: Props = $props();
 
-	const describedby = $derived(error ? `${id}-error` : help ? `${id}-help` : undefined);
+	const describedby = $derived(
+		[hint && `${id}-hint`, error ? `${id}-error` : help && `${id}-help`]
+			.filter(Boolean)
+			.join(' ') || undefined
+	);
 </script>
 
 <!-- Figma "Register / Field states" (79:621): mono label, control, then help or error. -->
 <div class="field {className}">
 	<label class="field__label" for={id}>{label}</label>
+	{#if hint}
+		<p id="{id}-hint" class="field__help">{hint}</p>
+	{/if}
 	{@render children({ id, describedby, invalid: Boolean(error) })}
 	{#if error}
 		<p id="{id}-error" class="field__error">{error}</p>

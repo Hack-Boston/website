@@ -9,6 +9,12 @@
 		NO_ALLERGIES,
 		OTHER_ALLERGY,
 		OTHER_SCHOOL,
+		APPLYING_AS_TEAM,
+		MAX_TEAMMATES,
+		applyingAsOptions,
+		codingExperienceLevels,
+		firstHackathonOptions,
+		teamRoles,
 		SCHOOLS_CSV_URL,
 		ages,
 		allergyOptions,
@@ -110,6 +116,34 @@
 		oninput: () => recheck(field)
 	});
 
+	/** Single-choice chip groups (rendered as radio buttons). */
+	type ChoiceField =
+		| 'firstHackathon'
+		| 'codingExperience'
+		| 'applyingAs'
+		| 'primaryRole'
+		| 'tshirtSize';
+
+	function onApplyingAsChange() {
+		// Start the teammate list with one empty row.
+		if (form.applyingAs === APPLYING_AS_TEAM && form.teammates.length === 0) {
+			form.teammates.push({ name: '', email: '' });
+		}
+		recheck('teammates');
+	}
+
+	function addTeammate() {
+		if (form.teammates.length >= MAX_TEAMMATES) return;
+		form.teammates.push({ name: '', email: '' });
+	}
+
+	async function removeTeammate(index: number) {
+		form.teammates.splice(index, 1);
+		recheck('teammates');
+		await tick();
+		document.getElementById(fieldId('teammates'))?.focus();
+	}
+
 	/** For chip and checkbox groups: check when focus leaves the whole group. */
 	function onGroupFocusout(field: FieldName, event: FocusEvent) {
 		const group = event.currentTarget as HTMLElement;
@@ -141,7 +175,7 @@
 		}
 		form.allergies = allergyOptions.filter((a) => next.includes(a));
 		recheck('allergies');
-		recheck('dietaryNotes');
+		recheck('allergiesOther');
 	}
 
 	function focusField(field: FieldName) {
@@ -257,7 +291,7 @@
 {:else}
 	<PageHeader
 		title="Save your spot."
-		lede="Takes about five minutes. We read every application, and you'll hear back by email."
+		lede="We read every application, and you'll hear back by email."
 	/>
 
 	<Section containerClass="register">
@@ -552,13 +586,13 @@
 						{/snippet}
 					</Field>
 
-					<Field id={fieldId('major')} label="Major" error={errors.major?.message}>
+					<Field id={fieldId('major')} label="Major / Field of Study" error={errors.major?.message}>
 						{#snippet children({ id, describedby, invalid })}
 							<input
 								{id}
 								class="control"
 								type="text"
-								placeholder="Computer Science"
+								placeholder="Your cool major here :)"
 								maxlength="200"
 								required
 								aria-describedby={describedby}
@@ -598,39 +632,190 @@
 				</div>
 			</section>
 
-			<!-- 03 The weekend -->
-			<section class="part" aria-labelledby="part-weekend">
-				<h2 id="part-weekend" class="part__title">
-					<span class="part__num">03</span><span class="display-m">The weekend</span>
+			<!-- 03 Experience -->
+			<section class="part" aria-labelledby="part-experience">
+				<h2 id="part-experience" class="part__title">
+					<span class="part__num">03</span><span class="display-m">Experience</span>
 				</h2>
 				<div class="stack">
-					<fieldset
-						class="group"
-						aria-describedby={errors.tshirtSize ? 'tshirt-error' : undefined}
-						onfocusout={(event) => onGroupFocusout('tshirtSize', event)}
-					>
-						<legend class="group__label">T-shirt size (adult unisex)</legend>
-						<div class="chips" class:chips--invalid={errors.tshirtSize}>
-							{#each tshirtSizes as size, i (size)}
-								<label class="chip">
-									<input
-										id={i === 0 ? fieldId('tshirtSize') : undefined}
-										class="chip__input"
-										type="radio"
-										name="tshirtSize"
-										value={size}
-										required
-										bind:group={form.tshirtSize}
-										onchange={() => check('tshirtSize')}
-									/>
-									<span class="chip__face">{size}</span>
-								</label>
-							{/each}
-						</div>
-						{#if errors.tshirtSize}
-							<p id="tshirt-error" class="error-text">{errors.tshirtSize.message}</p>
-						{/if}
-					</fieldset>
+					{@render choiceGroup(
+						'firstHackathon',
+						'Is this your first hackathon?',
+						firstHackathonOptions
+					)}
+					{@render choiceGroup(
+						'codingExperience',
+						'How would you rate your coding experience?',
+						codingExperienceLevels
+					)}
+
+					<div class="grid">
+						<Field
+							id={fieldId('githubUrl')}
+							label="GitHub (optional)"
+							help="Share GitHub, a portfolio, or both."
+							error={errors.githubUrl?.message}
+						>
+							{#snippet children({ id, describedby, invalid })}
+								<input
+									{id}
+									class="control"
+									type="url"
+									inputmode="url"
+									placeholder="github.com/your-username"
+									maxlength="500"
+									aria-describedby={describedby}
+									aria-invalid={invalid}
+									bind:value={form.githubUrl}
+									{...validateOn('githubUrl')}
+								/>
+							{/snippet}
+						</Field>
+
+						<Field
+							id={fieldId('portfolioUrl')}
+							label="Portfolio (optional)"
+							error={errors.portfolioUrl?.message}
+						>
+							{#snippet children({ id, describedby, invalid })}
+								<input
+									{id}
+									class="control"
+									type="url"
+									inputmode="url"
+									autocomplete="url"
+									placeholder="yourname.dev"
+									maxlength="500"
+									aria-describedby={describedby}
+									aria-invalid={invalid}
+									bind:value={form.portfolioUrl}
+									{...validateOn('portfolioUrl')}
+								/>
+							{/snippet}
+						</Field>
+
+						<Field
+							id={fieldId('linkedinUrl')}
+							class="col-span-full"
+							label="LinkedIn (optional)"
+							error={errors.linkedinUrl?.message}
+						>
+							{#snippet children({ id, describedby, invalid })}
+								<input
+									{id}
+									class="control"
+									type="url"
+									inputmode="url"
+									placeholder="linkedin.com/in/your-name"
+									maxlength="500"
+									aria-describedby={describedby}
+									aria-invalid={invalid}
+									bind:value={form.linkedinUrl}
+									{...validateOn('linkedinUrl')}
+								/>
+							{/snippet}
+						</Field>
+					</div>
+				</div>
+			</section>
+
+			<!-- 04 Team -->
+			<section class="part" aria-labelledby="part-team">
+				<h2 id="part-team" class="part__title">
+					<span class="part__num">04</span><span class="display-m">Team</span>
+				</h2>
+				<div class="stack">
+					{@render choiceGroup(
+						'applyingAs',
+						'Are you applying as an individual or part of a team?',
+						applyingAsOptions,
+						onApplyingAsChange
+					)}
+
+					{#if form.applyingAs === APPLYING_AS_TEAM}
+						<fieldset
+							class="group"
+							aria-describedby={errors.teammates
+								? `${fieldId('teammates')}-error`
+								: `${fieldId('teammates')}-help`}
+							onfocusout={(event) => onGroupFocusout('teammates', event)}
+						>
+							<legend class="group__label">Your teammates</legend>
+							<p id="{fieldId('teammates')}-help" class="help-text">
+								Each teammate fills out their own application, and we review your team together. Up
+								to {MAX_TEAMMATES} teammates.
+							</p>
+							<div class="teammates">
+								{#each form.teammates as teammate, i (i)}
+									<div class="teammate">
+										<input
+											id={i === 0 ? fieldId('teammates') : undefined}
+											class="control teammate__name"
+											type="text"
+											placeholder="Name"
+											autocomplete="off"
+											maxlength="200"
+											aria-label="Teammate {i + 1} name"
+											aria-invalid={Boolean(errors.teammates)}
+											bind:value={teammate.name}
+											oninput={() => recheck('teammates')}
+										/>
+										<input
+											class="control teammate__email"
+											type="email"
+											inputmode="email"
+											placeholder="teammate@school.edu"
+											autocomplete="off"
+											maxlength="200"
+											aria-label="Teammate {i + 1} email"
+											aria-invalid={Boolean(errors.teammates)}
+											bind:value={teammate.email}
+											oninput={() => recheck('teammates')}
+										/>
+										{#if form.teammates.length > 1}
+											<button
+												type="button"
+												class="teammate__remove"
+												aria-label="Remove teammate {i + 1}"
+												onclick={() => removeTeammate(i)}
+											>
+												<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+													<path
+														d="M2 2l10 10M12 2L2 12"
+														fill="none"
+														stroke="currentColor"
+														stroke-width="1.5"
+													/>
+												</svg>
+											</button>
+										{/if}
+									</div>
+								{/each}
+							</div>
+							{#if form.teammates.length < MAX_TEAMMATES}
+								<div>
+									<Button variant="secondary" size="sm" onclick={addTeammate}>Add teammate</Button>
+								</div>
+							{/if}
+							{#if errors.teammates}
+								<p id="{fieldId('teammates')}-error" class="error-text">
+									{errors.teammates.message}
+								</p>
+							{/if}
+						</fieldset>
+					{/if}
+
+					{@render choiceGroup('primaryRole', 'What is your primary role on a team?', teamRoles)}
+				</div>
+			</section>
+
+			<!-- 05 The weekend -->
+			<section class="part" aria-labelledby="part-weekend">
+				<h2 id="part-weekend" class="part__title">
+					<span class="part__num">05</span><span class="display-m">The weekend</span>
+				</h2>
+				<div class="stack">
+					{@render choiceGroup('tshirtSize', 'T-shirt size (adult unisex)', tshirtSizes)}
 
 					<fieldset
 						class="group"
@@ -661,6 +846,29 @@
 						{/if}
 					</fieldset>
 
+					{#if form.allergies.includes(OTHER_ALLERGY)}
+						<Field
+							id={fieldId('allergiesOther')}
+							label="Other allergies or restrictions"
+							error={errors.allergiesOther?.message}
+						>
+							{#snippet children({ id, describedby, invalid })}
+								<input
+									{id}
+									class="control"
+									type="text"
+									placeholder="For example: kiwi, halal, vegan"
+									maxlength="500"
+									required
+									aria-describedby={describedby}
+									aria-invalid={invalid}
+									bind:value={form.allergiesOther}
+									{...validateOn('allergiesOther')}
+								/>
+							{/snippet}
+						</Field>
+					{/if}
+
 					<Field
 						id={fieldId('dietaryNotes')}
 						label="Anything else we should know?"
@@ -671,9 +879,8 @@
 								{id}
 								class="control"
 								type="text"
-								placeholder="Other allergies or needs"
+								placeholder="Anything that would help us plan your weekend"
 								maxlength="1000"
-								required={form.allergies.includes(OTHER_ALLERGY)}
 								aria-describedby={describedby}
 								aria-invalid={invalid}
 								bind:value={form.dietaryNotes}
@@ -684,10 +891,10 @@
 				</div>
 			</section>
 
-			<!-- 04 Short answers -->
+			<!-- 06 Short answers -->
 			<section class="part" aria-labelledby="part-answers">
 				<h2 id="part-answers" class="part__title">
-					<span class="part__num">04</span><span class="display-m">Short answers</span>
+					<span class="part__num">06</span><span class="display-m">Short answers</span>
 				</h2>
 				<div class="stack">
 					{#each shortAnswerQuestions as question (question.name)}
@@ -695,6 +902,7 @@
 						<Field
 							id={fieldId(question.name)}
 							label={question.label}
+							hint={question.hint}
 							help="{MAX_WORDS} words max · {words} / {MAX_WORDS}"
 							error={errors[question.name]?.message}
 						>
@@ -717,20 +925,15 @@
 				</div>
 			</section>
 
-			<!-- 05 Agreements -->
+			<!-- 07 Agreements -->
 			<section class="part" aria-labelledby="part-agreements">
 				<h2 id="part-agreements" class="part__title">
-					<span class="part__num">05</span><span class="display-m">Agreements</span>
+					<span class="part__num">07</span><span class="display-m">Agreements</span>
 				</h2>
 				<div class="stack stack--tight">
-					<div class="note">
-						<p class="eyebrow text-accent-green">MLH partnership</p>
-						<p>
-							We are currently in the process of partnering with MLH. The following 3 checkboxes are
-							for this partnership. If we do not end up partnering with MLH, your information will
-							not be shared.
-						</p>
-					</div>
+					<p class="help-text">Boxes marked * are required.</p>
+
+					<h3 class="agree__heading eyebrow text-accent-green">Major League Hacking (MLH)</h3>
 
 					{#snippet external(href: string, text: string)}
 						<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- external URL -->
@@ -769,7 +972,7 @@
 						opportunities, and community announcements.
 					{/snippet}
 
-					<hr class="rule" />
+					<h3 class="agree__heading eyebrow text-accent-green">HackBoston</h3>
 
 					{@render checkbox('agreeHackBostonPolicies', true, policiesText)}
 					{#snippet policiesText()}
@@ -798,6 +1001,40 @@
 		</form>
 	</Section>
 {/if}
+
+{#snippet choiceGroup(field: ChoiceField, legend: string, options: string[], onpick?: () => void)}
+	{@const errorId = `${fieldId(field)}-error`}
+	<fieldset
+		class="group"
+		aria-describedby={errors[field] ? errorId : undefined}
+		onfocusout={(event) => onGroupFocusout(field, event)}
+	>
+		<legend class="group__label">{legend}</legend>
+		<div class="chips" class:chips--invalid={errors[field]}>
+			{#each options as option, i (option)}
+				<label class="chip">
+					<input
+						id={i === 0 ? fieldId(field) : undefined}
+						class="chip__input"
+						type="radio"
+						name={field}
+						value={option}
+						required
+						bind:group={form[field]}
+						onchange={() => {
+							check(field);
+							onpick?.();
+						}}
+					/>
+					<span class="chip__face">{option}</span>
+				</label>
+			{/each}
+		</div>
+		{#if errors[field]}
+			<p id={errorId} class="error-text">{errors[field]?.message}</p>
+		{/if}
+	</fieldset>
+{/snippet}
 
 {#snippet chevron()}
 	<svg class="select__chevron" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
@@ -1154,23 +1391,76 @@
 
 	/* MLH note and agreements. */
 	.note {
+		margin: 0;
 		padding: 12px 16px;
 		border-radius: 8px;
 		background: var(--bg-paper-deep);
 	}
 
-	.note p {
-		margin: 0;
+	.agree__heading {
+		margin: 16px 0 0;
 	}
 
-	.note .eyebrow {
-		margin-bottom: 4px;
+	.agree__heading:first-of-type {
+		margin-top: 0;
 	}
 
-	.rule {
-		margin: 8px 0;
-		border: 0;
-		border-top: 1px solid color-mix(in srgb, var(--text-ink) 15%, transparent);
+	/* Teammate rows: name, email, remove. On phones the email drops under the name. */
+	.teammates {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.teammate {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 48px;
+		gap: 8px 12px;
+	}
+
+	.teammate__name {
+		grid-column: 1;
+	}
+
+	.teammate__email {
+		grid-column: 1;
+	}
+
+	.teammate__remove {
+		grid-column: 2;
+		grid-row: 1;
+	}
+
+	@media (min-width: 640px) {
+		.teammate {
+			grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 48px;
+		}
+
+		.teammate__email {
+			grid-column: 2;
+			grid-row: 1;
+		}
+
+		.teammate__remove {
+			grid-column: 3;
+		}
+	}
+
+	.teammate__remove {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 48px;
+		height: 48px;
+		border: 1.5px solid var(--text-ink);
+		border-radius: 8px;
+		background: var(--bg-paper);
+		color: var(--text-ink);
+		cursor: pointer;
+	}
+
+	.teammate__remove:hover {
+		background: var(--bg-paper-deep);
 	}
 
 	.check {
