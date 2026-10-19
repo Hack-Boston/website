@@ -8,6 +8,10 @@
 		"binding": "ASSETS",
 		"directory": ".svelte-kit/cloudflare"
 	},
+	"routes": [{ "pattern": "hackboston.dev", "custom_domain": true }],
+	// The site is only public on hackboston.dev. Branch builds keep Preview URLs.
+	"workers_dev": false,
+	"preview_urls": true,
 	"observability": {
 		"enabled": true
 	}
