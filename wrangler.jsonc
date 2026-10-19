@@ -1,7 +1,14 @@
 {
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "hackboston",
-	"pages_build_output_dir": ".svelte-kit/cloudflare",
+	"main": ".svelte-kit/cloudflare/_worker.js",
 	"compatibility_date": "2026-10-08",
-	"compatibility_flags": ["nodejs_als"]
+	"compatibility_flags": ["nodejs_als"],
+	"assets": {
+		"binding": "ASSETS",
+		"directory": ".svelte-kit/cloudflare"
+	},
+	"observability": {
+		"enabled": true
+	}
 }
