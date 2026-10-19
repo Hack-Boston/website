@@ -94,56 +94,67 @@
             </div>
         </div>
    </Section>
-   <Section>
+
+    <Section>
         <h2 class="display-l font-display">Sponsorship tiers</h2>
-        <div class="grid grid-cols-4 mt-10 border-t-2 border-b-2">
+
+        <div class="mt-10 grid grid-cols-1 border-t-2 border-b-2 md:grid-cols-2 lg:grid-cols-4">
             <!-- Dewdrop -->
-            <div class="py-6 flex flex-col gap-2 border-r">
+            <div class="flex flex-col gap-2 border-b py-6 md:border-r md:pl-6 lg:border-b-0 lg:first:pl-0">
                 <span class="display-s">Dewdrop</span>
                 <span class="font-label text-accent-green">$500+</span>
             </div>
-            <!-- Dewdrop -->
-            <div class="py-6 flex flex-col gap-2 border-r pl-6">
+
+            <!-- Crystal -->
+            <div class="flex flex-col gap-2 border-b py-6 md:pl-6 lg:border-b-0 lg:border-r">
                 <span class="display-s">Crystal</span>
                 <span class="font-label text-accent-green">$1,000+</span>
             </div>
-            <!-- Dewdrop -->
-            <div class="py-6 flex flex-col gap-2 border-r pl-6">
+
+            <!-- Aurora -->
+            <div class="flex flex-col gap-2 border-b py-6 md:border-r md:border-b-0 md:pl-6 lg:border-b-0">
                 <span class="display-s">Aurora</span>
                 <span class="font-label text-accent-green">$5,000+</span>
             </div>
-            <div class="py-6 flex flex-col gap-2 pl-6">
+
+            <!-- Cosmic -->
+            <div class="flex flex-col gap-2 py-6 md:pl-6">
                 <span class="display-s">Cosmic</span>
                 <span class="font-label text-accent-green">$10,000+</span>
             </div>
         </div>
-        <div class="flex gap-4 my-10">
-            <span class="font-body">Every benefit, tier by tier, is in the prospectus.</span>
-           <Button
-            href="/sponsorship-prospectus.pdf"
-            target="_blank"
-            variant="secondary"
-             class="border-text-on-dark! text-bg-paper p-0! hover:underline! hover:bg-transparent!"
-        >
-            View the prospectus ↗
-        </Button>
-    </div>
-    <div
-        class="flex h-auto flex-col items-start justify-between gap-2 rounded-card bg-bg-green-wash p-10 text-text-ink sm:h-[141px] sm:flex-row sm:items-center"
-    >
-        <div class="flex flex-col text-left">
-            <span class="text-lede text-text-muted">
-                Want something custom? Sponsor a meal or an activity, or send mentors, APIs, or hardware, and we’ll put together a package around your goals.
+
+        <div class="my-10 flex flex-col gap-4 sm:flex-row sm:items-center">
+            <span class="font-body">
+                Every benefit, tier by tier, is in the prospectus.
             </span>
+
+            <Button
+                href="/sponsorship-prospectus.pdf"
+                target="_blank"
+                variant="secondary"
+                class="border-text-on-dark! text-bg-paper p-0! hover:underline! hover:bg-transparent!"
+            >
+                View the prospectus ↗
+            </Button>
         </div>
 
-        <a
-            href="mailto:sponsorship@hackboston.dev" target="_blank"
-            class="rounded-pill bg-bg-forest px-6 py-4 label-mono text-bg-paper no-underline hover:underline"
+        <div
+            class="flex h-auto flex-col items-start justify-between gap-6 rounded-card bg-bg-green-wash p-6 text-text-ink sm:p-8 md:flex-row md:items-center lg:p-10"
         >
-            sponsorship@hackboston.dev
-        </a>
-    </div>
-        
-   </Section>
+            <div class="flex flex-col text-left">
+                <span class="text-lede text-text-muted">
+                    Want something custom? Sponsor a meal or an activity, or send mentors, APIs, or hardware, and we’ll put together a package around your goals.
+                </span>
+            </div>
+
+            <a
+                href="mailto:sponsorship@hackboston.dev"
+                class="break-all rounded-pill bg-bg-forest px-6 py-4 label-mono text-bg-paper no-underline hover:underline"
+            >
+                sponsorship@hackboston.dev
+            </a>
+        </div>
+    </Section>
+
 </div>
