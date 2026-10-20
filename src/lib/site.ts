@@ -36,25 +36,6 @@ export const navLinks: NavLink[] = [
 	{ label: 'FAQ', href: '/faq' }
 ];
 
-<<<<<<< Updated upstream
-=======
-/** Footer "Pages" column, split into the two Figma columns. */
-export const footerPageColumns: NavLink[][] = [
-    [
-        { label: 'Home', href: '/' },
-        { label: 'About', href: '/about' },
-        { label: 'Team', href: '/team' }
-    ],
-    [
-        { label: 'Sponsors', href: '/sponsors' },
-        { label: 'FAQ', href: '/faq' },
-        { label: 'Register', href: registerHref },
-        { label: 'Code of Conduct', href: '/conduct' }
-    ]
-];
-
-
->>>>>>> Stashed changes
 export const contactEmails: ContactEmail[] = [
 	{ label: 'General', email: 'team@hackboston.dev' },
 	{ label: 'Sponsors', email: 'sponsorship@hackboston.dev' },
