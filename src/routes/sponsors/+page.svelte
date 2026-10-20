@@ -12,8 +12,8 @@
 
 <div class="bg-bg-paper font-label">
     <PageHeader
-    title="Sponsor HackBoston."
-    lede="Put your team in the room with ~200 students who are actively building. Recruit, get your brand in front of hackers, and see how people use your tools firsthand."
+    title="Sponsor HackBoston"
+    lede="Spring 2027 in Boston. Put your team in the room with about 200 students building for a weekend. Recruit, get your brand in front of students, and see how they use your tools firsthand."
     mascot={false}
     sponsor={true}
     >
@@ -31,10 +31,8 @@
             href="mailto:sponsorship@hackboston.dev"
             variant="secondary"
             class="border-2! border-solid! border-bg-paper! bg-transparent! text-text-on-dark! hover:underline!"
-            target="_blank"
-
         >
-            Get in touch about sponsorship
+            Get in touch
         </Button>
     </div>
 </PageHeader>
@@ -50,7 +48,7 @@
                 </span>
 
                 <span class="col-span-7 font-body text-text-muted">
-                    Meet CS and engineering students from across Boston at the sponsor fair and in the hacking spaces. Internships, co-ops, full-time.
+                    Meet CS and engineering students from across Boston in the hacking space and at judging. Hire for internships, co-ops, and full-time roles.
                 </span>
             </div>
 
@@ -63,7 +61,7 @@
                 </span>
 
                 <span class="col-span-7 font-body text-text-muted">
-                    Your brand on our site, socials, shirts, and banners, and on stage at the opening and closing ceremonies.
+                    Your logo on our site, socials, and shirts. Higher tiers add banners and stage time at opening and closing ceremonies.
                 </span>
             </div>
 
@@ -76,7 +74,7 @@
                 </span>
 
                 <span class="col-span-7 font-body text-text-muted">
-                    Pitch your APIs, propose a real-world challenge, run a workshop, and watch students build with what you make.
+                    Demo your APIs, create a track, run a workshop, and watch students build with what you make. What's included depends on your tier.
                 </span>
             </div>
 
@@ -89,7 +87,7 @@
                 </span>
 
                 <span class="col-span-7 font-body text-text-muted">
-                    Every dollar goes to venue, food, and swag for the next generation of builders here.
+                   Every dollar goes into running the event: venue, food, and swag for Boston's student builders.
                 </span>
             </div>
         </div>
@@ -133,9 +131,9 @@
                 href="/sponsorship-prospectus.pdf"
                 target="_blank"
                 variant="secondary"
-                class="border-text-on-dark! text-bg-paper p-0! hover:underline! hover:bg-transparent!"
+                class="border-text-on-dark! text-accent-green! p-0! hover:underline! hover:bg-transparent!"
             >
-                View the prospectus ↗
+                Download PDF ↗
             </Button>
         </div>
 
@@ -144,7 +142,7 @@
         >
             <div class="flex flex-col text-left">
                 <span class="text-lede text-text-muted">
-                    Want something custom? Sponsor a meal or an activity, or send mentors, APIs, or hardware, and we’ll put together a package around your goals.
+                    Want something custom? Sponsor a meal or an activity, or send mentors, API credits, or hardware. We'll build a package around your goals.
                 </span>
             </div>
 
