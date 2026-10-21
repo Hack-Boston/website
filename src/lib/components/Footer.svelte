@@ -1,17 +1,21 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import { resolve } from '$app/paths';
+	import type { Pathname } from '$app/types';
 	import {
 		contactEmails,
 		fiscalSponsorLine,
+		footerPageColumns,
 		socialLinks,
 		type ContactEmail,
+		type NavLink,
 		type SocialLink
 	} from '$lib/site';
 	import Container from './Container.svelte';
 	import Logo from './Logo.svelte';
 
 	interface Props {
+		pageColumns?: NavLink[][];
 		contacts?: ContactEmail[];
 		/** Social links (#17). The Socials column shows only when this has items or `socialsSlot` is set. */
 		socials?: SocialLink[];
@@ -19,7 +23,7 @@
 		socialsSlot?: Snippet;
 	}
 
-	let { contacts = contactEmails, socials = socialLinks, socialsSlot }: Props = $props();
+	let { pageColumns = footerPageColumns, contacts = contactEmails, socials = socialLinks, socialsSlot }: Props = $props();
 
 	const year = new Date().getFullYear();
 	const showSocials = $derived(Boolean(socialsSlot) || socials.length > 0);
@@ -35,6 +39,26 @@
 			</div>
 
 			<div class="flex flex-col gap-10 sm:flex-row sm:flex-wrap sm:gap-x-24 sm:gap-y-10">
+				<nav aria-labelledby="footer-pages" class="flex flex-col gap-3">
+					<h2 id="footer-pages" class="footer__heading">Pages</h2>
+
+					<div class="flex gap-12">
+						{#each pageColumns as column, i (i)}
+							<ul class="flex flex-col gap-2">
+								{#each column as link (link.label)}
+									<li>
+										<a
+											class="footer__link"
+											href={resolve(link.href as Pathname)}
+										>
+											{link.label}
+										</a>
+									</li>
+								{/each}
+							</ul>
+						{/each}
+					</div>
+				</nav>
 				<div class="flex flex-col gap-3">
 					<h2 class="footer__heading">Contact</h2>
 					<dl class="flex flex-col gap-2">
