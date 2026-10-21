@@ -2,7 +2,7 @@
 
 The website for the HackBoston hackathon, hosted at [hackboston.dev](https://hackboston.dev).
 
-The site is built with [SvelteKit](https://svelte.dev/docs/kit) (Svelte 5 + TypeScript) and deployed to [Cloudflare Workers](https://developers.cloudflare.com/workers/) using the SvelteKit Cloudflare adapter.
+The site is built with [SvelteKit](https://svelte.dev/docs/kit) (Svelte 5 + TypeScript) and deployed to [Cloudflare Pages](https://developers.cloudflare.com/pages/) using the SvelteKit Cloudflare adapter.
 
 ## Prerequisites
 
@@ -39,6 +39,6 @@ The site will be available at [http://localhost:5173](http://localhost:5173). To
 | `src/app.html`     | HTML template wrapping every page             |
 | `static/`          | Static files served as-is (e.g. `robots.txt`) |
 | `svelte.config.js` | SvelteKit configuration                       |
-| `wrangler.jsonc`   | Cloudflare Workers deployment configuration   |
+| `wrangler.jsonc`   | Cloudflare Pages deployment configuration     |
 
 To add a new page, create a `+page.svelte` file in a folder under `src/routes/`. For example, `src/routes/events/+page.svelte` is served at `/events`.
