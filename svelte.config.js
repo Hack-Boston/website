@@ -6,7 +6,22 @@ const config = {
 	preprocess: vitePreprocess(),
 
 	kit: {
-		adapter: adapter()
+		adapter: adapter({
+			// Pages allows 100 rules in _routes.json. The default lists every static file
+			// one by one and already reaches 100, so exclude the static folders as globs.
+			routes: {
+				include: ['/*'],
+				exclude: [
+					'<build>',
+					'<prerendered>',
+					'<redirects>',
+					'/assets/*',
+					'/fonts/*',
+					'/images/*',
+					'/robots.txt'
+				]
+			}
+		})
 	}
 };
 
