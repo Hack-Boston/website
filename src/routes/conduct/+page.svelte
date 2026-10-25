@@ -1,5 +1,5 @@
 
-<script>
+<script lang="ts">
     import Container from '$lib/components/Container.svelte';
     import bug from '$lib/assets/bug-light.svg';
 
@@ -14,6 +14,10 @@
 
 <svelte:head>
     <title>HackBoston - Code of Conduct</title>
+    <meta
+        name="description"
+        content="Learn about the HackBoston Code of Conduct, reporting procedures, and our commitment to a safe and welcoming event."
+    />
 </svelte:head>
 
 <!-- HEADER -->
@@ -38,33 +42,43 @@
 </header>
 
 <!-- MAIN CONTENT -->
-<section class="conduct-section">
+<div class="conduct-section">
     <Container>
         <div class="conduct-layout">
 
             <!-- LEFT NAVIGATION -->
             <aside class="sidebar">
-                <h3>ON THIS PAGE</h3>
+                <h2 class="sidebar-heading">ON THIS PAGE</h2>
 
                 <nav aria-label="On this page">
                     {#each sections as section}
-                        <a href={'#' + section.id}>
+                        <a
+                            class="conduct-link sidebar-link"
+                            href={'#' + section.id}
+                        >
                             {section.title}
                         </a>
                     {/each}
                 </nav>
 
                 <div class="sidebar-contact">
-                    Questions about the policy? Email
-                    <a href="mailto:team@hackboston.dev">team@hackboston.dev</a>.
+                    <p>
+                        Questions about the policy? Email
+                        <a
+                            class="conduct-link"
+                            href="mailto:team@hackboston.dev"
+                        >team@hackboston.dev</a>.
+                    </p>
                 </div>
             </aside>
 
             <!-- RIGHT CONTENT -->
             <div class="content">
 
+                <!-- SHORT VERSION -->
                 <section id="short">
                     <h2>The short version</h2>
+
                     <p>
                         Be respectful. Harassment and discrimination
                         aren't tolerated in any form, at the venue,
@@ -73,18 +87,22 @@
                     </p>
                 </section>
 
+                <!-- WHO IT COVERS -->
                 <section id="covers">
                     <h2>Who it covers</h2>
+
                     <p>
                         Everyone: hackers, mentors, judges, sponsors,
                         volunteers, organizers, and MLH staff.
-                        It applies for the whole weekend and in every
-                        space connected to the event.
+                        It applies for the whole weekend and in
+                        every space connected to the event.
                     </p>
                 </section>
 
+                <!-- VIOLATIONS -->
                 <section id="violations">
                     <h2>If someone breaks it</h2>
+
                     <p>
                         Organizers can take appropriate action,
                         including a warning, removal from the event
@@ -93,21 +111,30 @@
                     </p>
                 </section>
 
+                <!-- REPORTING -->
                 <section id="report">
                     <h2>How to report</h2>
 
                     <p>
-                        Find any organizer in a HackBoston lanyard,
-                        or email
-                        <a href="mailto:conduct@hackboston.dev">conduct@hackboston.dev</a>.
-                        We'll keep it as confidential as we can.
+                        Find any HackBoston organizer, or email
+                        <a
+                            class="conduct-link"
+                            href="mailto:conduct@hackboston.dev"
+                        >conduct@hackboston.dev</a>.
+                        We'll keep reports as confidential as we can.
                     </p>
 
                     <p>
                         You can also reach MLH directly at
-                        <a href="tel:+14092026060">+1 409 202 6060</a>
+                        <a
+                            class="conduct-link"
+                            href="tel:+14092026060"
+                        >+1 409 202 6060</a>
                         or
-                        <a href="mailto:incidents@mlh.io">incidents@mlh.io</a>.
+                        <a
+                            class="conduct-link"
+                            href="mailto:incidents@mlh.io"
+                        >incidents@mlh.io</a>.
                     </p>
 
                     <p>
@@ -115,17 +142,19 @@
                     </p>
                 </section>
 
+                <!-- FULL POLICY -->
                 <section id="full">
                     <h2>Full text</h2>
 
                     <p>
-                        Read the full MLH Code of Conduct at mlh.io.
-                        When you register, you agree to it.
+                        Read the full MLH Code of Conduct.
+                        When you register for HackBoston,
+                        you agree to follow it.
                     </p>
 
                     <div class="buttons">
                         <a
-                            class="primary-button"
+                            class="action-button primary-button"
                             href="https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md"
                             target="_blank"
                             rel="noopener noreferrer"
@@ -134,7 +163,7 @@
                         </a>
 
                         <a
-                            class="secondary-button"
+                            class="action-button secondary-button"
                             href="mailto:conduct@hackboston.dev"
                         >
                             Report something
@@ -145,7 +174,7 @@
             </div>
         </div>
     </Container>
-</section>
+</div>
 
 <style>
     /* HEADER */
@@ -153,7 +182,7 @@
     .conduct-header {
         background-color: var(--bg-forest, #2d493b);
         color: var(--text-on-dark, #f7f4eb);
-        padding: 65px 0;
+        padding: 75px 0;
     }
 
     .header-layout {
@@ -190,14 +219,13 @@
         max-width: 100%;
         height: auto;
         justify-self: end;
-        align-self: center;
     }
 
-    /* MAIN SECTION */
+    /* MAIN LAYOUT */
 
     .conduct-section {
-        background-color: var(--bg-cream, #f7f4eb);
-        color: var(--text-ink, #25382d);
+        background-color: #f7f4eb;
+        color: #25382d;
         padding: 65px 0 100px;
     }
 
@@ -209,7 +237,7 @@
 
     /* SIDEBAR */
 
-    .sidebar h3 {
+    .sidebar-heading {
         font-family: var(--font-label, monospace);
         font-size: 11px;
         font-weight: 500;
@@ -224,16 +252,10 @@
         gap: 12px;
     }
 
-    .sidebar nav a {
+    .sidebar-link {
         font-family: var(--font-label, monospace);
         font-size: 13px;
         font-weight: 600;
-        color: inherit;
-        text-decoration: none;
-    }
-
-    .sidebar nav a:hover {
-        text-decoration: underline;
     }
 
     .sidebar-contact {
@@ -241,18 +263,30 @@
         margin-top: 25px;
         padding-top: 20px;
         color: #68786e;
-        line-height: 1.5;
         font-size: 14px;
+        line-height: 1.5;
     }
 
-    .sidebar-contact a {
+    .sidebar-contact p {
+        margin: 0;
+    }
+
+    /* SHARED LINK STYLING */
+
+    .conduct-link {
         color: inherit;
         text-decoration: none;
+        text-underline-offset: 3px;
+        text-decoration-skip-ink: none;
     }
 
-    .sidebar-contact a:hover {
+    .conduct-link:hover {
         text-decoration: underline;
-        text-decoration-skip-ink: none;
+    }
+
+    .conduct-link:focus-visible {
+        outline: 2px solid currentColor;
+        outline-offset: 3px;
     }
 
     /* CONTENT */
@@ -266,7 +300,7 @@
         margin-bottom: 0;
     }
 
-    h2 {
+    .content h2 {
         font-family: Georgia, serif;
         font-size: 27px;
         font-weight: normal;
@@ -280,16 +314,6 @@
         margin: 0 0 14px;
     }
 
-    .content p a {
-        color: inherit;
-        text-decoration: none;
-    }
-
-    .content p a:hover {
-        text-decoration: underline;
-        text-decoration-skip-ink: none;
-    }
-
     /* BUTTONS */
 
     .buttons {
@@ -299,7 +323,7 @@
         margin-top: 40px;
     }
 
-    .buttons a {
+    .action-button {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -307,9 +331,10 @@
         font-size: 12px;
         font-weight: 500;
         text-decoration: none;
+        text-underline-offset: 3px;
         padding: 14px 20px;
+        border: 1px solid #25382d;
         border-radius: 30px;
-        transition: opacity 0.2s;
     }
 
     .primary-button {
@@ -318,17 +343,15 @@
     }
 
     .secondary-button {
-        border: 1px solid #25382d;
+        background-color: transparent;
         color: #25382d;
     }
 
-    .buttons a:hover {
-        opacity: 0.8;
+    .action-button:hover {
+        text-decoration: underline;
     }
 
-    .buttons a:focus-visible,
-    .sidebar a:focus-visible,
-    .content a:focus-visible {
+    .action-button:focus-visible {
         outline: 2px solid currentColor;
         outline-offset: 3px;
     }
@@ -363,7 +386,7 @@
             font-size: 42px;
         }
 
-        h2 {
+        .content h2 {
             font-size: 25px;
         }
 
