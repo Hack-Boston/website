@@ -1,7 +1,7 @@
 
 <script lang="ts">
     import Container from '$lib/components/Container.svelte';
-    import bug from '$lib/assets/bug-light.svg';
+    import PageHeader from '$lib/components/PageHeader.svelte';
 
     const sections = [
         { id: 'short', title: 'The short version' },
@@ -21,25 +21,10 @@
 </svelte:head>
 
 <!-- HEADER -->
-<header class="conduct-header">
-    <Container>
-        <div class="header-layout">
-            <div class="header-text">
-                <h1>Code of Conduct.</h1>
-                <p>
-                    HackBoston follows the MLH Code of Conduct.
-                    Everyone at the event agrees to it, no exceptions.
-                </p>
-            </div>
-
-            <img
-                src={bug}
-                alt="HackBoston mascot"
-                class="mascot"
-            />
-        </div>
-    </Container>
-</header>
+<PageHeader
+    title="Code of Conduct"
+    lede="HackBoston follows the MLH Code of Conduct. Everyone at the event agrees to it, no exceptions."
+/>
 
 <!-- MAIN CONTENT -->
 <div class="conduct-section">
@@ -177,50 +162,6 @@
 </div>
 
 <style>
-    /* HEADER */
-
-    .conduct-header {
-        background-color: var(--bg-forest, #2d493b);
-        color: var(--text-on-dark, #f7f4eb);
-        padding: 75px 0;
-    }
-
-    .header-layout {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) 220px;
-        align-items: center;
-        gap: 40px;
-        width: 100%;
-    }
-
-    .header-text {
-        max-width: 600px;
-        min-width: 0;
-    }
-
-    h1 {
-        font-family: Georgia, serif;
-        font-size: clamp(40px, 5vw, 58px);
-        font-weight: normal;
-        line-height: 1.15;
-        margin: 0 0 24px;
-    }
-
-    .conduct-header p {
-        max-width: 550px;
-        font-size: 17px;
-        line-height: 1.6;
-        margin: 0;
-    }
-
-    .mascot {
-        display: block;
-        width: 220px;
-        max-width: 100%;
-        height: auto;
-        justify-self: end;
-    }
-
     /* MAIN LAYOUT */
 
     .conduct-section {
@@ -359,20 +300,6 @@
     /* MOBILE */
 
     @media (max-width: 700px) {
-        .conduct-header {
-            padding: 50px 0;
-        }
-
-        .header-layout {
-            grid-template-columns: 1fr;
-            gap: 25px;
-        }
-
-        .mascot {
-            width: 150px;
-            justify-self: start;
-        }
-
         .conduct-section {
             padding: 40px 0 70px;
         }
@@ -380,10 +307,6 @@
         .conduct-layout {
             grid-template-columns: 1fr;
             gap: 35px;
-        }
-
-        h1 {
-            font-size: 42px;
         }
 
         .content h2 {
