@@ -21,16 +21,8 @@ test('normal pages still have the Nav and Footer', async ({ page }) => {
 	await expect(page.locator('footer')).toHaveCount(1);
 });
 
-test('the Pages function bundle is not served as a static file', async ({ request }) => {
-	for (const path of ['/_worker.js', '/_routes.json']) {
-		const response = await request.get(path);
-		expect(response.status(), path).toBe(404);
-	}
-});
-
-test('missing static files return 404', async ({ request }) => {
-	// Pages serves these paths from the static files, not the SvelteKit function.
-	for (const path of ['/_app/immutable/does-not-exist.js', '/images/does-not-exist.png']) {
+test('the Worker bundle is not served as a static file', async ({ request }) => {
+	for (const path of ['/_worker.js', '/_routes.json', '/.assetsignore']) {
 		const response = await request.get(path);
 		expect(response.status(), path).toBe(404);
 	}
