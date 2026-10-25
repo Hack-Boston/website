@@ -12,7 +12,7 @@
 	<!-- ===== BANNER ===== -->
 	<PageHeader
 		title="Meet the team."
-		lede="HackBoston is organized by an independent student team from the Boston area. Say hi, we don’t bite."
+		lede="HackBoston is organized by an independent student team from the Boston area. Say hi, we don't bite."
 	/>
 	<!-- ===== ORGANIZER ===== -->
 	<Section>
@@ -190,8 +190,8 @@
 						<span class="mb-3 display-m"> Want to mentor or help run the weekend? </span>
 
 						<span class="text-lede text-text-muted">
-							We’re always looking for mentors, judges, and extra hands. Reach out and tell us what
-							you’re into.
+							We're always looking for mentors, judges, and extra hands. Reach out and tell us what
+							you're into.
 						</span>
 					</div>
 
