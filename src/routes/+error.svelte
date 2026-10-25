@@ -1,15 +1,14 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
-	import { Button, Container, Logo } from '$lib';
-	import { contactEmails } from '$lib/site';
+	import { Button, Container, Logo, supportEmail } from '$lib';
 
 	interface ErrorCopy {
 		title: string;
 		heading: string;
 		lede: string;
 	}
-	const supportEmail = contactEmails[0].email;
+
 	/** Copy for the status codes a visitor can hit. Other codes use `fallback`. */
 	const copyByStatus: Record<number, ErrorCopy> = {
 		400: {
