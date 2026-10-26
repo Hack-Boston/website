@@ -1,7 +1,6 @@
 <script>
     import Container from '$lib/components/Container.svelte';
     import PageHeader from '$lib/components/PageHeader.svelte';
-    import Section from '$lib/components/Section.svelte';
 
     const faqs = [
         {
@@ -48,18 +47,12 @@
     <title>HackBoston - FAQ</title>
 </svelte:head>
 
+<PageHeader
+    title="Everything you wanted to ask."
+    lede="Dates, venue, food, and how to get involved."
+/>
 
-<header class="faq-header">
-    <Container>
-        <h1>Everything you<br />wanted to ask.</h1>
-        <p>
-            Dates, venue, food, and how to get involved.
-            Tap a question to expand it on the live site.
-        </p>
-    </Container>
-</header>
-
-<section class="faq-section">
+<div class="faq-section">
     <Container>
         <div class="faq-layout">
             <aside class="contact">
@@ -71,7 +64,7 @@
             </aside>
 
             <div class="questions">
-                {#each faqs as faq}
+                {#each faqs as faq (faq.question)}
                     <details>
                         <summary>{faq.question}</summary>
                         <p>
@@ -93,29 +86,9 @@
 
         </div>
     </Container>
-</section>
+</div>
 
 <style>
-    .faq-header {
-        background-color: #2d493b;
-        color: #f7f4eb;
-        padding: 60px 0;
-    }
-
-    h1 {
-        font-size: clamp(40px, 5vw, 72px);
-        font-weight: 800;
-        line-height: 1.05;
-        letter-spacing: -2px;
-        max-width: 650px;
-    }
-
-    .faq-header p {
-        margin-top: 25px;
-        max-width: 550px;
-        font-size: 17px;
-    }
-
     .faq-section {
         background-color: #f7f4eb;
         padding: 55px 0;
@@ -129,26 +102,6 @@
 
     .contact {
         color: #68786e;
-    }
-
-    .contact a {
-        text-decoration: none;
-        text-decoration-skip-ink: none;
-        color: inherit;
-    }
-
-    .contact a:hover {
-        text-decoration: underline;
-    }
-
-    .questions a {
-        color: inherit;
-        text-decoration: none;
-    }
-
-    .questions a:hover {
-        text-decoration: underline;
-        text-decoration-skip-ink: none;
     }
 
     .questions details {

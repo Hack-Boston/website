@@ -19,11 +19,7 @@
 		socialsSlot?: Snippet;
 	}
 
-	let {
-		contacts = contactEmails,
-		socials = socialLinks,
-		socialsSlot
-	}: Props = $props();
+	let { contacts = contactEmails, socials = socialLinks, socialsSlot }: Props = $props();
 
 	const year = new Date().getFullYear();
 	const showSocials = $derived(Boolean(socialsSlot) || socials.length > 0);
@@ -39,7 +35,14 @@
 			</div>
 
 			<div class="flex flex-col gap-10 sm:flex-row sm:flex-wrap sm:gap-x-24 sm:gap-y-10">
+
 				<div class="flex flex-col gap-3">
+					<h2 class="footer__heading">Important Links</h2>
+					<ul class="flex flex-col gap-2">
+						<li><a class="footer__link" href={resolve('/notify')}>Get notified</a></li>
+					</ul>
+				</div>
+				<div class="flex flex-col gap-3">					
 					<h2 class="footer__heading">Contact</h2>
 					<dl class="flex flex-col gap-2">
 						{#each contacts as contact (contact.email)}
@@ -70,6 +73,15 @@
 				{/if}
 			</div>
 		</div>
+
+		<!-- <section
+			aria-labelledby="footer-notify"
+			class="mx-auto flex w-full max-w-[360px] flex-col gap-3"
+		>
+			<h2 id="footer-notify" class="footer__heading text-center">Get notified</h2>
+			<p class="font-body text-base text-accent-green-tint">Hear first when registration opens.</p>
+			<NotifyForm tone="forest" layout="stacked" source="Website: footer" />
+		</section> -->
 
 		<div
 			class="flex flex-col gap-2 border-t border-accent-green pt-6 font-body text-base leading-normal text-accent-green-tint md:flex-row md:items-center md:justify-between md:gap-6"
@@ -118,6 +130,16 @@
 
 	.footer__link:hover {
 		text-decoration: underline;
+	}
+
+	/* Email links match the site-wide mailto style (main.css): always underlined. */
+	.footer__link[href^='mailto:'] {
+		text-decoration: underline;
+	}
+
+	/* accent-green is too dark on bg-forest, so hover uses the light tint. */
+	.footer__link[href^='mailto:']:hover {
+		color: var(--accent-green-tint);
 	}
 
 	.footer__link:focus-visible,

@@ -12,7 +12,7 @@
 	<!-- ===== BANNER ===== -->
 	<PageHeader
 		title="Meet the team."
-		lede="HackBoston is organized by an independent student team from the Boston area. Say hi, we don’t bite."
+		lede="HackBoston is organized by an independent student team from the Boston area. Say hi, we don't bite."
 	/>
 	<!-- ===== ORGANIZER ===== -->
 	<Section>
@@ -39,7 +39,7 @@
 							<span class="label-mono text-accent-green"> Co-director · Tech Lead </span>
 							<span class="font-body text-base text-text-muted"> 
 								<a
-									href="mailto:logan@hackboston.dev" target="_blank" class="hover:underline"
+									href="mailto:logan@hackboston.dev"
 								>
 									logan@hackboston.dev 
 								</a> 
@@ -62,7 +62,7 @@
 							<span class="label-mono text-accent-green"> Co-director · Ops Lead </span>
 							<span class="font-body text-base text-text-muted">  
 								<a
-									href="mailto:jasper@hackboston.dev" target="_blank" class="hover:underline"
+									href="mailto:jasper@hackboston.dev"
 								>
 									jasper@hackboston.dev
 								</a> 
@@ -85,7 +85,7 @@
 							<span class="label-mono text-accent-green"> Sponsorship + Finances Lead </span>
 							<span class="font-body text-base text-text-muted"> 
 								<a
-									href="mailto:volo@hackboston.dev" target="_blank" class="hover:underline"
+									href="mailto:volo@hackboston.dev"
 								>
 									volo@hackboston.dev
 								</a> 
@@ -108,7 +108,7 @@
 							<span class="label-mono text-accent-green"> Venue + Logistics Lead </span>
 							<span class="font-body text-base text-text-muted"> 
 								<a
-									href="mailto:cj@hackboston.dev" target="_blank" class="hover:underline"
+									href="mailto:cj@hackboston.dev"
 								>
 									cj@hackboston.dev 
 								</a> 
@@ -131,7 +131,7 @@
 							<span class="label-mono text-accent-green"> Design + Socials Lead </span>
 							<span class="font-body text-base text-text-muted"> 
 								<a
-									href="mailto:jojo@hackboston.dev" target="_blank" class="hover:underline"
+									href="mailto:jojo@hackboston.dev"
 								>
 									jojo@hackboston.dev 
 								</a> 
@@ -154,7 +154,7 @@
 							<span class="label-mono text-accent-green"> Judging Lead </span>
 							<span class="font-body text-base text-text-muted">
 								<a
-									href="mailto:daniel@hackboston.dev" target="_blank" class="hover:underline"
+									href="mailto:daniel@hackboston.dev"
 								>
 									daniel@hackboston.dev
 								</a> 
@@ -190,14 +190,14 @@
 						<span class="mb-3 display-m"> Want to mentor or help run the weekend? </span>
 
 						<span class="text-lede text-text-muted">
-							We’re always looking for mentors, judges, and extra hands. Reach out and tell us what
-							you’re into.
+							We're always looking for mentors, judges, and extra hands. Reach out and tell us what
+							you're into.
 						</span>
 					</div>
 
 					<a
-						href="mailto:team@hackboston.dev" target="_blank"
-						class="rounded-pill bg-bg-forest px-6 py-4 label-mono text-bg-paper hover:underline"
+						href="mailto:team@hackboston.dev"
+						class="rounded-pill bg-bg-forest px-6 py-4 label-mono text-bg-paper no-underline hover:underline"
 					>
 						team@hackboston.dev
 					</a>
