@@ -5,15 +5,17 @@
 	import { cubicInOut } from 'svelte/easing';
 	import { crossfade } from 'svelte/transition';
 	import bugInk from '$lib/assets/bug-ink.svg';
-	import { isActivePath, navLinks, type NavLink } from '$lib/site';
+	import { isActivePath, navLinks, registerHref, type NavLink } from '$lib/site';
 	import Button from './Button.svelte';
 	import Logo from './Logo.svelte';
 
 	interface Props {
 		links?: NavLink[];
+		ctaHref?: string;
+		ctaLabel?: string;
 	}
 
-	let { links = navLinks }: Props = $props();
+	let { links = navLinks, ctaHref = registerHref, ctaLabel = 'Register' }: Props = $props();
 
 	let menuOpen = $state(false);
 	let menuButton: HTMLButtonElement | undefined = $state();
@@ -120,6 +122,11 @@
 				</ul>
 			</nav>
 
+			<div class="hidden lg:block">
+				<!-- Small, so the bug can crawl under it on the collapsed bar. -->
+				<Button href={resolve(ctaHref as Pathname)} size="sm">{ctaLabel}</Button>
+			</div>
+
 			<button
 				bind:this={menuButton}
 				type="button"
@@ -154,6 +161,11 @@
 							</a>
 						</li>
 					{/each}
+					<li class="pt-3">
+						<Button href={resolve(ctaHref as Pathname)} onclick={() => closeMenu()}
+							>{ctaLabel}</Button
+						>
+					</li>
 				</ul>
 			</nav>
 		</div>
