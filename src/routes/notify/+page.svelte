@@ -3,7 +3,7 @@
 	import { resolve } from '$app/paths';
 	import type { Pathname } from '$app/types';
 	import { Button, PageHeader, Section } from '$lib';
-	import type { NotifyStatus } from './status/+server';
+	import type { NotifyStatus } from '$lib/notify';
 
 	/** Loops form endpoint (Loops > Forms > Settings > Form Endpoint). Public, no API key. */
 	const LOOPS_FORM_URL = 'https://app.loops.so/api/newsletter-form/cmvdd4bqn09hl0jvp19ick32l';
@@ -166,7 +166,7 @@
 	/>
 
 	<Section>
-		<div class="notify-grid">
+		<div class="notify-grid notify-grid--form">
 			<aside class="flex flex-col gap-6">
 				<div class="flex flex-col gap-1">
 					<h2 class="eyebrow text-accent-green">What you'll get</h2>
@@ -178,8 +178,8 @@
 
 			<!-- Without JavaScript the browser posts straight to Loops, which replies with JSON. -->
 			<form method="POST" action={LOOPS_FORM_URL} class="flex flex-col gap-8" novalidate {onsubmit}>
-				<div class="grid gap-6 sm:grid-cols-2">
-					<div class="field">
+				<div class="flex flex-col gap-6">
+					<div class="field flex flex-col gap-1">
 						<label for="firstName" class="eyebrow">First name</label>
 						<input
 							id="firstName"
@@ -193,8 +193,7 @@
 							aria-invalid={errorField === 'firstName' || undefined}
 							aria-describedby={errorField === 'firstName' ? 'notify-error' : undefined}
 						/>
-					</div>
-					<div class="field">
+						<br>
 						<label for="email" class="eyebrow">Email</label>
 						<input
 							id="email"
@@ -258,6 +257,20 @@
 		.notify-grid {
 			grid-template-columns: 220px minmax(0, 1fr);
 			column-gap: 56px;
+		}
+	}
+
+	/* Signup view: a narrow centered block, so the fields don't stretch across the page. */
+	.notify-grid--form {
+		max-width: 400px;
+		margin-inline: auto;
+	}
+
+	@media (min-width: 1024px) {
+		.notify-grid--form {
+			max-width: none;
+			grid-template-columns: 220px minmax(0, 400px);
+			justify-content: center;
 		}
 	}
 
