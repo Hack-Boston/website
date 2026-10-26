@@ -1,10 +1,19 @@
 import { env } from '$env/dynamic/private';
 import { json } from '@sveltejs/kit';
-import type { NotifyStatus } from '$lib/notify';
 import type { RequestHandler } from './$types';
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const LOOPS_FIND_URL = 'https://app.loops.so/api/v1/contacts/find';
+
+/**
+ * Where an email stands on the notify list:
+ * - new: not in Loops, so the page signs them up.
+ * - pending: signed up but has not clicked the double opt-in link yet.
+ * - subscribed: already on the list.
+ * - unsubscribed: unsubscribed or declined the opt-in. The form endpoint can't resubscribe them.
+ * - unknown: the lookup failed or LOOPS_API_KEY is missing. The page signs them up as normal.
+ */
+export type NotifyStatus = 'new' | 'pending' | 'subscribed' | 'unsubscribed' | 'unknown';
 
 interface LoopsContact {
 	subscribed: boolean;
