@@ -122,6 +122,22 @@
 	letter-spacing: -0.01em;
 }
 
+@utility display-s {
+	font-family: var(--font-display);
+	font-weight: 500;
+	font-size: 1.25rem;
+	line-height: 1.28;
+	letter-spacing: -0.01em;
+}
+
+@utility display-tiny {
+	font-family: var(--font-display);
+	font-weight: 500;
+	font-size: 0.75rem;
+	line-height: 1.4;
+	letter-spacing: 0.04em;
+}
+
 @utility display-stat {
 	font-family: var(--font-display);
 	font-weight: 600;
@@ -129,7 +145,6 @@
 	line-height: 1;
 	letter-spacing: -0.03em;
 }
-
 /* Body copy: Newsreader 20 / 1.5 (page ledes) and 16 / 1.5 (default) */
 @utility text-lede {
 	font-family: var(--font-body);
