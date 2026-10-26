@@ -119,7 +119,7 @@
 </script>
 
 <svelte:head>
-	<title>Get notified - HackBoston</title>
+	<title>HackBoston - Get notified</title>
 	<meta name="description" content="Get notified when registration opens for HackBoston." />
 </svelte:head>
 
