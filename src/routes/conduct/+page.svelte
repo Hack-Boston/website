@@ -33,12 +33,12 @@
 
             <!-- LEFT NAVIGATION -->
             <aside class="sidebar">
-                <h2 class="sidebar-heading">ON THIS PAGE</h2>
+                <h2 class="sidebar-heading eyebrow">On this page</h2>
 
                 <nav aria-label="On this page">
                     {#each sections as section}
                         <a
-                            class="conduct-link sidebar-link"
+                            class="sidebar-link label-mono"
                             href={'#' + section.id}
                         >
                             {section.title}
@@ -49,16 +49,14 @@
                 <div class="sidebar-contact">
                     <p>
                         Questions about the policy? Email
-                        <a
-                            class="conduct-link"
-                            href="mailto:team@hackboston.dev"
+                        <a href="mailto:team@hackboston.dev"
                         >team@hackboston.dev</a>.
                     </p>
                 </div>
             </aside>
 
             <!-- RIGHT CONTENT -->
-            <div class="content">
+            <main class="content">
 
                 <!-- SHORT VERSION -->
                 <section id="short">
@@ -102,28 +100,23 @@
 
                     <p>
                         Find any HackBoston organizer, or email
-                        <a
-                            class="conduct-link"
-                            href="mailto:conduct@hackboston.dev"
+                        <a href="mailto:conduct@hackboston.dev"
                         >conduct@hackboston.dev</a>.
                         We'll keep reports as confidential as we can.
                     </p>
 
                     <p>
                         You can also reach MLH directly at
-                        <a
-                            class="conduct-link"
-                            href="tel:+14092026060"
+                        <a href="tel:+14092026060"
                         >+1 409 202 6060</a>
                         or
-                        <a
-                            class="conduct-link"
-                            href="mailto:incidents@mlh.io"
+                        <a href="mailto:incidents@mlh.io"
                         >incidents@mlh.io</a>.
                     </p>
 
                     <p>
-                        In an emergency, call 911 first.
+                        In an emergency, call
+                        <a href="tel:911">911</a> first.
                     </p>
                 </section>
 
@@ -139,7 +132,7 @@
 
                     <div class="buttons">
                         <a
-                            class="action-button primary-button"
+                            class="action-button primary-button label-mono"
                             href="https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md"
                             target="_blank"
                             rel="noopener noreferrer"
@@ -148,7 +141,7 @@
                         </a>
 
                         <a
-                            class="action-button secondary-button"
+                            class="action-button secondary-button label-mono"
                             href="mailto:conduct@hackboston.dev"
                         >
                             Report something
@@ -156,7 +149,7 @@
                     </div>
                 </section>
 
-            </div>
+            </main>
         </div>
     </Container>
 </div>
@@ -165,8 +158,8 @@
     /* MAIN LAYOUT */
 
     .conduct-section {
-        background-color: #f7f4eb;
-        color: #25382d;
+        background-color: var(--bg-paper);
+        color: var(--text-ink);
         padding: 65px 0 100px;
     }
 
@@ -179,11 +172,7 @@
     /* SIDEBAR */
 
     .sidebar-heading {
-        font-family: var(--font-label, monospace);
-        font-size: 11px;
-        font-weight: 500;
-        letter-spacing: 1px;
-        color: #426c55;
+        color: var(--accent-green);
         margin: 0 0 20px;
     }
 
@@ -194,40 +183,34 @@
     }
 
     .sidebar-link {
-        font-family: var(--font-label, monospace);
-        font-size: 13px;
-        font-weight: 600;
+        color: var(--text-ink);
+        text-decoration: none;
+        text-underline-offset: 3px;
+        transition: color 0.2s ease;
+    }
+
+    .sidebar-link:hover {
+        color: var(--accent-green);
+        text-decoration: underline;
+    }
+
+    .sidebar-link:focus-visible {
+        outline: 2px solid var(--accent-green);
+        outline-offset: 3px;
     }
 
     .sidebar-contact {
-        border-top: 1px solid #d8d8cc;
+        border-top: 1px solid var(--bg-paper-deep);
         margin-top: 25px;
         padding-top: 20px;
-        color: #68786e;
+        color: var(--text-muted);
+        font-family: var(--font-body);
         font-size: 14px;
         line-height: 1.5;
     }
 
     .sidebar-contact p {
         margin: 0;
-    }
-
-    /* SHARED LINK STYLING */
-
-    .conduct-link {
-        color: inherit;
-        text-decoration: none;
-        text-underline-offset: 3px;
-        text-decoration-skip-ink: none;
-    }
-
-    .conduct-link:hover {
-        text-decoration: underline;
-    }
-
-    .conduct-link:focus-visible {
-        outline: 2px solid currentColor;
-        outline-offset: 3px;
     }
 
     /* CONTENT */
@@ -242,17 +225,48 @@
     }
 
     .content h2 {
-        font-family: Georgia, serif;
+        font-family: var(--font-body);
         font-size: 27px;
-        font-weight: normal;
+        font-weight: 400;
         line-height: 1.25;
         margin: 0 0 12px;
     }
 
     .content p {
-        font-size: 15px;
-        line-height: 1.7;
+        font-family: var(--font-body);
+        font-size: 16px;
+        line-height: 1.5;
         margin: 0 0 14px;
+    }
+
+    /* PHONE LINKS */
+
+    .content a[href^='tel:'] {
+        color: inherit;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        transition: color 0.2s ease;
+    }
+
+    .content a[href^='tel:']:hover {
+        color: var(--accent-green);
+    }
+
+    /* EMAIL LINKS */
+
+    /*
+     * Mailto links inherit their styling from
+     * the global main.css @layer base rules.
+     *
+     * These selectors keep the shared style
+     * accessible with keyboard navigation.
+     */
+
+    .content a[href^='mailto:']:focus-visible,
+    .sidebar-contact a[href^='mailto:']:focus-visible,
+    .content a[href^='tel:']:focus-visible {
+        outline: 2px solid var(--accent-green);
+        outline-offset: 3px;
     }
 
     /* BUTTONS */
@@ -268,33 +282,48 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        font-family: var(--font-label, monospace);
         font-size: 12px;
-        font-weight: 500;
         text-decoration: none;
         text-underline-offset: 3px;
         padding: 14px 20px;
-        border: 1px solid #25382d;
-        border-radius: 30px;
+        border: 1px solid var(--text-ink);
+        border-radius: var(--radius-pill);
+        transition:
+            background-color 0.2s ease,
+            color 0.2s ease;
     }
 
     .primary-button {
-        background-color: #2d493b;
-        color: #f7f4eb;
+        background-color: var(--bg-forest);
+        color: var(--text-on-dark);
     }
 
     .secondary-button {
         background-color: transparent;
-        color: #25382d;
+        color: var(--text-ink);
     }
 
-    .action-button:hover {
-        text-decoration: underline;
+    .primary-button:hover {
+        background-color: var(--accent-green);
+    }
+
+    .secondary-button:hover {
+        background-color: var(--bg-green-wash);
     }
 
     .action-button:focus-visible {
-        outline: 2px solid currentColor;
+        outline: 2px solid var(--accent-green);
         outline-offset: 3px;
+    }
+
+    /*
+     * The global mailto rule underlines links.
+     * Buttons are an exception: their text should
+     * remain ununderlined by default.
+     */
+
+    .action-button[href^='mailto:'] {
+        text-decoration: none;
     }
 
     /* MOBILE */
@@ -315,6 +344,13 @@
 
         .buttons {
             gap: 10px;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .action-button {
+            width: 100%;
+            text-align: center;
         }
     }
 </style>
