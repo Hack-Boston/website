@@ -115,8 +115,7 @@
                     </p>
 
                     <p>
-                        In an emergency, call
-                        <a href="tel:911">911</a> first.
+                        In an emergency, call 911 first.
                     </p>
                 </section>
 
