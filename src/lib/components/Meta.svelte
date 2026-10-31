@@ -14,8 +14,9 @@
 	const fullTitle = $derived(title ? `${siteName} - ${title}` : siteName);
 	const url = $derived(`${siteUrl}${page.url.pathname}`);
 
-	// Crawlers need an absolute URL. The file lives in static/assets.
-	const image = `${siteUrl}/assets/og-image.png`;
+	// Crawlers need an absolute URL. The file lives in static/assets. Use the serving origin, not
+	// siteUrl, so preview deploys link to their own copy of the image.
+	const image = $derived(`${page.url.origin}/assets/og-image.png`);
 	const imageAlt =
 		'HackBoston: Build something bold this spring. Boston, Spring 2027, about 200 student hackers.';
 </script>
