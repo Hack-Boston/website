@@ -19,6 +19,15 @@ export interface ContactEmail {
 	email: string;
 }
 
+export const siteName = 'HackBoston';
+
+/** Production origin, used for absolute URLs in meta tags. No trailing slash. */
+export const siteUrl = 'https://hackboston.dev';
+
+/** Default meta description, used by the home page and any page without its own. */
+export const siteDescription =
+	'HackBoston is a student hackathon in Boston this spring. About 200 student hackers, one weekend, and something bold to build.';
+
 /**
  * Set to true when registration opens (milestone "Registration opens").
  * While false, Register links go to the Get notified page.

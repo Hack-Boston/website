@@ -2,7 +2,7 @@
 	import { tick } from 'svelte';
 	import { resolve } from '$app/paths';
 	import type { Pathname } from '$app/types';
-	import { Button, PageHeader, Section } from '$lib';
+	import { Button, Meta, PageHeader, Section } from '$lib';
 	import type { NotifyStatus } from '$lib/notify';
 
 	/** Loops form endpoint (Loops > Forms > Settings > Form Endpoint). Public, no API key. */
@@ -118,10 +118,7 @@
 	];
 </script>
 
-<svelte:head>
-	<title>HackBoston - Get notified</title>
-	<meta name="description" content="Get notified when registration opens for HackBoston." />
-</svelte:head>
+<Meta title="Get notified" description="Get notified when registration opens for HackBoston." />
 
 {#if done}
 	<PageHeader

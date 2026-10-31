@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
-	import { Button, Container, Logo, supportEmail } from '$lib';
+	import { Button, Container, Logo, Meta, supportEmail } from '$lib';
 
 	interface ErrorCopy {
 		title: string;
@@ -60,9 +60,7 @@
 	const showSupport = $derived(serverError);
 </script>
 
-<svelte:head>
-	<title>{copy.title} | HackBoston</title>
-</svelte:head>
+<Meta title={copy.title} description={copy.lede} />
 
 <!-- +layout.svelte hides the Nav and Footer on this page, so it fills the screen. -->
 <section class="flex min-h-dvh items-center bg-bg-forest py-section text-text-on-dark">
