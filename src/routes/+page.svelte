@@ -2,10 +2,13 @@
 	import { resolve } from '$app/paths';
 	import type { Pathname } from '$app/types';
 	import Button from '$lib/components/Button.svelte';
+	import Meta from '$lib/components/Meta.svelte';
 	import Section from '$lib/components/Section.svelte';
 </script>
 
-<!-- Placeholder until the Home page (#9) lands. Nav and Footer come from +layout.svelte. -->
+<Meta />
+
+<!-- Placeholder until the Home page lands. Nav and Footer come from +layout.svelte. -->
 <Section>
 	<div
 		class="flex flex-col items-center gap-4 rounded-card border-2 border-dashed border-text-ink/40 bg-bg-green-wash px-6 py-16 text-center sm:py-20"

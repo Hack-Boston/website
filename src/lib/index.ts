@@ -6,4 +6,5 @@ export { default as Button } from './components/Button.svelte';
 export { default as Container } from './components/Container.svelte';
 export { default as Section } from './components/Section.svelte';
 export { default as PageHeader } from './components/PageHeader.svelte';
+export { default as Meta } from './components/Meta.svelte';
 export * from './site';
