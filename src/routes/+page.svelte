@@ -19,6 +19,7 @@
 			Check back soon for more updates or subscribe to our email notifications.
 		</p>
 		<Button href={resolve('/notify' as Pathname)} variant="secondary">Subscribe to email notifications</Button>
+		<Button href={resolve('/tracks' as Pathname)} variant="secondary">Explore tracks & prizes</Button>
 	</div>
 </Section>
 
