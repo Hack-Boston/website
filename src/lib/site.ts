@@ -55,10 +55,12 @@ export const contactEmails: ContactEmail[] = [
 export const supportEmail = 'support@hackboston.dev';
 
 /**
- * Social accounts for the footer (#17). Empty until the accounts are confirmed.
- * When this list is empty, the footer hides the Socials column.
+ * Social accounts for the footer.
  */
-export const socialLinks: SocialLink[] = [];
+export const socialLinks: SocialLink[] = [
+	{ label: 'Instagram', href: 'https://www.instagram.com/hack_boston/' }
+	// { label: 'Discord', href: 'https://discord.gg/hackboston' }
+];
 
 export const fiscalSponsorLine =
 	'Fiscally sponsored by Patchwork Labs Inc., a 501(c)(3) nonprofit. EIN 39-3310316.';
