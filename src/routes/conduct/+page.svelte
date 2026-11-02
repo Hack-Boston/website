@@ -23,7 +23,7 @@
 <!-- HEADER -->
 <PageHeader
     title="Code of Conduct"
-    lede="HackBoston follows the MLH Code of Conduct. Everyone at the event agrees to it, no exceptions."
+    lede="HackBoston follows the MLH Code of Conduct. Everyone at the event agrees to it."
 />
 
 <!-- MAIN CONTENT -->
@@ -49,8 +49,8 @@
                 <div class="sidebar-contact">
                     <p>
                         Questions about the policy? Email
-                        <a href="mailto:team@hackboston.dev"
-                        >team@hackboston.dev</a>.
+                        <a href="mailto:conduct@hackboston.dev"
+                        >conduct@hackboston.dev</a>.
                     </p>
                 </div>
             </aside>
