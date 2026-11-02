@@ -1,5 +1,6 @@
 <script>
     import Container from '$lib/components/Container.svelte';
+    import Meta from '$lib/components/Meta.svelte';
     import PageHeader from '$lib/components/PageHeader.svelte';
 
     const faqs = [
@@ -43,9 +44,10 @@
     ];
 </script>
 
-<svelte:head>
-    <title>HackBoston - FAQ</title>
-</svelte:head>
+<Meta
+    title="FAQ"
+    description="Answers to common questions about HackBoston: dates, venue, food, and how to get involved."
+/>
 
 <PageHeader
     title="Everything you wanted to ask."
