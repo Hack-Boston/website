@@ -8,10 +8,13 @@ export interface NavLink {
 	href: string;
 }
 
+export type SocialIconName = 'instagram' | 'x' | 'linkedin' | 'tiktok';
+
 export interface SocialLink {
-	/** Visible name, for example "Instagram". */
+	/** Accessible name, for example "Instagram". */
 	label: string;
 	href: string;
+	icon: SocialIconName;
 }
 
 export interface ContactEmail {
@@ -58,10 +61,10 @@ export const supportEmail = 'support@hackboston.dev';
  * Social accounts for the footer.
  */
 export const socialLinks: SocialLink[] = [
-	{ label: 'Instagram', href: 'https://www.instagram.com/hack_boston/' },
-	{ label: 'X', href: 'https://x.com/HackBoston' },
-	{ label: 'LinkedIn', href: 'https://www.linkedin.com/company/hackboston/' }
-	// { label: 'TikTok', href: 'https://www.tiktok.com/@hackboston' }
+	{ label: 'Instagram', href: 'https://www.instagram.com/hack_boston/', icon: 'instagram' },
+	{ label: 'X', href: 'https://x.com/HackBoston', icon: 'x' },
+	{ label: 'LinkedIn', href: 'https://www.linkedin.com/company/hackboston/', icon: 'linkedin' }
+	// { label: 'TikTok', href: 'https://www.tiktok.com/@hackboston', icon: 'tiktok' }
 ];
 
 export const fiscalSponsorLine =

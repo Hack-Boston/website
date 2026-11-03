@@ -10,6 +10,7 @@
 	} from '$lib/site';
 	import Container from './Container.svelte';
 	import Logo from './Logo.svelte';
+	import SocialIcon from './SocialIcon.svelte';
 
 	interface Props {
 		contacts?: ContactEmail[];
@@ -60,11 +61,20 @@
 						{#if socialsSlot}
 							{@render socialsSlot()}
 						{:else}
-							<ul class="flex flex-col gap-2">
+							<ul class="flex flex-row gap-4 py-2">
 								{#each socials as social (social.href)}
 									<li>
-										<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- external URLs -->
-										<a class="footer__link" href={social.href} rel="me noopener">{social.label}</a>
+										<!-- eslint-disable svelte/no-navigation-without-resolve -- external URLs -->
+										<a
+											class="footer__social"
+											href={social.href}
+											rel="me noopener"
+											aria-label={social.label}
+											title={social.label}
+										>
+											<SocialIcon name={social.icon} />
+										</a>
+										<!-- eslint-enable svelte/no-navigation-without-resolve -->
 									</li>
 								{/each}
 							</ul>
@@ -142,7 +152,26 @@
 		color: var(--accent-green-tint);
 	}
 
+	/* Icon-only links: 40px hit area around a 24px glyph. The negative margin keeps the
+	   glyphs aligned with the heading, and with gap-4 the hit areas touch without overlapping. */
+	.footer__social {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 40px;
+		margin: -8px;
+		border-radius: 4px;
+		color: var(--text-on-dark);
+		transition: color 120ms ease;
+	}
+
+	.footer__social:hover {
+		color: var(--accent-green-tint);
+	}
+
 	.footer__link:focus-visible,
+	.footer__social:focus-visible,
 	.footer__home:focus-visible {
 		outline-color: var(--text-on-dark);
 	}
