@@ -58,8 +58,10 @@ export const supportEmail = 'support@hackboston.dev';
  * Social accounts for the footer.
  */
 export const socialLinks: SocialLink[] = [
-	{ label: 'Instagram', href: 'https://www.instagram.com/hack_boston/' }
-	// { label: 'Discord', href: 'https://discord.gg/hackboston' }
+	{ label: 'Instagram', href: 'https://www.instagram.com/hack_boston/' },
+	{ label: 'X', href: 'https://x.com/HackBoston' },
+	{ label: 'LinkedIn', href: 'https://www.linkedin.com/company/hackboston/' }
+	// { label: 'TikTok', href: 'https://www.tiktok.com/@hackboston' }
 ];
 
 export const fiscalSponsorLine =
