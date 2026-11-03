@@ -8,10 +8,13 @@ export interface NavLink {
 	href: string;
 }
 
+export type SocialIconName = 'instagram' | 'x' | 'linkedin' | 'tiktok';
+
 export interface SocialLink {
-	/** Visible name, for example "Instagram". */
+	/** Accessible name, for example "Instagram". */
 	label: string;
 	href: string;
+	icon: SocialIconName;
 }
 
 export interface ContactEmail {
@@ -55,10 +58,14 @@ export const contactEmails: ContactEmail[] = [
 export const supportEmail = 'support@hackboston.dev';
 
 /**
- * Social accounts for the footer (#17). Empty until the accounts are confirmed.
- * When this list is empty, the footer hides the Socials column.
+ * Social accounts for the footer.
  */
-export const socialLinks: SocialLink[] = [];
+export const socialLinks: SocialLink[] = [
+	{ label: 'Instagram', href: 'https://www.instagram.com/hack_boston/', icon: 'instagram' },
+	{ label: 'X', href: 'https://x.com/HackBoston', icon: 'x' },
+	{ label: 'LinkedIn', href: 'https://www.linkedin.com/company/hackboston/', icon: 'linkedin' }
+	// { label: 'TikTok', href: 'https://www.tiktok.com/@hackboston', icon: 'tiktok' }
+];
 
 export const fiscalSponsorLine =
 	'Fiscally sponsored by Patchwork Labs Inc., a 501(c)(3) nonprofit. EIN 39-3310316.';
