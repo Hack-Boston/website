@@ -171,16 +171,16 @@
 
 					<div class="mt-2 flex flex-wrap items-center justify-center text-lede text-text-muted">
 						<span>Thang Pham</span>
-						<!-- <span class="mx-5">·</span>
-                        <span>Organizer Name</span>
-                        <span class="mx-5">·</span>
-                        <span>Organizer Name</span>
-                        <span class="mx-5">·</span>
-                        <span>Organizer Name</span>
-                        <span class="mx-5">·</span>
-                        <span>Organizer Name</span>
-                        <span class="mx-5">·</span>
-                        <span>Organizer Name</span> -->
+						<span class="mx-5">·</span>
+                        <span>Ramin Huseynov</span>
+                        <!-- <span class="mx-5">·</span> -->
+                        <!-- <span>Organizer Name</span> -->
+                        <!-- <span class="mx-5">·</span> -->
+                        <!-- <span>Organizer Name</span> -->
+                        <!-- <span class="mx-5">·</span> -->
+                        <!-- <span>Organizer Name</span> -->
+                        <!-- <span class="mx-5">·</span> -->
+                        <!-- <span>Organizer Name</span> -->
 					</div>
 				</div>
 
