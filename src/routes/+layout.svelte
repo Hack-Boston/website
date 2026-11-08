@@ -13,7 +13,6 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
-	<title>HackBoston</title>
 </svelte:head>
 
 <a href="#main" class="skip-link">Skip to content</a>

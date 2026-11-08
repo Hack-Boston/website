@@ -1,12 +1,14 @@
 <script>
 	import Container from '$lib/components/Container.svelte';
+	import Meta from '$lib/components/Meta.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Section from '$lib/components/Section.svelte';
 </script>
 
-<svelte:head>
-	<title>HackBoston - Team</title>
-</svelte:head>
+<Meta
+	title="Team"
+	description="Meet the independent student team from the Boston area that organizes HackBoston."
+/>
 
 <div class="bg-bg-paper font-label">
 	<!-- ===== BANNER ===== -->
@@ -169,16 +171,16 @@
 
 					<div class="mt-2 flex flex-wrap items-center justify-center text-lede text-text-muted">
 						<span>Thang Pham</span>
-						<!-- <span class="mx-5">·</span>
-                        <span>Organizer Name</span>
-                        <span class="mx-5">·</span>
-                        <span>Organizer Name</span>
-                        <span class="mx-5">·</span>
-                        <span>Organizer Name</span>
-                        <span class="mx-5">·</span>
-                        <span>Organizer Name</span>
-                        <span class="mx-5">·</span>
-                        <span>Organizer Name</span> -->
+						<span class="mx-5">·</span>
+                        <span>Ramin Huseynov</span>
+                        <!-- <span class="mx-5">·</span> -->
+                        <!-- <span>Organizer Name</span> -->
+                        <!-- <span class="mx-5">·</span> -->
+                        <!-- <span>Organizer Name</span> -->
+                        <!-- <span class="mx-5">·</span> -->
+                        <!-- <span>Organizer Name</span> -->
+                        <!-- <span class="mx-5">·</span> -->
+                        <!-- <span>Organizer Name</span> -->
 					</div>
 				</div>
 
