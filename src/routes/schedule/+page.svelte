@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PageHeader, Section } from '$lib';
+	import { Meta, PageHeader, Section } from '$lib';
 
 	// const schedule = [
 	// 	{
@@ -35,13 +35,10 @@
 	// ];
 </script>
 
-<svelte:head>
-	<title>HackBoston - Schedule</title>
-	<meta
-		name="description"
-		content="HackBoston is a hackathon run by an independent student team from the Boston area."
-	/>
-</svelte:head>
+<Meta
+	title="Schedule"
+	description="HackBoston is a hackathon run by an independent student team from the Boston area."
+/>
 
 <!-- The no-break space keeps "for students." together, so the title breaks after the comma. -->
 <PageHeader

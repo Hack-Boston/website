@@ -1,14 +1,14 @@
 <script>
-	import Container from '$lib/components/Container.svelte';
-	import Nav from '$lib/components/Nav.svelte';
+	import Meta from '$lib/components/Meta.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Section from '$lib/components/Section.svelte';
 	import Button from '$lib/components/Button.svelte';
 </script>
 
-<svelte:head>
-	<title>HackBoston - Sponsors</title>
-</svelte:head>
+<Meta
+	title="Sponsors"
+	description="Sponsor HackBoston, Spring 2027 in Boston. Recruit, put your brand in front of about 200 students, and see how they use your tools firsthand."
+/>
 
 <div class="bg-bg-paper font-label">
     <PageHeader
