@@ -63,8 +63,8 @@ export const supportEmail = 'support@hackboston.dev';
 export const socialLinks: SocialLink[] = [
 	{ label: 'Instagram', href: 'https://www.instagram.com/hack_boston/', icon: 'instagram' },
 	{ label: 'X', href: 'https://x.com/HackBoston', icon: 'x' },
-	{ label: 'LinkedIn', href: 'https://www.linkedin.com/company/hackboston/', icon: 'linkedin' }
-	// { label: 'TikTok', href: 'https://www.tiktok.com/@hackboston', icon: 'tiktok' }
+	{ label: 'LinkedIn', href: 'https://www.linkedin.com/company/hackboston/', icon: 'linkedin' },
+	{ label: 'TikTok', href: 'https://www.tiktok.com/@hackboston', icon: 'tiktok' }
 ];
 
 export const fiscalSponsorLine =
