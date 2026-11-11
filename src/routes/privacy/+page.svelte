@@ -22,13 +22,11 @@
                 <span class="text-accent-green text-[12px] tracking-[6%]">ON THIS PAGE</span>
                 <div class="flex flex-col gap-2.5 text-text-ink text-[14px] text-bold">
                     <span>What we collect</span>
-                    <span>Why</span>
                     <span>Who sees it</span>
                     <span>Health information</span>
-                    <span>How long we keep it</span>
                     <span>Your choices</span>
                 </div>
-                <hr class="h-px text-text-ink">
+                <hr class="h-px text-text-ink w-1/2">
                 <span class="font-body text-[16px] leading-[155%] text-text-muted">Last updated [date].</span>
             </div>
             <div class="col-span-1 md:col-span-2 font-body text-text-ink">
@@ -37,10 +35,6 @@
                         <span class="text-[30px] max-sm:text-[24px]">What we collect</span>
                         <span class="text-[18px] max-sm:text-[16px]">From pre-register: your name and email.</span>
                         <span class="text-[18px] max-sm:text-[16px]">From the application: name, email, phone, age, school, level of study, major, graduation year, country, t-shirt size, food allergies and restrictions, and your short answers.</span>
-                    </div>
-                    <div class="gap-3.5 flex flex-col">
-                        <span class="text-[30px] max-sm:text-[24px]">Why</span>
-                        <span class="text-[18px] max-sm:text-[16px]">From pre-register: your name and email.</span>
                     </div>
                     <div class="gap-3.5 flex flex-col">
                         <span class="text-[30px] max-sm:text-[24px]">Who sees it</span>
@@ -55,15 +49,9 @@
                         </span>
                     </div>
                     <div class="gap-3.5 flex flex-col">
-                        <span class="text-[30px] max-sm:text-[24px]">How long we keep it</span>
-                        <span class="text-[18px] max-sm:text-[16px]">
-                            We delete application data [N] months after the event. We keep anonymous totals, like how many schools attended, for sponsor reports.
-                        </span>
-                    </div>
-                    <div class="gap-3.5 flex flex-col">
                         <span class="text-[30px] max-sm:text-[24px]">Your choices</span>
                         <span class="text-[18px] max-sm:text-[16px]">
-                            Email team@hackboston.dev to see, fix, or delete your data at any time.
+                            Email <a href="mailto:privacy@hackboston.dev" class="no-underline hover:underline">privacy@hackboston.dev</a> to see, fix, or delete your data at any time.
                         </span>
                     </div>
                 </div>
