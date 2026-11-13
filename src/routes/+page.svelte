@@ -63,6 +63,10 @@
 
 	function startDrag(event: PointerEvent) {
 		if (!gallery || event.pointerType !== 'mouse' || event.button !== 0) return;
+		const bounds = gallery.getBoundingClientRect();
+		const x = event.clientX - bounds.left - gallery.clientLeft;
+		const y = event.clientY - bounds.top - gallery.clientTop;
+		if (x < 0 || x >= gallery.clientWidth || y < 0 || y >= gallery.clientHeight) return;
 		dragStart = {
 			pointerId: event.pointerId,
 			x: event.clientX,
