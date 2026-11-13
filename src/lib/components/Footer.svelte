@@ -42,7 +42,7 @@
 					<ul class="flex flex-col gap-2">
 						<li><a class="footer__link" href={resolve('/notify')}>Get notified</a></li>
 			        	<li><a class="footer__link" href={resolve('/conduct')}>Code of Conduct</a></li>
-
+						<li><a class="footer__link" href={resolve('/privacy')}>Privacy Policy</a></li>
 					</ul>
 				</div>
 				<div class="flex flex-col gap-3">					
