@@ -46,7 +46,7 @@
                 </nav>
 
                 <div class="sidebar-contact">
-                    <p>Last updated [date].</p>
+                    <p>Last updated November 15, 2026.</p>
                 </div>
             </aside>
 
