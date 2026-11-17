@@ -32,12 +32,14 @@ export const siteDescription =
 	'HackBoston is a student hackathon in Boston this spring. About 200 student hackers, one weekend, and something bold to build.';
 
 /**
- * Set to true when registration opens (milestone "Registration opens").
- * While false, Register links go to the Get notified page.
+ * True while registration is open. Shows the "Registration is now open" banner above the Nav.
  */
-export const registrationOpen = false;
+export const registrationOpen = true;
 
 export const notifyHref = '/notify';
+
+/** The Register page. The Nav CTA and the Home page Register button link here. */
+export const registerHref = '/register';
 
 /** Nav links, in Figma order. Register and Contact are footer-only. */
 export const navLinks: NavLink[] = [

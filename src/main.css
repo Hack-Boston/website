@@ -55,6 +55,8 @@
 @media (min-width: 1024px) {
 	:root {
 		--space-gutter: 5rem;
+		/* Shorter row so the Register button clears the crawling bug by about 13px */
+		--nav-row-compact: 46px;
 	}
 }
 
