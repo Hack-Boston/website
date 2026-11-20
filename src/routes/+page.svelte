@@ -63,10 +63,9 @@
 
 	function startDrag(event: PointerEvent) {
 		if (!gallery || event.pointerType !== 'mouse' || event.button !== 0) return;
-		const bounds = gallery.getBoundingClientRect();
-		const x = event.clientX - bounds.left - gallery.clientLeft;
-		const y = event.clientY - bounds.top - gallery.clientTop;
-		if (x < 0 || x >= gallery.clientWidth || y < 0 || y >= gallery.clientHeight) return;
+		// Presses on the scrollbar (classic or overlay) target the scroller itself, not the
+		// track. Leave those to the browser so native scrollbar dragging keeps working.
+		if (event.target === gallery) return;
 		dragStart = {
 			pointerId: event.pointerId,
 			x: event.clientX,
@@ -178,17 +177,19 @@
 		onpointercancel={endDrag}
 		onlostpointercapture={endDrag}
 	>
-		{#each photos as photo (photo.src)}
-			<img
-				src={photo.src}
-				alt={photo.alt}
-				width={photo.width}
-				height={photo.height}
-				loading="lazy"
-				decoding="async"
-				draggable="false"
-			/>
-		{/each}
+		<div class="photo-track">
+			{#each photos as photo (photo.src)}
+				<img
+					src={photo.src}
+					alt={photo.alt}
+					width={photo.width}
+					height={photo.height}
+					loading="lazy"
+					decoding="async"
+					draggable="false"
+				/>
+			{/each}
+		</div>
 	</div>
 	<div class="mt-4 flex items-center justify-between gap-4">
 		<p id="gallery-caption" class="font-label text-[0.625rem] leading-relaxed text-text-muted">
@@ -358,8 +359,6 @@
 	}
 
 	.photo-gallery {
-		display: flex;
-		gap: 1rem;
 		overflow-x: auto;
 		padding-bottom: 0.75rem;
 		border-radius: var(--radius-image);
@@ -367,6 +366,12 @@
 		scrollbar-width: thin;
 		scrollbar-color: var(--accent-green) var(--bg-paper-deep);
 		user-select: none;
+	}
+
+	.photo-track {
+		display: flex;
+		gap: 1rem;
+		width: max-content;
 	}
 
 	.photo-gallery--dragging {
@@ -454,7 +459,7 @@
 	}
 
 	@media (min-width: 640px) {
-		.photo-gallery {
+		.photo-track {
 			gap: 1.5rem;
 		}
 
